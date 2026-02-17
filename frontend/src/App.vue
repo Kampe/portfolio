@@ -63,7 +63,7 @@
             </div>
             <div class="space-y-5 md:space-y-6 text-white/80 leading-relaxed font-light">
               <p class="text-sm md:text-base border-l-4 border-cyan-500/50 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.3s both;">
-                <span class="text-cyan-300 font-semibold">Infrastructure Architect & DevOps Specialist</span> with 15+ years scaling production systems for startups and enterprise. Deep expertise in cloud infrastructure automation (GCP, AWS, Azure), Kubernetes orchestration, blockchain infrastructure, and open-source technology. Currently managing multiple long-term contract engagements.
+                <span class="text-cyan-300 font-semibold">Infrastructure Architect & DevOps Specialist</span> with 15+ years scaling production systems for startups and enterprise. Deep expertise in cloud infrastructure automation (GCP, AWS, Azure), Kubernetes orchestration, blockchain infrastructure, and open-source technology.
               </p>
               <p class="text-sm md:text-base border-l-4 border-cyan-500/30 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.4s both;">
                 Expert in GitOps workflows (ArgoCD, Flux), service mesh architecture (Istio), observability-first design (Prometheus, Grafana, Loki), and building scalable platform infrastructure. Proven ability to design and deploy enterprise-grade CI/CD pipelines, cloud migrations, and container orchestration systems that scale with your organization.
