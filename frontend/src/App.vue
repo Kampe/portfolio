@@ -405,7 +405,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
 import gsap from 'gsap'
 import VectorCloudHero from './components/art/VectorCloudHero.vue'
 import { getRandomPalette, applyPaletteToDOM } from './utils/colorPalettes'
@@ -418,6 +418,22 @@ const navSkillsRef = ref<HTMLElement | null>(null)
 const navResumeRef = ref<HTMLElement | null>(null)
 const navContactRef = ref<HTMLElement | null>(null)
 const currentPalette = ref(getRandomPalette())
+
+// Sync URL hash with active section
+watch(activeSection, (newSection) => {
+  if (newSection) {
+    window.location.hash = newSection
+  } else {
+    window.location.hash = ''
+  }
+})
+
+// Handle browser back/forward navigation
+const handleHashChange = () => {
+  const hash = window.location.hash.slice(1)
+  const validSections = ['about', 'skills', 'resume', 'contact']
+  activeSection.value = validSections.includes(hash) ? hash : null
+}
 
 const submitForm = async () => {
   try {
@@ -440,6 +456,16 @@ const submitForm = async () => {
 onMounted(async () => {
   // Wait for DOM to fully render
   await nextTick()
+
+  // Handle initial URL hash for deep linking
+  const hash = window.location.hash.slice(1)
+  const validSections = ['about', 'skills', 'resume', 'contact']
+  if (validSections.includes(hash)) {
+    activeSection.value = hash
+  }
+
+  // Listen for browser back/forward navigation
+  window.addEventListener('hashchange', handleHashChange)
 
   // Apply selected color palette to DOM
   applyPaletteToDOM(currentPalette.value)
