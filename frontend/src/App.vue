@@ -87,7 +87,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
               <div class="p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.25s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud & Hosting Platforms</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">AWS, GCP, Azure, Cloudflare, DigitalOcean, Hetzner, Linode, Civo, Vercel, Railway</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">AWS, GCP, Azure, Cloudflare, DigitalOcean, Hetzner, Linode, Civo, Vercel, Railway, Proxmox</p>
               </div>
               <div class="p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.3s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud Native Solutions</h3>
@@ -107,7 +107,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.5s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Databases</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MongoDB, Redis, ElasticSearch, Qdrant</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MongoDB, Redis, ElasticSearch, Scylla, DynamoDB, Firebase, Supabase, Qdrant</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.55s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ GitOps</h3>
@@ -147,7 +147,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.0s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Networking/API</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Envoy, Nginx, Apache, HAProxy, gRPC, Express, FastAPI, Hapi, Flask, Gin</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Envoy, Nginx, Apache, HAProxy, Tailscale, gRPC, Express, FastAPI, Hapi, Flask, Gin</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.05s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Testing</h3>
@@ -168,6 +168,10 @@
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.25s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Data & ML Ops</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Kubeflow, Airflow, Temporal, dbt, MLflow, Spark</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.3s both;">
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Object Storage</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">S3, IPFS, Minio, Wasabi</p>
               </div>
             </div>
           </template>
