@@ -362,10 +362,6 @@
                     <span class="w-1.5 h-1.5 bg-cyan-500 group-hover:bg-magenta-500 rounded-full transition-colors duration-300"></span>
                     <span>Quora</span>
                   </a>
-                  <a href="mailto:nickkampe@gmail.com" class="flex items-center gap-3 text-magenta-400/70 hover:text-magenta-300 transition-all duration-300 group text-sm font-light px-3 py-2 border border-magenta-500/30 hover:border-magenta-500/60 rounded">
-                    <span class="w-1.5 h-1.5 bg-magenta-500 group-hover:bg-cyan-500 rounded-full transition-colors duration-300"></span>
-                    <span>Email</span>
-                  </a>
                 </div>
               </div>
               <form @submit.prevent="submitForm" class="space-y-3 md:space-y-4 pt-3 md:pt-6 border-t border-cyan-500/20">
