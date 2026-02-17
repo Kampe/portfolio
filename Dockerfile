@@ -10,6 +10,9 @@ WORKDIR /app
 # Copy monorepo metadata files for workspace resolution
 COPY package.json bun.lock ./
 
+# Copy configuration files
+COPY .formspree.json ./
+
 # Copy workspace package.json files first (minimal files for caching)
 COPY frontend/package.json ./frontend/package.json
 COPY backend/package.json ./backend/package.json
@@ -38,6 +41,7 @@ WORKDIR /app
 COPY --from=frontend-builder /app/backend ./backend
 COPY --from=frontend-builder /app/package.json ./
 COPY --from=frontend-builder /app/bun.lock ./
+COPY --from=frontend-builder /app/.formspree.json ./
 
 WORKDIR /app/backend
 
