@@ -4,17 +4,26 @@ FROM oven/bun:latest AS frontend-builder
 
 WORKDIR /app
 
-# Copy root and workspace files
+# Copy monorepo metadata files for workspace resolution
 COPY package.json bun.lock ./
+
+# Copy workspace package.json files first (minimal files for caching)
+COPY frontend/package.json ./frontend/package.json
+COPY backend/package.json ./backend/package.json
+COPY e2e/package.json ./e2e/package.json
+
+# Install dependencies (cached if lock files unchanged)
+RUN bun install
+
+# Copy full source code
 COPY frontend ./frontend
 COPY backend ./backend
 COPY e2e ./e2e
 
-# Clean any stale build artifacts before building (ensures fresh builds)
-RUN rm -rf frontend/dist backend/public node_modules
+# Clean stale build artifacts
+RUN rm -rf frontend/dist backend/public
 
-# Install dependencies and build frontend
-RUN bun install
+# Build frontend
 RUN bun run build:frontend
 
 # Stage 2: Runtime

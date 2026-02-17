@@ -91,7 +91,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.3s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud Native Solutions</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Kubernetes, Docker, Istio, Helm, Kustomize, Linkerd, Argo Rollouts, Argo Workflows</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Kubernetes, Docker, Talos, Istio, Helm, Kustomize, Linkerd, Argo Rollouts, Argo Workflows</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.35s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
@@ -119,7 +119,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.65s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Observability</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Prometheus, Grafana, Sentry, CloudWatch, Loki, Tempo</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Prometheus, Grafana, OpenTelemetry, Sentry, CloudWatch, Loki, Tempo</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.7s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Frontend</h3>
@@ -135,7 +135,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.85s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ IoT</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">AWS IoT, AWS Greengrass, Home Assistant</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">AWS IoT, AWS Greengrass, Home Assistant, SmartThings</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.9s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
@@ -143,7 +143,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.95s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Messaging</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">RabbitMQ, NATS, MQTT, Kafka</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">RabbitMQ, NATS, MQTT, Kafka, Redis Streams, SQS, ZeroMQ</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.0s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Networking/API</h3>
@@ -158,10 +158,14 @@
                 <p class="text-white/70 text-xs font-light leading-relaxed">Vault, Consul, cert-manager, mTLS, RBAC, OpenSSL</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.15s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ VCS & Collaboration</h3>
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Security Scanning</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Aqua, Trivy, Wiz, CrowdStrike, Falco</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.2s both;">
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ VCS & Collaboration</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Git, GitHub, GitLab, Bitbucket, Gitea, Perforce</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.2s both;">
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.25s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Data & ML Ops</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Kubeflow, Airflow, Temporal, dbt, MLflow, Spark</p>
               </div>

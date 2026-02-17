@@ -67,15 +67,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
-import gsap from 'gsap'
 import ParameterPanel from '../dev/ParameterPanel.vue'
 import { ThemeManager, type ThemeName } from './vectorCloud/themes'
 import { synthesizePattern } from './vectorCloud/synthesis'
 import { PerformanceMonitor, type PerformanceMetrics } from './vectorCloud/core/performance'
 import {
-  createParameters,
   ParameterPresetManager,
   type ParameterDefinition,
   type ParameterSet,
@@ -139,6 +137,20 @@ const initScene = () => {
   scene = themeSetup.scene
   camera = themeSetup.camera
   renderer = themeSetup.renderer
+
+  // Initialize default parameters
+  const defaultParams = {
+    scale: { name: 'Scale', type: 'range' as const, min: 0.1, max: 3, value: 1, step: 0.1, category: 'General' },
+    speed: { name: 'Speed', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'General' },
+    brightness: { name: 'Brightness', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'Rendering' },
+    bloomStrength: { name: 'Bloom Strength', type: 'range' as const, min: 0, max: 3, value: 1.2, step: 0.1, category: 'Rendering' },
+    particleSize: { name: 'Particle Size', type: 'range' as const, min: 0.5, max: 10, value: 2, step: 0.5, category: 'Particles' },
+  }
+
+  Object.assign(paramDefinitions, defaultParams)
+  Object.entries(defaultParams).forEach(([key, def]) => {
+    currentParams[key] = def.value
+  })
 
   // Performance monitoring
   if (scene && renderer) {
@@ -245,6 +257,20 @@ const switchTheme = (themeName: ThemeName | string) => {
   scene = setup.scene
   camera = setup.camera
   renderer = setup.renderer
+
+  // Load default parameters for theme
+  const defaultParams = {
+    scale: { name: 'Scale', type: 'range' as const, min: 0.1, max: 3, value: 1, step: 0.1, category: 'General' },
+    speed: { name: 'Speed', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'General' },
+    brightness: { name: 'Brightness', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'Rendering' },
+    bloomStrength: { name: 'Bloom Strength', type: 'range' as const, min: 0, max: 3, value: 1.2, step: 0.1, category: 'Rendering' },
+    particleSize: { name: 'Particle Size', type: 'range' as const, min: 0.5, max: 10, value: 2, step: 0.5, category: 'Particles' },
+  }
+
+  Object.assign(paramDefinitions, defaultParams)
+  Object.entries(defaultParams).forEach(([key, def]) => {
+    currentParams[key] = def.value
+  })
 
   if (scene && renderer && performanceMonitor) {
     performanceMonitor = new PerformanceMonitor(scene, renderer)
