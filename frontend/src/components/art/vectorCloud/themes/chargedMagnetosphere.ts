@@ -37,10 +37,10 @@ const CONFIG: ThemeConfig = {
 const PARAMS = {
   particleCount: 2000, // Dense cloud like original Magnetosphere
   particleSize: 2.8, // Medium-large glowing particles
-  bloomStrength: 1.2, // Moderate glow (prevent text washout)
-  bloomRadius: 0.6,
-  bloomThreshold: 0.4,
-  toneMappingExposure: 0.9, // Reduced brightness
+  bloomStrength: 0.6, // Subtle glow (preserves text readability)
+  bloomRadius: 0.4,
+  bloomThreshold: 0.5,
+  toneMappingExposure: 0.85, // Slightly reduced brightness
   interactionRadius: 80, // Larger interaction range
   chargeStrength: 0.6, // Moderate repulsion/attraction for organic spreading
   velocityDamping: 0.91, // Smooth drift through space
