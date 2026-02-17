@@ -85,69 +85,77 @@
               <div class="h-1 w-16 bg-gradient-to-r from-cyan-500 to-magenta-500 mt-3 md:mt-4"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
-              <div class="p-3 md:p-4 border-2 border-cyan-500/60 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.25s both;">
+              <div class="p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.25s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">AWS, GCP, Azure, DigitalOcean, Hetzner, Civo, Vercel, Railway</p>
               </div>
-              <div class="p-3 md:p-4 border-2 border-magenta-500/60 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.3s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ K8s</h3>
+              <div class="p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.3s both;">
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud Native Solutions</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Kubernetes, Docker, Istio, Helm, Kustomize, Linkerd</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.35s both;">
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.35s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Node hosting, Smart contracts, Solidity, Layer 2 systems, Web3 tooling</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.4s both;">
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.4s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ IaC</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, Ansible, Packer, Vault</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.45s both;">
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.45s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Languages</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Go, Rust, Python, TypeScript, Bash</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.5s both;">
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.5s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Databases</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MongoDB, Redis, ElasticSearch, Qdrant</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.55s both;">
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.55s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ GitOps</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">ArgoCD, GitHub Actions, Tekton, Flux</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.6s both;">
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.6s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ DevTools</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Linux, macOS, VS Code, Vim, Docker</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.65s both;">
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.65s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Observability</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Prometheus, Grafana, Loki, Tempo</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.7s both;">
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.7s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Frontend</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">React, Vue, Next.js, GraphQL</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.75s both;">
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.75s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Hardware</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Raspberry Pi, Arduino, 3D Printing</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.8s both;">
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.8s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Creative</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Unreal, Blender, Game Dev</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.85s both;">
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.85s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ IoT</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">AWS IoT, Home Assistant</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.9s both;">
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.9s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Gemini, LangChain, Ollama, Hugging Face</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.95s both;">
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.95s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Messaging</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">RabbitMQ, NATS, MQTT, Kafka</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.0s both;">
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.0s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Networking/API</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Envoy, Nginx, HAProxy, gRPC, Express</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.05s both;">
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Testing</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">pytest, Jest, Vitest, Playwright, Bats</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.1s both;">
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets & Security</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, cert management, mTLS, RBAC, OpenSSL</p>
               </div>
             </div>
           </template>
@@ -235,7 +243,7 @@
                   <span class="flex-1 h-px bg-gradient-to-r from-cyan-500/50 to-transparent"></span>
                 </h3>
                 <div class="space-y-3">
-                  <div class="p-3 md:p-4 border-2 border-cyan-500/40 bg-slate-900/40 hover:border-cyan-500/70 transition-colors duration-300">
+                  <div class="p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/40 hover:border-cyan-500/70 transition-colors duration-300">
                     <p class="text-cyan-300 font-bold text-xs md:text-sm">▸ B.S. Interdisciplinary Studies in Computer Science & IT</p>
                     <p class="text-white/70 text-xs md:text-sm mt-1 font-light">University of Missouri–Columbia (2008–2012)</p>
                   </div>
@@ -313,9 +321,9 @@
                 </div>
               </div>
               <form @submit.prevent="submitForm" class="space-y-3 md:space-y-4 pt-3 md:pt-6 border-t border-cyan-500/20">
-                <input v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-cyan-500/40 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" required />
-                <input v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-magenta-500/40 text-white placeholder-slate-500 focus:outline-none focus:border-magenta-400 focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" required />
-                <textarea v-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-cyan-500/40 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" required></textarea>
+                <input v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-cyan-500/50 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" required />
+                <input v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-magenta-500/50 text-white placeholder-slate-500 focus:outline-none focus:border-magenta-400 focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" required />
+                <textarea v-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-cyan-500/50 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" required></textarea>
                 <button type="submit" class="w-full px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-cyan-600 to-magenta-600 hover:from-cyan-500 hover:to-magenta-500 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 border-2 border-cyan-400/50 hover:border-cyan-300">
                   ▸ SEND MESSAGE
                 </button>
