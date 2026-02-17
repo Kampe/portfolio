@@ -35,7 +35,7 @@
       <div class="fixed inset-0 bg-black/70 backdrop-blur-lg z-40 pointer-events-auto" @click.self="activeSection = null" style="animation: fadeIn 0.3s ease-out;"></div>
 
       <div class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 pointer-events-auto overflow-y-auto">
-        <div class="relative w-full md:max-w-4xl max-h-[90vh] bg-slate-950/98 backdrop-blur-xl border-2 border-cyan-500/60 rounded-none md:rounded-lg p-6 md:p-12 pb-40 md:pb-48 pointer-events-auto flex flex-col my-8 md:my-0 overflow-y-auto shadow-2xl shadow-cyan-500/10" style="animation: glitchOpen 0.5s ease-out; --glitch-offset: 4px;">
+        <div class="relative w-full md:max-w-4xl max-h-[90vh] bg-slate-950/98 backdrop-blur-xl border-2 border-cyan-500/60 rounded-none md:rounded-lg p-6 md:p-12 pb-64 md:pb-96 pointer-events-auto flex flex-col my-8 md:my-0 overflow-y-auto shadow-2xl shadow-cyan-500/10" style="animation: glitchOpen 0.5s ease-out; --glitch-offset: 4px;">
           <!-- Neon glow effect -->
           <div class="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-500/3 via-transparent to-magenta-500/2 pointer-events-none"></div>
 
