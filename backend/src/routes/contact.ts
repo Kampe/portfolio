@@ -9,12 +9,7 @@ export interface ContactMessage {
 }
 
 interface FormspreeConfig {
-  project: string
-  forms: Array<{
-    name: string
-    id: string
-    email: string
-  }>
+  formId: string
 }
 
 let config: FormspreeConfig | null = null
@@ -35,14 +30,13 @@ async function loadFormspreeConfig(): Promise<FormspreeConfig> {
 export async function sendContactEmail(data: ContactMessage) {
   try {
     const config = await loadFormspreeConfig()
-    const contactForm = config.forms.find(f => f.name === 'contact')
 
-    if (!contactForm) {
+    if (!config.formId) {
       throw new Error('Contact form not configured')
     }
 
     const response = await fetch(
-      `https://formspree.io/f/${contactForm.id}`,
+      `https://formspree.io/f/${config.formId}`,
       {
         method: 'POST',
         headers: {
