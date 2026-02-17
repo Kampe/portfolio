@@ -18,76 +18,76 @@ export interface ColorPalette {
 
 export const palettes: ColorPalette[] = [
   {
-    name: 'Cyberpunk',
-    primary: '#00FFFF', // Cyan
-    primaryHSL: '180 100% 50%',
-    secondary: '#FF00FF', // Magenta
-    secondaryHSL: '300 100% 50%',
-    accent: '#0099FF',
+    name: 'Cyberpunk Neon',
+    primary: '#FF006E', // Hot pink
+    primaryHSL: '327 100% 50%',
+    secondary: '#00FFFF', // Bright cyan
+    secondaryHSL: '180 100% 50%',
+    accent: '#0099FF', // Electric blue
     accentHSL: '204 100% 50%',
-    orb1: '#00FFFF',
-    orb2: '#FF00FF',
-    orb3: '#00FF88',
+    orb1: '#FF006E',
+    orb2: '#00FFFF',
+    orb3: '#0099FF',
   },
   {
-    name: 'Deep Ocean',
-    primary: '#00D9FF', // Bright Teal
-    primaryHSL: '186 100% 50%',
-    secondary: '#FF1493', // Deep Pink
-    secondaryHSL: '327 100% 50%',
-    accent: '#00CED1',
-    accentHSL: '180 100% 50%',
-    orb1: '#00D9FF',
-    orb2: '#00FF88',
-    orb3: '#FF1493',
+    name: 'Electric Summer',
+    primary: '#FF9500', // Bright orange
+    primaryHSL: '35 100% 50%',
+    secondary: '#00FFFF', // Cyan
+    secondaryHSL: '180 100% 50%',
+    accent: '#FFFF00', // Bright yellow
+    accentHSL: '60 100% 50%',
+    orb1: '#FF9500',
+    orb2: '#00FFFF',
+    orb3: '#FFFF00',
   },
   {
-    name: 'Sunset',
-    primary: '#FF6B35', // Orange
+    name: 'Neon Dreams',
+    primary: '#FF00FF', // Bright magenta
+    primaryHSL: '300 100% 50%',
+    secondary: '#00D9FF', // Bright cyan
+    secondaryHSL: '186 100% 50%',
+    accent: '#39FF14', // Neon lime
+    accentHSL: '95 100% 50%',
+    orb1: '#FF00FF',
+    orb2: '#00D9FF',
+    orb3: '#39FF14',
+  },
+  {
+    name: 'Sunset Paradise',
+    primary: '#FF6B35', // Bright orange
     primaryHSL: '17 100% 55%',
-    secondary: '#9D4EDD', // Purple
-    secondaryHSL: '280 100% 55%',
-    accent: '#FFD60A',
-    accentHSL: '45 100% 50%',
+    secondary: '#FF006E', // Hot pink
+    secondaryHSL: '327 100% 50%',
+    accent: '#FFDD00', // Golden yellow
+    accentHSL: '55 100% 50%',
     orb1: '#FF6B35',
-    orb2: '#9D4EDD',
-    orb3: '#FFD60A',
+    orb2: '#FF006E',
+    orb3: '#FFDD00',
   },
   {
-    name: 'Slate & Steel',
-    primary: '#4A90E2', // Refined electric blue
-    primaryHSL: '218 81% 55%',
-    secondary: '#E8E8E8', // Light gray/silver
-    secondaryHSL: '0 0% 91%',
-    accent: '#00D9FF',
-    accentHSL: '186 100% 50%',
-    orb1: '#4A90E2',
-    orb2: '#E8E8E8',
-    orb3: '#00D9FF',
+    name: 'Tropical Vibes',
+    primary: '#39FF14', // Neon lime
+    primaryHSL: '95 100% 50%',
+    secondary: '#FF1493', // Hot pink
+    secondaryHSL: '327 100% 50%',
+    accent: '#00FFFF', // Bright cyan
+    accentHSL: '180 100% 50%',
+    orb1: '#39FF14',
+    orb2: '#FF1493',
+    orb3: '#00FFFF',
   },
   {
-    name: 'Indigo Pro',
-    primary: '#6366F1', // Deep indigo
-    primaryHSL: '242 94% 57%',
-    secondary: '#A78BFA', // Soft lavender
-    secondaryHSL: '263 94% 74%',
-    accent: '#60A5FA',
-    accentHSL: '217 97% 70%',
-    orb1: '#6366F1',
-    orb2: '#A78BFA',
-    orb3: '#60A5FA',
-  },
-  {
-    name: 'Monochrome Dark',
-    primary: '#FFFFFF', // Pure white
-    primaryHSL: '0 0% 100%',
-    secondary: '#94A3B8', // Slate gray
-    secondaryHSL: '221 16% 65%',
-    accent: '#06B6D4',
-    accentHSL: '190 94% 43%',
-    orb1: '#FFFFFF',
-    orb2: '#94A3B8',
-    orb3: '#06B6D4',
+    name: 'Ocean Neon',
+    primary: '#00FFFF', // Bright cyan
+    primaryHSL: '180 100% 50%',
+    secondary: '#FF0080', // Hot magenta
+    secondaryHSL: '325 100% 50%',
+    accent: '#0080FF', // Electric blue
+    accentHSL: '210 100% 50%',
+    orb1: '#00FFFF',
+    orb2: '#FF0080',
+    orb3: '#0080FF',
   },
 ]
 

@@ -8,7 +8,7 @@
       <div class="text-center space-y-4 md:space-y-6 w-full">
         <!-- Name + Role -->
         <div ref="heroNameRef">
-          <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold mb-2 md:mb-3 leading-tight" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em; color: hsl(var(--color-primary-hsl) / 1);">
+          <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold mb-2 md:mb-3 leading-tight text-white" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em;">
             NICK KAMPE
           </h1>
           <p ref="roleRef" class="text-sm md:text-lg tracking-wider font-semibold inline-flex gap-1 md:gap-2 flex-wrap justify-center px-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 500; letter-spacing: 0.08em; opacity: 0; color: hsl(var(--color-secondary-hsl) / 1);">
