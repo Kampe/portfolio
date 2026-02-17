@@ -35,7 +35,7 @@
       <div class="fixed inset-0 bg-black/70 backdrop-blur-lg z-40 pointer-events-auto" @click.self="activeSection = null" style="animation: fadeIn 0.3s ease-out;"></div>
 
       <div class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 pointer-events-auto overflow-y-auto">
-        <div class="relative w-full md:max-w-4xl max-h-[90vh] bg-slate-950/98 backdrop-blur-xl border-2 border-cyan-500/60 rounded-none md:rounded-lg p-6 md:p-12 pb-12 md:pb-16 pointer-events-auto flex flex-col my-8 md:my-0 overflow-y-auto shadow-2xl shadow-cyan-500/10" style="animation: glitchOpen 0.5s ease-out; --glitch-offset: 4px;">
+        <div class="relative w-full md:max-w-4xl max-h-[90vh] bg-slate-950/98 backdrop-blur-xl border-2 border-cyan-500/60 rounded-none md:rounded-lg p-6 md:p-12 pb-24 md:pb-32 pointer-events-auto flex flex-col my-8 md:my-0 overflow-y-auto shadow-2xl shadow-cyan-500/10" style="animation: glitchOpen 0.5s ease-out; --glitch-offset: 4px;">
           <!-- Neon glow effect -->
           <div class="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-500/3 via-transparent to-magenta-500/2 pointer-events-none"></div>
 
@@ -91,7 +91,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.3s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud Native Solutions</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Kubernetes, Docker, Istio, Helm, Kustomize, Linkerd</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Kubernetes, Docker, Istio, Helm, Kustomize, Linkerd, Argo Rollouts, Argo Workflows</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.35s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
@@ -151,11 +151,11 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.05s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Testing</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">pytest, Jest, Vitest, Playwright, Bats</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">pytest, Jest, Vitest, Playwright, Bats, mocha/chai, turbo, go test</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.1s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets & Security</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, cert management, mTLS, RBAC, OpenSSL</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, cert-manager, mTLS, RBAC, OpenSSL</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.15s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ VCS & Collaboration</h3>
