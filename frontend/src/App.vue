@@ -115,7 +115,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.6s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ DevTools</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Linux, macOS, VS Code, Vim, Docker</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Linux, macOS, VS Code, Vim, Docker, Vagrant</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.65s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Observability</h3>
@@ -126,8 +126,8 @@
                 <p class="text-white/70 text-xs font-light leading-relaxed">React, Vue, Next.js, GraphQL</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.75s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Hardware</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Raspberry Pi, Arduino, 3D Printing</p>
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Hardware & Embedded</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Raspberry Pi, Arduino, Microcontrollers, PCB Design, 3D Printing, FPGA, Soldering</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.8s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Creative</h3>
@@ -155,7 +155,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.1s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets & Security</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, cert-manager, mTLS, RBAC, OpenSSL</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, Consul, cert-manager, mTLS, RBAC, OpenSSL</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.15s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ VCS & Collaboration</h3>
