@@ -1,0 +1,18 @@
+{
+  "name": "Nick Kampe | Platform Engineer & Cloud Architect",
+  "short_name": "Nick Kampe",
+  "description": "Platform Engineer & Cloud Architect specializing in cloud infrastructure and DevOps",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00FFFF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ]
+}
