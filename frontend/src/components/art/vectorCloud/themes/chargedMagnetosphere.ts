@@ -172,11 +172,7 @@ export const createChargedMagnetosphereTheme = (
         randomStartY + (Math.random() - 0.5) * 180,
         randomStartZ + (Math.random() - 0.5) * 140
       ),
-      velocity: new THREE.Vector3(
-        (Math.random() - 0.5) * 0.8,
-        (Math.random() - 0.5) * 0.8,
-        (Math.random() - 0.5) * 0.6
-      ),
+      velocity: new THREE.Vector3(0, 0, 0), // Start from rest, accelerate via forces
       charge,
       color,
       age: 0,
