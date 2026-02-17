@@ -54,40 +54,40 @@ export const palettes: ColorPalette[] = [
     orb3: '#FFD60A',
   },
   {
-    name: 'Neon Lime',
-    primary: '#39FF14', // Neon Green
-    primaryHSL: '99 100% 55%',
-    secondary: '#7C3AED', // Violet
-    secondaryHSL: '261 100% 50%',
-    accent: '#06FFA5',
-    accentHSL: '152 100% 51%',
-    orb1: '#39FF14',
-    orb2: '#7C3AED',
-    orb3: '#06FFA5',
+    name: 'Slate & Steel',
+    primary: '#4A90E2', // Refined electric blue
+    primaryHSL: '218 81% 55%',
+    secondary: '#E8E8E8', // Light gray/silver
+    secondaryHSL: '0 0% 91%',
+    accent: '#00D9FF',
+    accentHSL: '186 100% 50%',
+    orb1: '#4A90E2',
+    orb2: '#E8E8E8',
+    orb3: '#00D9FF',
   },
   {
-    name: 'Rose Gold',
-    primary: '#FF69B4', // Hot Pink
-    primaryHSL: '330 100% 71%',
-    secondary: '#FFD700', // Gold
-    secondaryHSL: '51 100% 50%',
-    accent: '#FF1493',
-    accentHSL: '327 100% 50%',
-    orb1: '#FF69B4',
-    orb2: '#FFD700',
-    orb3: '#FF1493',
+    name: 'Indigo Pro',
+    primary: '#6366F1', // Deep indigo
+    primaryHSL: '242 94% 57%',
+    secondary: '#A78BFA', // Soft lavender
+    secondaryHSL: '263 94% 74%',
+    accent: '#60A5FA',
+    accentHSL: '217 97% 70%',
+    orb1: '#6366F1',
+    orb2: '#A78BFA',
+    orb3: '#60A5FA',
   },
   {
-    name: 'Vaporwave',
-    primary: '#FF10F0', // Hot Magenta
-    primaryHSL: '302 100% 50%',
-    secondary: '#00F0FF', // Cyan
-    secondaryHSL: '187 100% 50%',
-    accent: '#B537F2',
-    accentHSL: '283 100% 56%',
-    orb1: '#FF10F0',
-    orb2: '#00F0FF',
-    orb3: '#B537F2',
+    name: 'Monochrome Dark',
+    primary: '#FFFFFF', // Pure white
+    primaryHSL: '0 0% 100%',
+    secondary: '#94A3B8', // Slate gray
+    secondaryHSL: '221 16% 65%',
+    accent: '#06B6D4',
+    accentHSL: '190 94% 43%',
+    orb1: '#FFFFFF',
+    orb2: '#94A3B8',
+    orb3: '#06B6D4',
   },
 ]
 
