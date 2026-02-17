@@ -9,7 +9,7 @@
         <!-- Name + Role -->
         <div ref="heroNameRef">
           <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold text-white mb-2 md:mb-3 leading-tight" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em;">
-            Nick Kampe
+            NICK KAMPE
           </h1>
           <p ref="roleRef" class="text-sm md:text-lg text-cyan-300 tracking-wider font-semibold inline-flex gap-1 md:gap-2 flex-wrap justify-center px-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 500; letter-spacing: 0.08em; opacity: 0;">
             <span class="role-item">Platform Engineer</span>
@@ -22,16 +22,20 @@
 
         <!-- Tagline -->
         <p ref="taglineRef" class="text-sm md:text-base text-slate-300 max-w-sm md:max-w-md mx-auto leading-relaxed px-2" style="font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0;">
-          Expert DevOps engineering & infrastructure automation. Building Internal Development Platforms, designing cloud migrations, and deploying modern CI/CD solutions. <span class="whitespace-nowrap">15+ years</span> of proven expertise.
+          Expert infrastructure architect & DevOps specialist scaling production systems for startups and enterprise. Designing cloud migrations, deploying modern CI/CD solutions, and building scalable platforms. <span class="whitespace-nowrap">15+ years</span> of proven expertise. Available for strategic long-term engagements.
         </p>
 
         <!-- CTA Buttons -->
         <div ref="buttonsRef" class="flex flex-col md:flex-row gap-3 md:gap-4 justify-center pt-2 md:pt-4 pointer-events-auto px-2" style="opacity: 0;">
-          <button @click="$emit('open-contact')" class="px-4 md:px-6 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-lg font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-wide text-white shadow-lg hover:shadow-cyan-500/25 whitespace-nowrap">
-            Contact Me
+          <button @click="$emit('open-contact')" class="relative px-4 md:px-6 py-2 border-2 border-cyan-500 text-white hover:text-cyan-300 hover:border-magenta-500 hover:shadow-lg hover:shadow-magenta-500/50 rounded-lg font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden">
+            <span class="absolute inset-0 bg-cyan-500/5 group-hover:bg-magenta-500/10 transition-colors duration-300"></span>
+            <span class="relative block">▸ Contact Me</span>
+            <span class="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-cyan-500 to-magenta-500 group-hover:w-full transition-all duration-500"></span>
           </button>
-          <a href="https://github.com/Kampe" target="_blank" class="px-4 md:px-6 py-2 border border-white/30 hover:border-white/60 text-white hover:text-white rounded-lg font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-wide text-center">
-            GitHub
+          <a href="https://github.com/Kampe" target="_blank" class="relative inline-block px-4 md:px-6 py-2 border-2 border-white text-white hover:text-cyan-300 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/50 rounded-lg font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden">
+            <span class="absolute inset-0 bg-white/5 group-hover:bg-cyan-500/10 transition-colors duration-300"></span>
+            <span class="relative block">◆ GitHub</span>
+            <span class="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-white to-cyan-500 group-hover:w-full transition-all duration-500"></span>
           </a>
         </div>
       </div>
