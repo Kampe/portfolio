@@ -220,15 +220,15 @@
                     <p class="text-xs text-cyan-400/60 mt-1">EDF Renewables · Sept 2018 – Sept 2019</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Architected distributed systems for renewable energy monitoring across on-prem, edge, and cloud-native infrastructure. Developed "EDF Edge Industrial IoT Cloud Platform." Built ML pipelines and continuous delivery systems. Presented AWS solutions at Re:Invent 2018.</p>
                   </div>
-                  <div class="p-3 md:p-4 border-l-4 border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-magenta-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.7s both;">
-                    <h4 class="text-cyan-300 font-bold text-xs md:text-sm">Software Engineer</h4>
-                    <p class="text-xs text-cyan-400/60 mt-1">Emerson Electric Co. · Nov 2014 – May 2016</p>
-                    <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Reduced support team request volumes through creation of self-service internal tooling and data dashboards. Managed containerized server clusters on AWS ECS with RDS, ElastiCache, and ElasticSearch. Consulted on Amazon Alexa integration for IoT thermostats using AWS Lambda and Node.js. Architected multi-tenant management portals and mobile installation wizards using Node.js, React, Angular, and PHP.</p>
-                  </div>
-                  <div class="p-3 md:p-4 border-l-4 border-magenta-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-cyan-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.75s both;">
+                  <div class="p-3 md:p-4 border-l-4 border-magenta-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-cyan-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.7s both;">
                     <h4 class="text-magenta-300 font-bold text-xs md:text-sm">Agile Engineer</h4>
                     <p class="text-xs text-magenta-400/60 mt-1">Emerson Climate Technologies · May 2016 – Sept 2018</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Led full-stack cloud engineering in agile environment. Architected microservice migration from Rackspace to AWS. Developed REST/streaming APIs. Integrated Amazon Alexa, Google Home, and IFTTT. Unified Salesforce CRM, IoT, and Marketing Cloud.</p>
+                  </div>
+                  <div class="p-3 md:p-4 border-l-4 border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-magenta-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.75s both;">
+                    <h4 class="text-cyan-300 font-bold text-xs md:text-sm">Software Engineer</h4>
+                    <p class="text-xs text-cyan-400/60 mt-1">Emerson Electric Co. · Nov 2014 – May 2016</p>
+                    <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Reduced support team request volumes through creation of self-service internal tooling and data dashboards. Managed containerized server clusters on AWS ECS with RDS, ElastiCache, and ElasticSearch. Consulted on Amazon Alexa integration for IoT thermostats using AWS Lambda and Node.js. Architected multi-tenant management portals and mobile installation wizards using Node.js, React, Angular, and PHP.</p>
                   </div>
                 </div>
               </div>
