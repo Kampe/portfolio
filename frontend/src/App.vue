@@ -226,12 +226,12 @@
                   <span class="flex-1 h-px bg-gradient-to-r from-cyan-500/50 to-transparent"></span>
                 </h3>
                 <div class="space-y-3 md:space-y-4">
-                  <div class="p-3 md:p-4 border-l-4 border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-magenta-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.45s both;">
+                  <div class="p-3 md:p-4 border-l-4 border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-white/80 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.45s both;">
                     <h4 class="text-cyan-300 font-bold text-xs md:text-sm">Staff DevOps Engineer</h4>
                     <p class="text-xs text-cyan-400/60 mt-1">Yuga Labs · May 2023 – Present</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Spearheading platform engineering at the world's largest NFT metaverse company. Designed and implemented Internal Development Platform (IDP) using GitOps with Crossplane, ArgoCD, Backstage, and LGTM stack. Transitioned legacy systems to cloud-native Kubernetes. Oversaw global DNS management for all company IP and brands. Managed Perforce Helix Core and Unreal Engine utilities supporting game development pipelines.</p>
                   </div>
-                  <div class="p-3 md:p-4 border-l-4 border-magenta-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-cyan-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.5s both;">
+                  <div class="p-3 md:p-4 border-l-4 border-magenta-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-white/80 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.5s both;">
                     <h4 class="text-magenta-300 font-bold text-xs md:text-sm">Manager, Site Reliability/Core Infrastructure</h4>
                     <p class="text-xs text-magenta-400/60 mt-1">Payward Inc (Kraken Digital Asset Exchange) · Sept 2022 – May 2023</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Enhanced organizational security posture through robust policies and risk-based approaches. Led team of engineers coordinating with multiple stakeholders. Formulated technical triage and remediation procedures with emphasis on automation. Elevated infrastructure visibility and integrated open-source observability tools.</p>
