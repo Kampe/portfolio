@@ -99,7 +99,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.4s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ IaC</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, Ansible, Packer, Vault</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, Ansible, CloudFormation, CDK, Packer, Vault</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.45s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Languages</h3>
@@ -135,7 +135,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.85s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ IoT</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">AWS IoT, Home Assistant</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">AWS IoT, AWS Greengrass, Home Assistant</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.9s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
@@ -147,7 +147,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.0s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Networking/API</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Envoy, Nginx, HAProxy, gRPC, Express, FastAPI, Hapi, Flask, Gin</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Envoy, Nginx, Apache, HAProxy, gRPC, Express, FastAPI, Hapi, Flask, Gin</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.05s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Testing</h3>
@@ -163,7 +163,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.2s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Data & ML Ops</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Kubeflow, Airflow, dbt, MLflow, Spark</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Kubeflow, Airflow, Temporal, dbt, MLflow, Spark</p>
               </div>
             </div>
           </template>
