@@ -387,14 +387,23 @@
                   </a>
                 </div>
               </div>
-              <form @submit.prevent="submitForm" class="space-y-3 md:space-y-4 pt-3 md:pt-6" :style="{ borderTop: `1px solid hsl(var(--color-primary-hsl) / 0.2)` }">
-                <input id="contact-name" name="name" v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required />
-                <input id="contact-email" name="email" v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.5)` }" required />
-                <textarea id="contact-message" name="message" v-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required></textarea>
-                <button id="contact-submit" type="submit" class="w-full px-6 md:px-8 py-3 md:py-4 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg border-2" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.6), hsl(var(--color-secondary-hsl) / 0.6))`, borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, boxShadow: `0 0 30px hsl(var(--color-primary-hsl) / 0.25)` }">
-                  ▸ SEND MESSAGE
-                </button>
-              </form>
+              <div class="pt-3 md:pt-6" :style="{ borderTop: `1px solid hsl(var(--color-primary-hsl) / 0.2)` }">
+                <template v-if="formSuccess">
+                  <div class="flex flex-col items-center justify-center py-12 text-center" style="animation: slideInUp 0.4s ease-out;">
+                    <div class="text-4xl md:text-5xl mb-4" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">✓</div>
+                    <h3 class="text-lg md:text-xl font-bold mb-2" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Message Submitted!</h3>
+                    <p class="text-sm md:text-base text-white/70">Thanks for reaching out. I'll get back to you shortly.</p>
+                  </div>
+                </template>
+                <form v-else @submit.prevent="submitForm" class="space-y-3 md:space-y-4">
+                  <input id="contact-name" name="name" v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required />
+                  <input id="contact-email" name="email" v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.5)` }" required />
+                  <textarea id="contact-message" name="message" v-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required></textarea>
+                  <button id="contact-submit" type="submit" class="w-full px-6 md:px-8 py-3 md:py-4 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg border-2" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.6), hsl(var(--color-secondary-hsl) / 0.6))`, borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, boxShadow: `0 0 30px hsl(var(--color-primary-hsl) / 0.25)` }">
+                    ▸ SEND MESSAGE
+                  </button>
+                </form>
+              </div>
             </div>
           </template>
           </div>
@@ -412,6 +421,8 @@ import { getRandomPalette, applyPaletteToDOM } from './utils/colorPalettes'
 
 const activeSection = ref<string | null>(null)
 const form = ref({ name: '', email: '', subject: '', message: '' })
+const formSuccess = ref(false)
+const formError = ref(false)
 const navRef = ref<HTMLElement | null>(null)
 const navAboutRef = ref<HTMLElement | null>(null)
 const navSkillsRef = ref<HTMLElement | null>(null)
@@ -445,11 +456,24 @@ const submitForm = async () => {
     const result = await response.json()
     if (result.success) {
       form.value = { name: '', email: '', subject: '', message: '' }
-      alert('Message received!')
-      activeSection.value = null
+      formSuccess.value = true
+
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        activeSection.value = null
+        formSuccess.value = false
+      }, 2000)
+    } else {
+      formError.value = true
+      setTimeout(() => {
+        formError.value = false
+      }, 3000)
     }
   } catch (error) {
-    // Handle form submission error silently
+    formError.value = true
+    setTimeout(() => {
+      formError.value = false
+    }, 3000)
   }
 }
 
