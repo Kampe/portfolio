@@ -11,21 +11,21 @@
     <!-- Header + Navigation (overlay) -->
     <header class="fixed top-0 left-0 right-0 z-30 flex justify-end items-center px-4 md:px-8 py-6 md:py-8 pointer-events-none">
       <nav ref="navRef" class="flex gap-3 md:gap-6 text-xs md:text-sm tracking-wider uppercase font-bold pointer-events-auto" style="opacity: 0;">
-        <button ref="navAboutRef" @click="activeSection = 'about'" class="relative text-white hover:text-blue-400 transition-all duration-200 group">
-          <span class="block">ABOUT</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-500"></span>
+        <button ref="navAboutRef" @click="activeSection = 'about'" class="relative text-white transition-all duration-200 group" :style="{ '--hover-color': `hsl(var(--color-primary-hsl) / 1)` }">
+          <span class="block hover:opacity-70">ABOUT</span>
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
         </button>
-        <button ref="navSkillsRef" @click="activeSection = 'skills'" class="relative text-white hover:text-blue-400 transition-all duration-200 group">
-          <span class="block">SKILLS</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-500"></span>
+        <button ref="navSkillsRef" @click="activeSection = 'skills'" class="relative text-white transition-all duration-200 group">
+          <span class="block hover:opacity-70">SKILLS</span>
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
         </button>
-        <button ref="navResumeRef" @click="activeSection = 'resume'" class="relative text-white hover:text-blue-400 transition-all duration-200 group">
-          <span class="block">RESUME</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-500"></span>
+        <button ref="navResumeRef" @click="activeSection = 'resume'" class="relative text-white transition-all duration-200 group">
+          <span class="block hover:opacity-70">RESUME</span>
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
         </button>
-        <button ref="navContactRef" @click="activeSection = 'contact'" class="relative text-white hover:text-blue-400 transition-all duration-200 group">
-          <span class="block">CONTACT</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-500"></span>
+        <button ref="navContactRef" @click="activeSection = 'contact'" class="relative text-white transition-all duration-200 group">
+          <span class="block hover:opacity-70">CONTACT</span>
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
         </button>
       </nav>
     </header>
@@ -35,15 +35,15 @@
       <div class="fixed inset-0 bg-black/70 backdrop-blur-lg z-40 pointer-events-auto" @click.self="activeSection = null" style="animation: fadeIn 0.3s ease-out;"></div>
 
       <div class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 pointer-events-auto overflow-y-auto">
-        <div class="relative w-full md:max-w-4xl max-h-[90vh] bg-slate-950/98 backdrop-blur-xl border-2 border-cyan-500/60 rounded-none md:rounded-lg p-6 md:p-12 pb-64 md:pb-96 pointer-events-auto flex flex-col my-8 md:my-0 overflow-y-auto shadow-2xl shadow-cyan-500/10" style="animation: glitchOpen 0.5s ease-out; --glitch-offset: 4px;">
+        <div class="relative w-full md:max-w-4xl max-h-[90vh] bg-slate-950/98 backdrop-blur-xl rounded-none md:rounded-lg pointer-events-auto flex flex-col my-8 md:my-0 shadow-2xl border-2" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)`, boxShadow: `0 0 50px hsl(var(--color-primary-hsl) / 0.1)` }" style="animation: glitchOpen 0.5s ease-out; --glitch-offset: 4px;">
           <!-- Neon glow effect -->
-          <div class="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-500/3 via-transparent to-magenta-500/2 pointer-events-none"></div>
+          <div class="absolute inset-0 rounded-lg bg-gradient-to-br via-transparent pointer-events-none" :style="{ backgroundImage: `linear-gradient(to bottom right, hsl(var(--color-primary-hsl) / 0.03), transparent, hsl(var(--color-secondary-hsl) / 0.02))` }"></div>
 
           <!-- Animated scanline overlay -->
-          <div class="absolute inset-0 rounded-lg pointer-events-none opacity-20" style="background-image: linear-gradient(0deg, transparent 24%, rgba(0, 255, 255, 0.1) 25%, rgba(0, 255, 255, 0.1) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.1) 75%, rgba(0, 255, 255, 0.1) 76%, transparent 77%, transparent); background-size: 100% 4px; animation: scanlines 8s linear infinite;"></div>
+          <div class="absolute inset-0 rounded-lg pointer-events-none opacity-20" :style="{ backgroundImage: `linear-gradient(0deg, transparent 24%, hsl(var(--color-primary-hsl) / 0.1) 25%, hsl(var(--color-primary-hsl) / 0.1) 26%, transparent 27%, transparent 74%, hsl(var(--color-primary-hsl) / 0.1) 75%, hsl(var(--color-primary-hsl) / 0.1) 76%, transparent 77%, transparent)`, backgroundSize: '100% 4px', animation: 'scanlines 8s linear infinite' }"></div>
 
-          <!-- Close Button -->
-          <button @click="activeSection = null" class="absolute top-4 md:top-6 right-4 md:right-6 z-20 text-cyan-400/70 hover:text-cyan-300 hover:text-lg transition-all duration-200 font-bold text-2xl" style="animation: slideInTop 0.4s ease-out 0.1s both;">
+          <!-- Close Button - Fixed to modal corner -->
+          <button @click="activeSection = null" class="absolute top-4 md:top-6 right-4 md:right-6 z-20 hover:text-lg transition-all duration-200 font-bold text-2xl" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)` }" style="animation: slideInTop 0.4s ease-out 0.1s both;">
             <span class="relative block">
               ✕
               <span class="absolute inset-0 text-magenta-500 opacity-0 animate-pulse" style="animation: glitchText 0.3s ease-out; animation-delay: 0.3s;">✕</span>
@@ -51,28 +51,24 @@
           </button>
 
           <!-- Content -->
-          <div class="relative z-10 min-h-full" style="animation: slideInUp 0.6s ease-out 0.2s both;">
+          <div class="relative z-10 min-h-full overflow-y-auto p-6 md:p-12 pb-12" style="animation: slideInUp 0.6s ease-out 0.2s both;">
           <!-- About -->
           <template v-if="activeSection === 'about'">
             <div class="mb-8 md:mb-12">
-              <div class="flex items-baseline gap-4">
-                <h2 class="text-4xl md:text-6xl font-serif font-black text-cyan-300 leading-none" style="letter-spacing: -2px;">ABOUT</h2>
-                <div class="flex-1 h-0.5 bg-gradient-to-r from-cyan-500 via-magenta-500 to-transparent"></div>
-              </div>
-              <div class="h-1 w-16 bg-gradient-to-r from-magenta-500 to-cyan-500 mt-3 md:mt-4"></div>
+              <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="letter-spacing: -2px;">ABOUT</h2>
             </div>
             <div class="space-y-5 md:space-y-6 text-white/80 leading-relaxed font-light">
-              <p class="text-sm md:text-base border-l-4 border-cyan-500/50 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.3s both;">
-                <span class="text-cyan-300 font-semibold">Infrastructure Architect & Platform Engineer</span> with 15+ years scaling production systems from pre-seed startups to enterprise and Web3. Specialist in designing end-to-end platform infrastructure—from cloud orchestration and observability to smart contract security and internal development platforms.
+              <p class="text-sm md:text-base pl-4 py-2 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, borderLeftWidth: '4px' }" style="animation: slideInLeft 0.6s ease-out 0.3s both;">
+                <span class="font-semibold" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Infrastructure Architect & Platform Engineer</span> with 15+ years building systems that scale. At <span class="font-semibold" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Yuga Labs</span> (world's largest NFT metaverse), architected an Internal Development Platform (IDP) using GitOps that enabled 50+ engineers to self-serve infrastructure—removing deployment bottlenecks and accelerating time-to-market. Managed global DNS infrastructure across all company IPs and brands, and oversaw CI/CD pipelines supporting game development workflows.
               </p>
-              <p class="text-sm md:text-base border-l-4 border-cyan-500/30 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.4s both;">
-                At <span class="text-cyan-300 font-semibold">Yuga Labs</span> (world's largest NFT metaverse), architected an Internal Development Platform leveraging GitOps (Crossplane, ArgoCD, Backstage, LGTM stack) enabling 50+ engineers to self-serve infrastructure. Managed global DNS infrastructure across all company IPs and brands, and oversaw Perforce Helix Core and Unreal Engine CI/CD pipelines supporting game development workflows.
+              <p class="text-sm md:text-base pl-4 py-2 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.3)`, borderLeftWidth: '4px' }" style="animation: slideInLeft 0.6s ease-out 0.4s both;">
+                Proven expertise across Web3 and enterprise environments. Managed infrastructure at <span class="font-semibold" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Kraken Digital Asset Exchange</span> during rapid scaling. Led successful cloud infrastructure migrations for Fortune 500 companies, optimizing for both cost and resilience. Hands-on smart contract audit experience (Solidity, Vyper, Forge, Hardhat), and deep expertise in zero-trust architecture, distributed systems security, and hardening production environments across AWS, GCP, Azure, and on-premise Kubernetes clusters.
               </p>
-              <p class="text-sm md:text-base border-l-4 border-cyan-500/30 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.5s both;">
-                <span class="text-cyan-300 font-semibold">Crypto infrastructure specialist</span> with hands-on smart contract audit experience (Solidity, Vyper, Forge, Hardhat). Deep expertise in zero-trust architecture (Boundary, Okta, Authentik, Cloudflare), distributed systems security, and hardening production environments across AWS, GCP, and on-premise Kubernetes clusters.
+              <p class="text-sm md:text-base pl-4 py-2 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.3)`, borderLeftWidth: '4px' }" style="animation: slideInLeft 0.6s ease-out 0.5s both;">
+                Architect cloud-native solutions across all major providers. Design and implement Kubernetes-based platforms with GitOps workflows (Crossplane, ArgoCD, Backstage), observability stacks (Prometheus, Grafana, Loki, Tempo), and automated security practices. Practiced software craftsman with commitment to TDD, BDD, and clean architecture—code quality matters for mission-critical infrastructure.
               </p>
-              <p class="text-sm md:text-base border-l-4 border-cyan-500/30 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.6s both;">
-                <span class="text-cyan-300 font-semibold">Software craftsman</span> committed to TDD, BDD, and clean architecture principles. Full-stack capabilities span backend (Go, Rust, Python, Node.js), frontend (React, Vue, Three.js generative art), and embedded systems (Raspberry Pi, Arduino, FPGA). Experienced mentoring engineering teams on platform-as-a-service thinking, chaos engineering, and distributed systems design.
+              <p class="text-sm md:text-base pl-4 py-2 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.3)`, borderLeftWidth: '4px' }" style="animation: slideInLeft 0.6s ease-out 0.6s both;">
+                <span class="font-semibold" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Available for contract-based infrastructure engagements:</span> platform architecture, DevOps automation, cloud migrations, and infrastructure optimization. If your team needs an architect to solve hard scaling problems, <span class="font-semibold" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">contact me.</span>
               </p>
             </div>
           </template>
@@ -81,13 +77,9 @@
           <!-- Skills -->
           <template v-if="activeSection === 'skills'">
             <div class="mb-8 md:mb-12">
-              <div class="flex items-baseline gap-4">
-                <h2 class="text-4xl md:text-6xl font-serif font-black text-magenta-400 leading-none" style="letter-spacing: -2px;">SKILLS</h2>
-                <div class="flex-1 h-0.5 bg-gradient-to-r from-magenta-500 via-cyan-500 to-transparent"></div>
-              </div>
-              <div class="h-1 w-16 bg-gradient-to-r from-cyan-500 to-magenta-500 mt-3 md:mt-4"></div>
+              <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }" style="letter-spacing: -2px;">SKILLS</h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0 pb-12">
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud & Hosting Platforms</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">AWS, GCP, Azure, Cloudflare, DigitalOcean, Hetzner, Linode, Civo, Vercel, Railway, Proxmox, EBS</p>
@@ -98,7 +90,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Solidity, Vyper, Forge, Hardhat, Smart contracts, Smart contract audits, Layer 2 systems, Web3 tooling, Node hosting, ethers.js, RainbowKit, Privy, Halliday</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Solidity, Vyper, Forge, Hardhat, Smart contracts, Smart contract audits, Layer 2 systems, Web3 tooling, Node hosting, ethers.js, RainbowKit, Privy, Halliday, Echidna</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ IaC</h3>
@@ -109,8 +101,12 @@
                 <p class="text-white/70 text-xs font-light leading-relaxed">Go, Rust, Python, TypeScript, JavaScript, PHP, Bash</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
-                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Databases</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MongoDB, Redis, ElasticSearch, MySQL, Scylla, DynamoDB, Firebase, Supabase, Qdrant, Snowflake, CouchDB, Aurora SQL, CockroachDB, Memcached, TimescaleDB, InfluxDB, Clickhouse</p>
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Relational Databases</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MySQL, CockroachDB, Aurora SQL, TimescaleDB, PostGIS, GeoJSON</p>
+              </div>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ NoSQL, Search & Analytics</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">MongoDB, Redis, ElasticSearch, DynamoDB, Firebase, Supabase, Qdrant, CouchDB, Memcached, InfluxDB, Clickhouse, Snowflake, Scylla</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ GitOps</h3>
@@ -154,7 +150,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Gemini, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe, Feast, Elyra</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Gemini, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe, Feast, Elyra, ADK, AP2</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Messaging</h3>
@@ -222,59 +218,55 @@
           <!-- Resume -->
           <template v-if="activeSection === 'resume'">
             <div class="mb-8 md:mb-12">
-              <div class="flex items-baseline gap-4">
-                <h2 class="text-4xl md:text-6xl font-serif font-black text-cyan-300 leading-none" style="letter-spacing: -2px;">RESUME</h2>
-                <div class="flex-1 h-0.5 bg-gradient-to-r from-cyan-500 via-magenta-500 to-transparent"></div>
-              </div>
-              <div class="h-1 w-16 bg-gradient-to-r from-magenta-500 to-cyan-500 mt-3 md:mt-4"></div>
+              <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="letter-spacing: -2px;">RESUME</h2>
             </div>
-            <div class="space-y-6 md:space-y-8 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
+            <div class="space-y-6 md:space-y-8 mt-0 pb-12" style="animation: slideInUp 0.6s ease-out 0.2s both;">
               <!-- Professional Summary -->
-              <div class="p-4 md:p-5 border-2 border-magenta-500/50 bg-slate-900/40 hover:border-magenta-500/80 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.3s both;">
-                <h3 class="text-magenta-300 font-bold mb-3 uppercase tracking-wider text-xs md:text-sm">▸ Staff DevOps Engineer & Platform Architect</h3>
+              <div class="p-4 md:p-5 border-2 bg-slate-900/40 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.5)` }" style="animation: slideInLeft 0.6s ease-out 0.3s both;">
+                <h3 class="font-bold mb-3 uppercase tracking-wider text-xs md:text-sm" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">▸ Staff DevOps Engineer & Platform Architect</h3>
                 <p class="text-white/75 text-xs md:text-sm leading-relaxed font-light">Specialist in designing and implementing enterprise DevOps solutions, Internal Development Platforms (IDPs), and cloud infrastructure automation. Deep expertise in Kubernetes, infrastructure-as-code, and GitOps workflows across AWS, GCP, and Azure. Experienced in delivering rapid infrastructure transformations for startups and enterprises. Available for contract-based DevOps automation, platform engineering, and infrastructure optimization engagements leveraging modern tooling and AI-driven workflows.</p>
               </div>
 
               <!-- Work Experience -->
               <div>
-                <h3 class="text-cyan-300 font-bold mb-4 md:mb-5 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2" style="animation: slideInLeft 0.6s ease-out 0.4s both;">
+                <h3 class="font-bold mb-4 md:mb-5 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="animation: slideInLeft 0.6s ease-out 0.4s both;">
                   <span>▸ PROFESSIONAL EXPERIENCE</span>
-                  <span class="flex-1 h-px bg-gradient-to-r from-cyan-500/50 to-transparent"></span>
+                  <span class="flex-1 h-px" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.5), transparent)` }"></span>
                 </h3>
                 <div class="space-y-3 md:space-y-4">
-                  <div class="p-3 md:p-4 border-l-4 border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-white/80 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.45s both;">
-                    <h4 class="text-cyan-300 font-bold text-xs md:text-sm">Staff DevOps Engineer</h4>
-                    <p class="text-xs text-cyan-400/60 mt-1">Yuga Labs · May 2023 – Present</p>
+                  <div class="p-3 md:p-4 border-l-4 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }" style="animation: slideInLeft 0.6s ease-out 0.45s both;">
+                    <h4 class="font-bold text-xs md:text-sm" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Staff DevOps Engineer</h4>
+                    <p class="text-xs mt-1" :style="{ color: `hsl(var(--color-primary-hsl) / 0.6)` }">Yuga Labs · May 2023 – Present</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Spearheading platform engineering at the world's largest NFT metaverse company. Designed and implemented Internal Development Platform (IDP) using GitOps with Crossplane, ArgoCD, Backstage, and LGTM stack. Transitioned legacy systems to cloud-native Kubernetes. Oversaw global DNS management for all company IP and brands. Managed Perforce Helix Core and Unreal Engine utilities supporting game development pipelines.</p>
                   </div>
-                  <div class="p-3 md:p-4 border-l-4 border-magenta-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-white/80 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.5s both;">
-                    <h4 class="text-magenta-300 font-bold text-xs md:text-sm">Manager, Site Reliability/Core Infrastructure</h4>
-                    <p class="text-xs text-magenta-400/60 mt-1">Payward Inc (Kraken Digital Asset Exchange) · Sept 2022 – May 2023</p>
+                  <div class="p-3 md:p-4 border-l-4 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }" style="animation: slideInLeft 0.6s ease-out 0.5s both;">
+                    <h4 class="font-bold text-xs md:text-sm" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Manager, Site Reliability/Core Infrastructure</h4>
+                    <p class="text-xs mt-1" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.6)` }">Payward Inc (Kraken Digital Asset Exchange) · Sept 2022 – May 2023</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Enhanced organizational security posture through robust policies and risk-based approaches. Led team of engineers coordinating with multiple stakeholders. Formulated technical triage and remediation procedures with emphasis on automation. Elevated infrastructure visibility and integrated open-source observability tools.</p>
                   </div>
-                  <div class="p-3 md:p-4 border-l-4 border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-magenta-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.55s both;">
-                    <h4 class="text-cyan-300 font-bold text-xs md:text-sm">Principal Site Reliability Engineer</h4>
-                    <p class="text-xs text-cyan-400/60 mt-1">Powerflex Systems (EDF Renewables) · April 2021 – Aug 2022</p>
+                  <div class="p-3 md:p-4 border-l-4 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }" style="animation: slideInLeft 0.6s ease-out 0.55s both;">
+                    <h4 class="font-bold text-xs md:text-sm" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Principal Site Reliability Engineer</h4>
+                    <p class="text-xs mt-1" :style="{ color: `hsl(var(--color-primary-hsl) / 0.6)` }">Powerflex Systems (EDF Renewables) · April 2021 – Aug 2022</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Transformed diverse teams into lean agile using Kanban and XP. Mentored organization-wide on 12FA, TDD/BDD, GitOps, distributed tracing, and chaos engineering. Managed SRE team leading ceremonies and roadmapping product delivery to internal customers.</p>
                   </div>
-                  <div class="p-3 md:p-4 border-l-4 border-magenta-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-cyan-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.6s both;">
-                    <h4 class="text-magenta-300 font-bold text-xs md:text-sm">Senior Site Reliability Engineer</h4>
-                    <p class="text-xs text-magenta-400/60 mt-1">Powerflex Systems · Sept 2019 – April 2021</p>
+                  <div class="p-3 md:p-4 border-l-4 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }" style="animation: slideInLeft 0.6s ease-out 0.6s both;">
+                    <h4 class="font-bold text-xs md:text-sm" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Senior Site Reliability Engineer</h4>
+                    <p class="text-xs mt-1" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.6)` }">Powerflex Systems · Sept 2019 – April 2021</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Established SRE practices organization-wide. Deployed multistage containerized environments across GKE, EKS, and AKS with Istio, Vault, and ArgoCD. Identified cloud waste and migrated to cost-reduced cloud-native solutions.</p>
                   </div>
-                  <div class="p-3 md:p-4 border-l-4 border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-magenta-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.65s both;">
-                    <h4 class="text-cyan-300 font-bold text-xs md:text-sm">Senior Software Engineer</h4>
-                    <p class="text-xs text-cyan-400/60 mt-1">EDF Renewables · Sept 2018 – Sept 2019</p>
+                  <div class="p-3 md:p-4 border-l-4 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }" style="animation: slideInLeft 0.6s ease-out 0.65s both;">
+                    <h4 class="font-bold text-xs md:text-sm" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Senior Software Engineer</h4>
+                    <p class="text-xs mt-1" :style="{ color: `hsl(var(--color-primary-hsl) / 0.6)` }">EDF Renewables · Sept 2018 – Sept 2019</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Architected distributed systems for renewable energy monitoring across on-prem, edge, and cloud-native infrastructure. Developed "EDF Edge Industrial IoT Cloud Platform." Built ML pipelines and continuous delivery systems. Presented AWS solutions at Re:Invent 2018.</p>
                   </div>
-                  <div class="p-3 md:p-4 border-l-4 border-magenta-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-cyan-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.7s both;">
-                    <h4 class="text-magenta-300 font-bold text-xs md:text-sm">Agile Engineer</h4>
-                    <p class="text-xs text-magenta-400/60 mt-1">Emerson Climate Technologies · May 2016 – Sept 2018</p>
+                  <div class="p-3 md:p-4 border-l-4 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }" style="animation: slideInLeft 0.6s ease-out 0.7s both;">
+                    <h4 class="font-bold text-xs md:text-sm" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Agile Engineer</h4>
+                    <p class="text-xs mt-1" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.6)` }">Emerson Climate Technologies · May 2016 – Sept 2018</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Led full-stack cloud engineering in agile environment. Architected microservice migration from Rackspace to AWS. Developed REST/streaming APIs. Integrated Amazon Alexa, Google Home, and IFTTT. Unified Salesforce CRM, IoT, and Marketing Cloud.</p>
                   </div>
-                  <div class="p-3 md:p-4 border-l-4 border-cyan-500/60 bg-slate-900/40 hover:bg-slate-900/60 hover:border-magenta-500 transition-all duration-300" style="animation: slideInLeft 0.6s ease-out 0.75s both;">
-                    <h4 class="text-cyan-300 font-bold text-xs md:text-sm">Software Engineer</h4>
-                    <p class="text-xs text-cyan-400/60 mt-1">Emerson Electric Co. · Nov 2014 – May 2016</p>
+                  <div class="p-3 md:p-4 border-l-4 bg-slate-900/40 hover:bg-slate-900/60 transition-all duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }" style="animation: slideInLeft 0.6s ease-out 0.75s both;">
+                    <h4 class="font-bold text-xs md:text-sm" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Software Engineer</h4>
+                    <p class="text-xs mt-1" :style="{ color: `hsl(var(--color-primary-hsl) / 0.6)` }">Emerson Electric Co. · Nov 2014 – May 2016</p>
                     <p class="text-white/75 mt-2 text-xs md:text-sm leading-relaxed font-light">Reduced support team request volumes through creation of self-service internal tooling and data dashboards. Managed containerized server clusters on AWS ECS with RDS, ElastiCache, and ElasticSearch. Consulted on Amazon Alexa integration for IoT thermostats using AWS Lambda and Node.js. Architected multi-tenant management portals and mobile installation wizards using Node.js, React, Angular, and PHP.</p>
                   </div>
                 </div>
@@ -282,33 +274,33 @@
 
               <!-- Technical Expertise -->
               <div style="animation: slideInUp 0.6s ease-out 0.75s both;">
-                <h3 class="text-magenta-300 font-bold mb-4 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2">
+                <h3 class="font-bold mb-4 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">
                   <span>▸ TECHNICAL EXPERTISE</span>
-                  <span class="flex-1 h-px bg-gradient-to-r from-magenta-500/50 to-transparent"></span>
+                  <span class="flex-1 h-px" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-secondary-hsl) / 0.5), transparent)` }"></span>
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 text-white/75 text-xs md:text-sm font-light">
-                  <div class="p-2 md:p-3 border-l-2 border-cyan-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-cyan-300">Cloud:</strong> AWS, GCP, Azure, Linode</div>
-                  <div class="p-2 md:p-3 border-l-2 border-magenta-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-magenta-300">Orchestration:</strong> Kubernetes, Istio, Helm, ArgoCD</div>
-                  <div class="p-2 md:p-3 border-l-2 border-cyan-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-cyan-300">IaC:</strong> Terraform, Ansible, Kustomize, Crossplane</div>
-                  <div class="p-2 md:p-3 border-l-2 border-magenta-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-magenta-300">Observability:</strong> Prometheus, Grafana, Loki, Tempo</div>
-                  <div class="p-2 md:p-3 border-l-2 border-cyan-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-cyan-300">GitOps:</strong> ArgoCD, Flux, GitHub Actions, Tekton</div>
-                  <div class="p-2 md:p-3 border-l-2 border-magenta-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-magenta-300">Languages:</strong> Go, Rust, Python, TypeScript, Node.js</div>
-                  <div class="p-2 md:p-3 border-l-2 border-cyan-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-cyan-300">Databases:</strong> PostgreSQL, MongoDB, Redis, MySQL</div>
-                  <div class="p-2 md:p-3 border-l-2 border-magenta-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-magenta-300">Messaging:</strong> RabbitMQ, Kafka, MQTT, AWS SQS</div>
-                  <div class="p-2 md:p-3 border-l-2 border-cyan-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-cyan-300">AI/LLMs:</strong> Claude, Gemini, Codex/ChatGPT, LangChain</div>
-                  <div class="p-2 md:p-3 border-l-2 border-magenta-500/60 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300"><strong class="text-magenta-300">Automation:</strong> Bash, Python, CI/CD, Workflows</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Cloud:</strong> AWS, GCP, Azure, Linode</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Orchestration:</strong> Kubernetes, Istio, Helm, ArgoCD</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">IaC:</strong> Terraform, Ansible, Kustomize, Crossplane</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Observability:</strong> Prometheus, Grafana, Loki, Tempo</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">GitOps:</strong> ArgoCD, Flux, GitHub Actions, Tekton</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Languages:</strong> Go, Rust, Python, TypeScript, Node.js</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Databases:</strong> PostgreSQL, MongoDB, Redis, MySQL</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Messaging:</strong> RabbitMQ, Kafka, MQTT, AWS SQS</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">AI/LLMs:</strong> Claude, Gemini, Codex/ChatGPT, LangChain</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Automation:</strong> Bash, Python, CI/CD, Workflows</div>
                 </div>
               </div>
 
               <!-- Education & Achievements -->
               <div style="animation: slideInUp 0.6s ease-out 0.85s both;">
-                <h3 class="text-cyan-300 font-bold mb-4 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2">
+                <h3 class="font-bold mb-4 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">
                   <span>▸ EDUCATION & ACHIEVEMENTS</span>
-                  <span class="flex-1 h-px bg-gradient-to-r from-cyan-500/50 to-transparent"></span>
+                  <span class="flex-1 h-px" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.5), transparent)` }"></span>
                 </h3>
                 <div class="space-y-3">
-                  <div class="p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/40 hover:border-cyan-500/70 transition-colors duration-300">
-                    <p class="text-cyan-300 font-bold text-xs md:text-sm">▸ University of Missouri–Columbia</p>
+                  <div class="p-3 md:p-4 border-2 bg-slate-900/40 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }">
+                    <p class="font-bold text-xs md:text-sm" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">▸ University of Missouri–Columbia</p>
                     <p class="text-white/70 text-xs md:text-sm mt-1 font-light">Computer Science & IT coursework (2008–2012)</p>
                   </div>
                   <ul class="space-y-2 text-white/75 text-xs md:text-sm font-light">
@@ -337,54 +329,50 @@
           <!-- Contact -->
           <template v-if="activeSection === 'contact'">
             <div class="mb-8 md:mb-12">
-              <div class="flex items-baseline gap-4">
-                <h2 class="text-4xl md:text-6xl font-serif font-black text-magenta-300 leading-none" style="letter-spacing: -2px;">CONTACT</h2>
-                <div class="flex-1 h-0.5 bg-gradient-to-r from-magenta-500 via-cyan-500 to-transparent"></div>
-              </div>
-              <div class="h-1 w-16 bg-gradient-to-r from-cyan-500 to-magenta-500 mt-3 md:mt-4"></div>
+              <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }" style="letter-spacing: -2px;">CONTACT</h2>
             </div>
             <div class="space-y-6 md:space-y-8 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
               <div>
-                <h3 class="text-cyan-300 font-bold mb-3 md:mb-4 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2">
+                <h3 class="font-bold mb-3 md:mb-4 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">
                   <span>▸ CONNECT WITH ME</span>
-                  <span class="flex-1 h-px bg-gradient-to-r from-cyan-500/50 to-transparent"></span>
+                  <span class="flex-1 h-px" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.5), transparent)` }"></span>
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
-                  <a href="https://github.com/Kampe" target="_blank" class="flex items-center gap-3 text-cyan-400/70 hover:text-cyan-300 transition-all duration-300 group text-sm font-light px-3 py-2 border border-cyan-500/30 hover:border-cyan-500/60 rounded">
-                    <span class="w-1.5 h-1.5 bg-cyan-500 group-hover:bg-magenta-500 rounded-full transition-colors duration-300"></span>
+                  <a href="https://github.com/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                    <span class="w-1.5 h-1.5 rounded-full transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
                     <span>GitHub</span>
                   </a>
-                  <a href="https://linkedin.com/in/Kampe" target="_blank" class="flex items-center gap-3 text-magenta-400/70 hover:text-magenta-300 transition-all duration-300 group text-sm font-light px-3 py-2 border border-magenta-500/30 hover:border-magenta-500/60 rounded">
-                    <span class="w-1.5 h-1.5 bg-magenta-500 group-hover:bg-cyan-500 rounded-full transition-colors duration-300"></span>
+                  <a href="https://linkedin.com/in/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                    <span class="w-1.5 h-1.5 rounded-full transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-secondary-hsl) / 1)` }"></span>
                     <span>LinkedIn</span>
                   </a>
-                  <a href="https://twitter.com/NickKampe" target="_blank" class="flex items-center gap-3 text-cyan-400/70 hover:text-cyan-300 transition-all duration-300 group text-sm font-light px-3 py-2 border border-cyan-500/30 hover:border-cyan-500/60 rounded">
-                    <span class="w-1.5 h-1.5 bg-cyan-500 group-hover:bg-magenta-500 rounded-full transition-colors duration-300"></span>
+                  <a href="https://twitter.com/NickKampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                    <span class="w-1.5 h-1.5 rounded-full transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
                     <span>Twitter/X</span>
                   </a>
-                  <a href="https://bitbucket.org/Kampe" target="_blank" class="flex items-center gap-3 text-magenta-400/70 hover:text-magenta-300 transition-all duration-300 group text-sm font-light px-3 py-2 border border-magenta-500/30 hover:border-magenta-500/60 rounded">
-                    <span class="w-1.5 h-1.5 bg-magenta-500 group-hover:bg-cyan-500 rounded-full transition-colors duration-300"></span>
+                  <a href="https://bitbucket.org/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                    <span class="w-1.5 h-1.5 rounded-full transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-secondary-hsl) / 1)` }"></span>
                     <span>BitBucket</span>
                   </a>
-                  <a href="https://stackoverflow.com/users/201297/nickkampe" target="_blank" class="flex items-center gap-3 text-cyan-400/70 hover:text-cyan-300 transition-all duration-300 group text-sm font-light px-3 py-2 border border-cyan-500/30 hover:border-cyan-500/60 rounded">
-                    <span class="w-1.5 h-1.5 bg-cyan-500 group-hover:bg-magenta-500 rounded-full transition-colors duration-300"></span>
+                  <a href="https://stackoverflow.com/users/201297/nickkampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                    <span class="w-1.5 h-1.5 rounded-full transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
                     <span>Stack Overflow</span>
                   </a>
-                  <a href="https://angel.co/Kampe" target="_blank" class="flex items-center gap-3 text-magenta-400/70 hover:text-magenta-300 transition-all duration-300 group text-sm font-light px-3 py-2 border border-magenta-500/30 hover:border-magenta-500/60 rounded">
-                    <span class="w-1.5 h-1.5 bg-magenta-500 group-hover:bg-cyan-500 rounded-full transition-colors duration-300"></span>
+                  <a href="https://angel.co/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                    <span class="w-1.5 h-1.5 rounded-full transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-secondary-hsl) / 1)` }"></span>
                     <span>AngelList</span>
                   </a>
-                  <a href="https://quora.com/Nick-Kampe" target="_blank" class="flex items-center gap-3 text-cyan-400/70 hover:text-cyan-300 transition-all duration-300 group text-sm font-light px-3 py-2 border border-cyan-500/30 hover:border-cyan-500/60 rounded">
-                    <span class="w-1.5 h-1.5 bg-cyan-500 group-hover:bg-magenta-500 rounded-full transition-colors duration-300"></span>
+                  <a href="https://quora.com/Nick-Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                    <span class="w-1.5 h-1.5 rounded-full transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
                     <span>Quora</span>
                   </a>
                 </div>
               </div>
-              <form @submit.prevent="submitForm" class="space-y-3 md:space-y-4 pt-3 md:pt-6 border-t border-cyan-500/20">
-                <input id="contact-name" name="name" v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-cyan-500/50 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" required />
-                <input id="contact-email" name="email" v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-magenta-500/50 text-white placeholder-slate-500 focus:outline-none focus:border-magenta-400 focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" required />
-                <textarea id="contact-message" name="message" v-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 border-cyan-500/50 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" required></textarea>
-                <button id="contact-submit" type="submit" class="w-full px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-cyan-600 to-magenta-600 hover:from-cyan-500 hover:to-magenta-500 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 border-2 border-cyan-400/50 hover:border-cyan-300">
+              <form @submit.prevent="submitForm" class="space-y-3 md:space-y-4 pt-3 md:pt-6" :style="{ borderTop: `1px solid hsl(var(--color-primary-hsl) / 0.2)` }">
+                <input id="contact-name" name="name" v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required />
+                <input id="contact-email" name="email" v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.5)` }" required />
+                <textarea id="contact-message" name="message" v-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required></textarea>
+                <button id="contact-submit" type="submit" class="w-full px-6 md:px-8 py-3 md:py-4 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg border-2" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.6), hsl(var(--color-secondary-hsl) / 0.6))`, borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, boxShadow: `0 0 30px hsl(var(--color-primary-hsl) / 0.25)` }">
                   ▸ SEND MESSAGE
                 </button>
               </form>

@@ -2,6 +2,9 @@
 # Stage 1: Build frontend
 FROM oven/bun:latest AS frontend-builder
 
+# Build timestamp to invalidate cache
+ARG BUILD_DATE
+
 WORKDIR /app
 
 # Copy monorepo metadata files for workspace resolution
@@ -24,7 +27,7 @@ COPY e2e ./e2e
 RUN rm -rf frontend/dist backend/public
 
 # Build frontend
-RUN bun run build:frontend
+RUN echo "Building frontend at ${BUILD_DATE}" && bun run build:frontend
 
 # Stage 2: Runtime
 FROM oven/bun:latest

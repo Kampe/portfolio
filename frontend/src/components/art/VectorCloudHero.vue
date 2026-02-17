@@ -8,10 +8,10 @@
       <div class="text-center space-y-4 md:space-y-6 w-full">
         <!-- Name + Role -->
         <div ref="heroNameRef">
-          <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold text-white mb-2 md:mb-3 leading-tight" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em;">
+          <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold mb-2 md:mb-3 leading-tight" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em; color: hsl(var(--color-primary-hsl) / 1);">
             NICK KAMPE
           </h1>
-          <p ref="roleRef" class="text-sm md:text-lg text-cyan-300 tracking-wider font-semibold inline-flex gap-1 md:gap-2 flex-wrap justify-center px-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 500; letter-spacing: 0.08em; opacity: 0;">
+          <p ref="roleRef" class="text-sm md:text-lg tracking-wider font-semibold inline-flex gap-1 md:gap-2 flex-wrap justify-center px-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 500; letter-spacing: 0.08em; opacity: 0; color: hsl(var(--color-secondary-hsl) / 1);">
             <span class="role-item">Platform Engineer</span>
             <span class="role-separator">|</span>
             <span class="role-item">Software Craftsman</span>
@@ -21,21 +21,21 @@
         </div>
 
         <!-- Tagline -->
-        <p ref="taglineRef" class="text-sm md:text-base text-slate-300 max-w-sm md:max-w-5xl mx-auto leading-relaxed px-2" style="font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0;">
+        <p ref="taglineRef" class="text-sm md:text-base max-w-sm md:max-w-5xl mx-auto leading-relaxed px-2" style="font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0; color: hsl(var(--color-primary-hsl) / 0.7);">
           Expert infrastructure architect & DevOps specialist scaling production systems for startups and enterprise. <br class="hidden md:block">Designing cloud migrations, deploying modern CI/CD solutions, and building scalable platforms. <br class="hidden md:block"><span class="whitespace-nowrap">15+ years of proven expertise.</span> <span class="whitespace-nowrap">Available for strategic long-term engagements.</span>
         </p>
 
         <!-- CTA Buttons -->
         <div ref="buttonsRef" class="flex flex-col md:flex-row gap-3 md:gap-4 justify-center pt-2 md:pt-4 pointer-events-auto px-2" style="opacity: 0;">
-          <button @click="$emit('open-contact')" class="relative px-4 md:px-6 py-2 border-2 border-cyan-500 text-white hover:text-cyan-300 hover:border-magenta-500 hover:shadow-lg hover:shadow-magenta-500/50 rounded-lg font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden">
-            <span class="absolute inset-0 bg-cyan-500/5 group-hover:bg-magenta-500/10 transition-colors duration-300"></span>
+          <button @click="$emit('open-contact')" class="relative px-4 md:px-6 py-2 border-2 text-white font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden rounded-lg" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 1)`, color: `hsl(var(--color-primary-hsl) / 1)` }" @mouseenter="hoverPrimaryBtn = true" @mouseleave="hoverPrimaryBtn = false">
+            <span class="absolute inset-0 transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / ${hoverPrimaryBtn ? 0.1 : 0.05})` }"></span>
             <span class="relative block">▸ Contact Me</span>
-            <span class="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-cyan-500 to-magenta-500 group-hover:w-full transition-all duration-500"></span>
+            <span class="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 1), hsl(var(--color-secondary-hsl) / 1))`, width: hoverPrimaryBtn ? '100%' : '0%' }"></span>
           </button>
-          <a href="https://github.com/Kampe" target="_blank" class="relative inline-block px-4 md:px-6 py-2 border-2 border-white text-white hover:text-cyan-300 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/50 rounded-lg font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden">
-            <span class="absolute inset-0 bg-white/5 group-hover:bg-cyan-500/10 transition-colors duration-300"></span>
+          <a href="https://github.com/Kampe" target="_blank" class="relative inline-block px-4 md:px-6 py-2 border-2 text-white font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden rounded-lg" :style="{ borderColor: `hsl(var(--color-accent-hsl) / 1)`, color: `hsl(var(--color-accent-hsl) / 1)` }" @mouseenter="hoverGithubBtn = true" @mouseleave="hoverGithubBtn = false">
+            <span class="absolute inset-0 transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-accent-hsl) / ${hoverGithubBtn ? 0.1 : 0.05})` }"></span>
             <span class="relative block">◆ GitHub</span>
-            <span class="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-white to-cyan-500 group-hover:w-full transition-all duration-500"></span>
+            <span class="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-accent-hsl) / 1), hsl(var(--color-primary-hsl) / 1))`, width: hoverGithubBtn ? '100%' : '0%' }"></span>
           </a>
         </div>
       </div>
@@ -106,6 +106,8 @@ const particleCount = ref(0)
 const time = ref(0)
 const energizedLevel = ref(0)
 const currentTheme = ref<string>('magnetosphere')
+const hoverPrimaryBtn = ref(false)
+const hoverGithubBtn = ref(false)
 
 // Theme labels for display
 const themeLabels = {
