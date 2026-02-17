@@ -8,7 +8,7 @@
       <div class="text-center space-y-4 md:space-y-6 w-full">
         <!-- Name + Role -->
         <div ref="heroNameRef">
-          <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold mb-2 md:mb-3 leading-tight text-white" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em;">
+          <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold mb-2 md:mb-3 leading-tight" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em; color: hsl(var(--color-primary-hsl) / 1);">
             NICK KAMPE
           </h1>
           <p ref="roleRef" class="text-sm md:text-lg tracking-wider font-semibold inline-flex gap-1 md:gap-2 flex-wrap justify-center px-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 500; letter-spacing: 0.08em; opacity: 0; color: hsl(var(--color-secondary-hsl) / 1);">
@@ -27,15 +27,15 @@
 
         <!-- CTA Buttons -->
         <div ref="buttonsRef" class="flex flex-col md:flex-row gap-3 md:gap-4 justify-center pt-2 md:pt-4 pointer-events-auto px-2" style="opacity: 0;">
-          <button @click="$emit('open-contact')" class="relative px-4 md:px-6 py-2 border-2 text-white font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden rounded-lg" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 1)`, color: `hsl(var(--color-primary-hsl) / 1)` }" @mouseenter="hoverPrimaryBtn = true" @mouseleave="hoverPrimaryBtn = false">
+          <button @click="$emit('open-contact')" class="relative px-4 md:px-6 py-2 border-2 text-white font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden rounded-lg" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 1)`, color: 'white' }" @mouseenter="hoverPrimaryBtn = true" @mouseleave="hoverPrimaryBtn = false">
             <span class="absolute inset-0 transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / ${hoverPrimaryBtn ? 0.1 : 0.05})` }"></span>
             <span class="relative block">▸ Contact Me</span>
             <span class="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 1), hsl(var(--color-secondary-hsl) / 1))`, width: hoverPrimaryBtn ? '100%' : '0%' }"></span>
           </button>
-          <a href="https://github.com/Kampe" target="_blank" class="relative inline-block px-4 md:px-6 py-2 border-2 text-white font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden rounded-lg" :style="{ borderColor: `hsl(var(--color-accent-hsl) / 1)`, color: `hsl(var(--color-accent-hsl) / 1)` }" @mouseenter="hoverGithubBtn = true" @mouseleave="hoverGithubBtn = false">
+          <a href="https://github.com/Kampe" target="_blank" class="relative inline-block px-4 md:px-6 py-2 border-2 text-white font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden rounded-lg" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 1)`, color: 'white' }" @mouseenter="hoverGithubBtn = true" @mouseleave="hoverGithubBtn = false">
             <span class="absolute inset-0 transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-accent-hsl) / ${hoverGithubBtn ? 0.1 : 0.05})` }"></span>
             <span class="relative block">◆ GitHub</span>
-            <span class="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-accent-hsl) / 1), hsl(var(--color-primary-hsl) / 1))`, width: hoverGithubBtn ? '100%' : '0%' }"></span>
+            <span class="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 1), hsl(var(--color-secondary-hsl) / 1))`, width: hoverGithubBtn ? '100%' : '0%' }"></span>
           </a>
         </div>
       </div>
