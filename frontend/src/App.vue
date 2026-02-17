@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="fixed inset-0 bg-black text-white overflow-hidden font-sans">
     <!-- Vector Cloud Hero -->
-    <VectorCloudHero @open-contact="activeSection = 'contact'" />
+    <VectorCloudHero :palette="currentPalette" @open-contact="activeSection = 'contact'" />
 
     <!-- Animated Grid Background (subtle) -->
     <div class="fixed inset-0 opacity-5 pointer-events-none overflow-hidden z-0">
@@ -63,13 +63,16 @@
             </div>
             <div class="space-y-5 md:space-y-6 text-white/80 leading-relaxed font-light">
               <p class="text-sm md:text-base border-l-4 border-cyan-500/50 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.3s both;">
-                <span class="text-cyan-300 font-semibold">Infrastructure Architect & DevOps Specialist</span> with 15+ years scaling production systems for startups and enterprise. Deep expertise in cloud infrastructure automation (GCP, AWS, Azure), Kubernetes orchestration, blockchain infrastructure, and open-source technology.
+                <span class="text-cyan-300 font-semibold">Infrastructure Architect & Platform Engineer</span> with 15+ years scaling production systems from pre-seed startups to enterprise and Web3. Specialist in designing end-to-end platform infrastructure—from cloud orchestration and observability to smart contract security and internal development platforms.
               </p>
               <p class="text-sm md:text-base border-l-4 border-cyan-500/30 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.4s both;">
-                Expert in GitOps workflows (ArgoCD, Flux), service mesh architecture (Istio), observability-first design (Prometheus, Grafana, Loki), and building scalable platform infrastructure. Proven ability to design and deploy enterprise-grade CI/CD pipelines, cloud migrations, and container orchestration systems that scale with your organization.
+                At <span class="text-cyan-300 font-semibold">Yuga Labs</span> (world's largest NFT metaverse), architected an Internal Development Platform leveraging GitOps (Crossplane, ArgoCD, Backstage, LGTM stack) enabling 100+ engineers to self-serve infrastructure. Managed global DNS infrastructure across all company IPs and brands, and oversaw Perforce Helix Core and Unreal Engine CI/CD pipelines supporting game development workflows.
               </p>
               <p class="text-sm md:text-base border-l-4 border-cyan-500/30 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.5s both;">
-                Leveraging <span class="text-cyan-300 font-semibold">AI/ML tools, LLMs, and automation frameworks</span> to accelerate infrastructure innovation. From blockchain node infrastructure to ML ops on Kubernetes, full-stack infrastructure for modern development teams.
+                <span class="text-cyan-300 font-semibold">Crypto infrastructure specialist</span> with hands-on smart contract audit experience (Solidity, Vyper, Forge, Hardhat). Deep expertise in zero-trust architecture (Boundary, Okta, Authentik, Cloudflare), distributed systems security, and hardening production environments across AWS, GCP, and on-premise Kubernetes clusters.
+              </p>
+              <p class="text-sm md:text-base border-l-4 border-cyan-500/30 pl-4 py-2 hover:border-magenta-500/50 transition-colors duration-300" style="animation: slideInLeft 0.6s ease-out 0.6s both;">
+                <span class="text-cyan-300 font-semibold">Software craftsman</span> committed to TDD, BDD, and clean architecture principles. Full-stack capabilities span backend (Go, Rust, Python, Node.js), frontend (React, Vue, Three.js generative art), and embedded systems (Raspberry Pi, Arduino, FPGA). Experienced mentoring engineering teams on platform-as-a-service thinking, chaos engineering, and distributed systems design.
               </p>
             </div>
           </template>
@@ -91,27 +94,27 @@
               </div>
               <div class="p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.3s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud Native Solutions</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Kubernetes, Docker, Talos, Istio, Helm, Kustomize, Linkerd, Argo Rollouts, Argo Workflows</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Kubernetes, Docker, Talos, Istio, Consul, Helm, Kustomize, Linkerd, Argo Rollouts, Argo Workflows, External-DNS</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.35s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Solidity, Vyper, Forge, Node hosting, Smart contracts, Layer 2 systems, Web3 tooling</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Solidity, Vyper, Forge, Hardhat, Smart contracts, Smart contract audits, Layer 2 systems, Web3 tooling, Node hosting</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.4s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ IaC</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, Pulumi, Ansible, CloudFormation, CDK, Crossplane, Packer, Vault</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, OpenTofu, Pulumi, Ansible, CloudFormation, CDK, Crossplane, Packer, Vault</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.45s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Languages</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Go, Rust, Python, TypeScript, JavaScript, PHP, Bash</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.5s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Databases</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MongoDB, Redis, ElasticSearch, Scylla, DynamoDB, Firebase, Supabase, Qdrant</p>
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.5s both;">
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Databases</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MongoDB, Redis, ElasticSearch, MySQL, Scylla, DynamoDB, Firebase, Supabase, Qdrant, Snowflake, CouchDB, Aurora SQL, CockroachDB, Memcached, TimescaleDB, InfluxDB, Clickhouse</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.55s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ GitOps</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">ArgoCD, GitHub Actions, Jenkins, Tekton, Flux</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">ArgoCD, GitHub Actions, Jenkins, Tekton, Flux, TeamCity</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.6s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ DevTools</h3>
@@ -119,11 +122,11 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.65s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Observability</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Prometheus, Grafana, OpenTelemetry, Sentry, CloudWatch, Loki, Tempo</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Prometheus, Grafana, Grafana Beyla, OpenTelemetry, Sentry, CloudWatch, Loki, Tempo, PagerDuty, Grafana On-Call, Datadog, Splunk, Sumo Logic, ELK Stack, Kibana, Logstash</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.7s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Frontend</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">React, Vue, Next.js, GraphQL</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">React, Vue, Next.js, Astro, Svelte, GraphQL, Tailwind CSS, PostCSS, Bootstrap, jQuery, Three.js, p5.js</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.75s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Hardware & Embedded</h3>
@@ -139,39 +142,63 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.9s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Gemini, LangChain, Ollama, Hugging Face</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Gemini, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.95s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Messaging</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">RabbitMQ, NATS, MQTT, Kafka, Redis Streams, SQS, ZeroMQ</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.0s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Networking/API</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Envoy, Nginx, Apache, HAProxy, Tailscale, gRPC, Express, FastAPI, Hapi, Flask, Gin</p>
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Networking</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Envoy, Nginx, Apache, HAProxy, Tailscale, Cloudflare Argo Tunnels</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.05s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Testing</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">pytest, Jest, Vitest, Playwright, Bats, mocha/chai, turbo, go test</p>
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ API Frameworks</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">gRPC, Express, FastAPI, Hapi, Flask, Gin</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.1s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets & Security</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, Consul, cert-manager, External Secrets, 1Password, Bitwarden, mTLS, RBAC, OpenSSL</p>
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Load Testing</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">k6, Locust, JMeter, Apache Bench, Artillery</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.15s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Security Scanning</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Aqua, Trivy, Wiz, CrowdStrike, Falco</p>
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Feature Flags</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">OpenFeature, LaunchDarkly, Unleash</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.2s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ VCS & Collaboration</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Git, GitHub, GitLab, Bitbucket, Gitea, Perforce</p>
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Database Migrations</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Atlas, Flyway, Liquibase, Alembic</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.25s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Data & ML Ops</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Kubeflow, Airflow, Temporal, dbt, MLflow, Spark</p>
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Query Builders/ORMs</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Kysley, Knex, Drizzle, TypeORM, Sequelize</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.3s both;">
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Testing</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">pytest, Jest, Vitest, Playwright, Bats, mocha/chai, turbo, go test</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.35s both;">
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets & Security</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, cert-manager, External Secrets, 1Password, Bitwarden, mTLS, RBAC, OpenSSL, Boundary, Cloudflare Zero Trust, Okta, Authentik, Keycloak, pfSense</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.4s both;">
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Security Scanning</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Aqua, Trivy, Wiz, CrowdStrike Falcon, Falco, Lacework</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.45s both;">
+                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ VCS & Collaboration</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Git, GitHub, GitLab, Bitbucket, Gitea, Perforce, Helix Swarm, Unreal Game Sync, Jira, Confluence</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.5s both;">
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Data & ML Ops</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Kubeflow, Airflow, Temporal, Airbyte, dbt, MLflow, Spark</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.55s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Object Storage</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">S3, IPFS, Minio, Wasabi</p>
+              </div>
+              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.6s both;">
+                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Software Craftsmanship</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">TDD, BDD, XP, Agile, Clean Code, Design Patterns, SOLID Principles, Refactoring, 12FA</p>
               </div>
             </div>
           </template>
@@ -265,8 +292,8 @@
                 </h3>
                 <div class="space-y-3">
                   <div class="p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/40 hover:border-cyan-500/70 transition-colors duration-300">
-                    <p class="text-cyan-300 font-bold text-xs md:text-sm">▸ B.S. Interdisciplinary Studies in Computer Science & IT</p>
-                    <p class="text-white/70 text-xs md:text-sm mt-1 font-light">University of Missouri–Columbia (2008–2012)</p>
+                    <p class="text-cyan-300 font-bold text-xs md:text-sm">▸ University of Missouri–Columbia</p>
+                    <p class="text-white/70 text-xs md:text-sm mt-1 font-light">Computer Science & IT coursework (2008–2012)</p>
                   </div>
                   <ul class="space-y-2 text-white/75 text-xs md:text-sm font-light">
                     <li class="flex items-start gap-3 p-2 hover:bg-slate-900/40 transition-colors duration-300">
@@ -362,6 +389,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 import gsap from 'gsap'
 import VectorCloudHero from './components/art/VectorCloudHero.vue'
+import { getRandomPalette, applyPaletteToDOM } from './utils/colorPalettes'
 
 const activeSection = ref<string | null>(null)
 const form = ref({ name: '', email: '', subject: '', message: '' })
@@ -370,6 +398,7 @@ const navAboutRef = ref<HTMLElement | null>(null)
 const navSkillsRef = ref<HTMLElement | null>(null)
 const navResumeRef = ref<HTMLElement | null>(null)
 const navContactRef = ref<HTMLElement | null>(null)
+const currentPalette = ref(getRandomPalette())
 
 const submitForm = async () => {
   try {
@@ -392,6 +421,9 @@ const submitForm = async () => {
 onMounted(async () => {
   // Wait for DOM to fully render
   await nextTick()
+
+  // Apply selected color palette to DOM
+  applyPaletteToDOM(currentPalette.value)
 
   // Animate navbar with staggered entrance
   const timeline = gsap.timeline()
@@ -553,6 +585,16 @@ onMounted(async () => {
 </style>
 
 <style>
+:root {
+  /* Default palette (Cyberpunk) - will be overridden by JS */
+  --color-primary: #00FFFF;
+  --color-primary-hsl: 180 100% 50%;
+  --color-secondary: #FF00FF;
+  --color-secondary-hsl: 300 100% 50%;
+  --color-accent: #0099FF;
+  --color-accent-hsl: 204 100% 50%;
+}
+
 html, body {
   margin: 0;
   padding: 0;
