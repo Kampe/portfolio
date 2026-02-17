@@ -314,15 +314,11 @@ const initScene = () => {
       themeManager.dispose()
       themeManager = null
     }
-
-    console.log('[VectorCloudHero] Theme and resources cleaned up')
   }
 
   onUnmounted(() => {
     cleanup()
   })
-
-  console.log('[VectorCloudHero] Theme initialized:', themeManager?.getCurrentThemeName())
 }
 
 /**
@@ -343,8 +339,6 @@ const switchTheme = (themeName: ThemeName) => {
   renderer = themeSetup.renderer
   composer = themeSetup.composer
   currentTheme.value = themeName
-
-  console.log('[VectorCloudHero] Switched to theme:', themeName)
 }
 
 onMounted(async () => {

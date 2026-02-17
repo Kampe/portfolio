@@ -433,7 +433,7 @@ const submitForm = async () => {
       activeSection.value = null
     }
   } catch (error) {
-    console.error('Error:', error)
+    // Handle form submission error silently
   }
 }
 
