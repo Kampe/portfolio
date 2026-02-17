@@ -3,7 +3,10 @@ import { join } from 'path'
 import { sendContactEmail } from './routes/contact'
 
 const PORT = 3001
-const PUBLIC_DIR = join(import.meta.dir, '../public')
+// Use absolute path in container, relative path in dev
+const PUBLIC_DIR = process.env.NODE_ENV === 'production'
+  ? '/app/backend/public'
+  : join(import.meta.dir, '../public')
 
 function getMimeType(filePath: string): string {
   const ext = filePath.split('.').pop()?.toLowerCase()

@@ -47,5 +47,6 @@ EXPOSE 3001
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD bun run -e "const res = await fetch('http://localhost:3001/health'); process.exit(res.ok ? 0 : 1)"
 
-# Start the server
+# Start the server with production environment
+ENV NODE_ENV=production
 CMD ["bun", "src/index.ts"]
