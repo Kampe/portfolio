@@ -1,0 +1,14 @@
+{
+  "project": "portfolio",
+  "forms": [
+    {
+      "name": "contact",
+      "id": "2938978484824833769",
+      "email": "nickkampe@gmail.com",
+      "notifications": {
+        "enabled": true,
+        "email": true
+      }
+    }
+  ]
+}
