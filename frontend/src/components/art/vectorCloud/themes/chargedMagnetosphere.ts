@@ -84,8 +84,20 @@ export const createChargedMagnetosphereTheme = (
   const width = window.innerWidth
   const height = window.innerHeight
 
-  // ===== RANDOM COLOR PAIR =====
-  const colorPair = pickColorPair()
+  // ===== COLOR SETUP =====
+  // Use provided palette colors or pick random pair
+  const paletteColors = userConfig?.paletteColors
+  let orbColor1 = new THREE.Color()
+  let orbColor2 = new THREE.Color()
+  let orbColor3 = new THREE.Color()
+
+  if (paletteColors) {
+    orbColor1.setHex(paletteColors.color1)
+    orbColor2.setHex(paletteColors.color2)
+    orbColor3.setHex(paletteColors.color3)
+  }
+
+  const colorPair = paletteColors ? { positive: 0.95, negative: 0.35 } : pickColorPair()
 
   // ===== RANDOM STARTING POSITION =====
   const randomStartX = (Math.random() - 0.5) * 80 - 30 // Biased left
@@ -140,8 +152,19 @@ export const createChargedMagnetosphereTheme = (
   // Initialize particles with random charges and complementary colors
   for (let i = 0; i < particleCount; i++) {
     const charge = Math.random() > 0.5 ? 1 : -1
-    const baseHue = charge > 0 ? colorPair.positive : colorPair.negative
-    const color = new THREE.Color().setHSL(baseHue, 0.85, 0.45)
+
+    // Use palette colors if provided, otherwise use HSL-based colors
+    let color: THREE.Color
+    if (paletteColors) {
+      // Cycle through palette colors
+      const colorIndex = i % 3
+      if (colorIndex === 0) color = orbColor1.clone()
+      else if (colorIndex === 1) color = orbColor2.clone()
+      else color = orbColor3.clone()
+    } else {
+      const baseHue = charge > 0 ? colorPair.positive : colorPair.negative
+      color = new THREE.Color().setHSL(baseHue, 0.85, 0.45)
+    }
 
     particles.push({
       position: new THREE.Vector3(
@@ -280,25 +303,43 @@ export const createChargedMagnetosphereTheme = (
       // Update color: psychedelic cycling based on charge + pattern + time
       const ageRatio = particle.age / particle.life
 
-      // Base hue from charge-based color pair, with cycling
-      const chargeHue = particle.charge > 0 ? colorPair.positive : colorPair.negative
-      const baseHue = (chargeHue +
-        pattern.colorShift * 0.2 +
-        time * 0.0005 +
-        i * 0.0001) % 1
+      // Use palette colors with brightness variations, or HSL-based dynamic colors
+      let color: THREE.Color
+      if (paletteColors) {
+        // Get base palette color and vary brightness based on pattern energy
+        const colorIndex = i % 3
+        const baseColor = colorIndex === 0 ? orbColor1 : colorIndex === 1 ? orbColor2 : orbColor3
+        color = baseColor.clone()
 
-      // High saturation for vivid neon look
-      const saturation = 0.95 + Math.sin(time * 0.0003 + i * 0.01) * 0.05
+        // Adjust brightness based on pattern energy
+        const baseLightness = 0.55 * (1 - Math.min(1, ageRatio) * 0.3)
+        const energyBoost = ageRatio <= 1 ?
+          (pattern.lightIntensity * PARAMS.beatResponsiveness * 0.05 +
+          pattern.frequency.peak * 0.08) : 0
+        const finalBrightness = Math.min(0.65, baseLightness + energyBoost)
 
-      // Bright, responsive to pattern energy, but capped to prevent over-saturation
-      // Fades out as particles age past their life
-      const baseLightness = Math.max(0, 0.55 * (1 - Math.min(1, ageRatio) * 0.3))
-      const energyBoost = ageRatio <= 1 ?
-        (pattern.lightIntensity * PARAMS.beatResponsiveness * 0.05 +
-        pattern.frequency.peak * 0.08) : 0
-      const lightness = Math.min(0.65, baseLightness + energyBoost)
+        // Apply brightness by blending with white
+        const white = new THREE.Color(1, 1, 1)
+        color.lerp(white, 1 - finalBrightness)
+      } else {
+        // Original HSL-based color generation
+        const chargeHue = particle.charge > 0 ? colorPair.positive : colorPair.negative
+        const baseHue = (chargeHue +
+          pattern.colorShift * 0.2 +
+          time * 0.0005 +
+          i * 0.0001) % 1
 
-      const color = new THREE.Color().setHSL(baseHue % 1, saturation, lightness)
+        const saturation = 0.95 + Math.sin(time * 0.0003 + i * 0.01) * 0.05
+
+        const baseLightness = Math.max(0, 0.55 * (1 - Math.min(1, ageRatio) * 0.3))
+        const energyBoost = ageRatio <= 1 ?
+          (pattern.lightIntensity * PARAMS.beatResponsiveness * 0.05 +
+          pattern.frequency.peak * 0.08) : 0
+        const lightness = Math.min(0.65, baseLightness + energyBoost)
+
+        color = new THREE.Color().setHSL(baseHue % 1, saturation, lightness)
+      }
+
       particleColors[i * 3] = color.r
       particleColors[i * 3 + 1] = color.g
       particleColors[i * 3 + 2] = color.b

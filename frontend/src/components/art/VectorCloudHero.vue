@@ -75,11 +75,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, nextTick, defineEmits } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick, defineEmits, defineProps } from 'vue'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { ThemeManager, getThemeFromURL, type ThemeName, type ThemeInteractionState } from './vectorCloud/themes'
 import { synthesizePattern } from './vectorCloud/synthesis'
+import type { ColorPalette } from '../../utils/colorPalettes'
+import { getPaletteOrbColors } from '../../utils/colorPalettes'
+
+// Props
+const props = defineProps<{
+  palette: ColorPalette
+}>()
 
 // Emit events
 defineEmits<{
@@ -138,9 +145,15 @@ const initScene = () => {
   // Initialize theme manager
   themeManager = new ThemeManager(canvasRef.value)
 
+  // Get palette orb colors to pass to theme (safely handle if palette not ready)
+  let paletteOrbColors: { color1: number; color2: number; color3: number } | undefined
+  if (props.palette) {
+    paletteOrbColors = getPaletteOrbColors(props.palette)
+  }
+
   // Load theme from URL or default to magnetosphere
   const themeName = (getThemeFromURL() || 'magnetosphere') as ThemeName
-  const themeSetup = themeManager.loadTheme(themeName)
+  const themeSetup = themeManager.loadTheme(themeName, paletteOrbColors)
 
   scene = themeSetup.scene
   camera = themeSetup.camera

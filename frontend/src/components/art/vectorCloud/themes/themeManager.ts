@@ -51,7 +51,7 @@ export class ThemeManager {
   /**
    * Create and load a theme
    */
-  loadTheme(themeName: ThemeName, config?: Partial<ThemeConfig>): ThemeSetupResult {
+  loadTheme(themeName: ThemeName, paletteColors?: { color1: number; color2: number; color3: number }, config?: Partial<ThemeConfig>): ThemeSetupResult {
     // Dispose current theme if it exists
     if (this.currentTheme && this.currentTheme.dispose) {
       this.currentTheme.dispose()
@@ -61,11 +61,17 @@ export class ThemeManager {
     if (!factory) {
       console.warn(`[ThemeManager] Theme "${themeName}" not found. Available: ${Object.keys(THEME_REGISTRY).join(', ')}`)
       // Fallback to spectrum
-      return this.loadTheme('spectrum', config)
+      return this.loadTheme('spectrum', paletteColors, config)
+    }
+
+    // Merge palette colors into config
+    const mergedConfig: Partial<ThemeConfig> = {
+      ...config,
+      paletteColors
     }
 
     console.log(`[ThemeManager] Loading theme: ${themeName}`)
-    this.currentTheme = factory(this.canvas, config)
+    this.currentTheme = factory(this.canvas, mergedConfig)
     this.currentThemeName = themeName
 
     return this.currentTheme
