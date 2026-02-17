@@ -1,3 +1,6 @@
+import { readFile } from 'fs/promises'
+import { join } from 'path'
+
 export interface ContactMessage {
   name: string
   email: string
@@ -5,32 +8,57 @@ export interface ContactMessage {
   message: string
 }
 
-const FORMSPREE_FORM_ID = '2938978484824833769'
-const FORMSPREE_DEPLOY_KEY = 'b2e8f68e1d2f41089cc29f9c307dd590'
+interface FormspreeConfig {
+  project: string
+  forms: Array<{
+    name: string
+    id: string
+    email: string
+  }>
+}
+
+let config: FormspreeConfig | null = null
+
+async function loadFormspreeConfig(): Promise<FormspreeConfig> {
+  if (config) return config
+
+  try {
+    const configPath = join(import.meta.dir, '../../..', '.formspree.json')
+    const configData = await readFile(configPath, 'utf-8')
+    config = JSON.parse(configData)
+    return config
+  } catch (error) {
+    throw new Error('Failed to load Formspree configuration')
+  }
+}
 
 export async function sendContactEmail(data: ContactMessage) {
   try {
+    const config = await loadFormspreeConfig()
+    const contactForm = config.forms.find(f => f.name === 'contact')
+
+    if (!contactForm) {
+      throw new Error('Contact form not configured')
+    }
+
     const response = await fetch(
-      `https://formspree.io/api/form/${FORMSPREE_FORM_ID}/submissions`,
+      `https://formspree.io/f/${contactForm.id}`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${FORMSPREE_DEPLOY_KEY}`,
         },
         body: JSON.stringify({
           name: data.name,
           email: data.email,
           subject: data.subject,
           message: data.message,
-          _url: 'https://nickkampe.com',
-          _next: 'https://nickkampe.com',
         }),
       }
     )
 
     if (!response.ok) {
-      throw new Error(`Formspree API error: ${response.status}`)
+      throw new Error(`Formspree error: ${response.status}`)
     }
 
     return {
