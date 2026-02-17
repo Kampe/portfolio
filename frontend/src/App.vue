@@ -87,117 +87,117 @@
               </div>
               <div class="h-1 w-16 bg-gradient-to-r from-cyan-500 to-magenta-500 mt-3 md:mt-4"></div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
-              <div class="p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.25s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud & Hosting Platforms</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0">
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud & Hosting Platforms</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">AWS, GCP, Azure, Cloudflare, DigitalOcean, Hetzner, Linode, Civo, Vercel, Railway, Proxmox, EBS</p>
               </div>
-              <div class="p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.3s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud Native Solutions</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud Native Solutions</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Kubernetes, Docker, Talos, Istio, Consul, Helm, Kustomize, Linkerd, Argo Rollouts, Argo Workflows, External-DNS</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.35s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Solidity, Vyper, Forge, Hardhat, Smart contracts, Smart contract audits, Layer 2 systems, Web3 tooling, Node hosting</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.4s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ IaC</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ IaC</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, OpenTofu, Pulumi, Ansible, CloudFormation, CDK, Crossplane, Packer, Vault</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.45s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Languages</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Languages</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Go, Rust, Python, TypeScript, JavaScript, PHP, Bash</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.5s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Databases</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Databases</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MongoDB, Redis, ElasticSearch, MySQL, Scylla, DynamoDB, Firebase, Supabase, Qdrant, Snowflake, CouchDB, Aurora SQL, CockroachDB, Memcached, TimescaleDB, InfluxDB, Clickhouse</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.55s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ GitOps</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ GitOps</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">ArgoCD, GitHub Actions, Jenkins, Tekton, Flux, TeamCity</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.6s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ DevTools</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ DevTools</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Linux, macOS, VS Code, Vim, Docker, Vagrant</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.65s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Observability</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Observability</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Prometheus, Grafana, Grafana Beyla, OpenTelemetry, Sentry, CloudWatch, Loki, Tempo, PagerDuty, Grafana On-Call, Datadog, Splunk, Sumo Logic, ELK Stack, Kibana, Logstash</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.7s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Frontend</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Frontend</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">React, Vue, Next.js, Astro, Svelte, GraphQL, Tailwind CSS, PostCSS, Bootstrap, jQuery, Three.js, p5.js</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.75s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Hardware & Embedded</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Hardware & Embedded</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Raspberry Pi, Arduino, Microcontrollers, PCB Design, 3D Printing, FPGA, Soldering</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.8s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Creative</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Creative</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Unreal, Blender, Game Dev</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.85s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ IoT</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ IoT</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">AWS IoT, AWS Greengrass, Home Assistant, SmartThings</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.9s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Gemini, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 0.95s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Messaging</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Messaging</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">RabbitMQ, NATS, MQTT, Kafka, Redis Streams, SQS, ZeroMQ</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.0s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Networking</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Networking</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Envoy, Nginx, Apache, HAProxy, Tailscale, Cloudflare Argo Tunnels</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.05s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ API Frameworks</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ API Frameworks</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">gRPC, Express, FastAPI, Hapi, Flask, Gin</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.1s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Load Testing</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Load Testing</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">k6, Locust, JMeter, Apache Bench, Artillery</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.15s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Feature Flags</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Feature Flags</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">OpenFeature, LaunchDarkly, Unleash</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.2s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Database Migrations</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Database Migrations</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Atlas, Flyway, Liquibase, Alembic</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.25s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Query Builders/ORMs</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Query Builders/ORMs</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Kysley, Knex, Drizzle, TypeORM, Sequelize</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.3s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Testing</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Testing</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">pytest, Jest, Vitest, Playwright, Bats, mocha/chai, turbo, go test</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.35s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets & Security</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets & Security</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Vault, cert-manager, External Secrets, 1Password, Bitwarden, mTLS, RBAC, OpenSSL, Boundary, Cloudflare Zero Trust, Okta, Authentik, Keycloak, pfSense</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.4s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Security Scanning</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Security Scanning</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Aqua, Trivy, Wiz, CrowdStrike Falcon, Falco, Lacework</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.45s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ VCS & Collaboration</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ VCS & Collaboration</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Git, GitHub, GitLab, Bitbucket, Gitea, Perforce, Helix Swarm, Unreal Game Sync, Jira, Confluence</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.5s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Data & ML Ops</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Data & ML Ops</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Kubeflow, Airflow, Temporal, Airbyte, dbt, MLflow, Spark</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.55s both;">
-                <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Object Storage</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Object Storage</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">S3, IPFS, Minio, Wasabi</p>
               </div>
-              <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.6s both;">
-                <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Software Craftsmanship</h3>
+              <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Software Craftsmanship</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">TDD, BDD, XP, Agile, Clean Code, Design Patterns, SOLID Principles, Refactoring, 12FA</p>
               </div>
             </div>
