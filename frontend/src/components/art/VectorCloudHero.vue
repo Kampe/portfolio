@@ -8,7 +8,7 @@
       <div class="text-center space-y-4 md:space-y-6 w-full">
         <!-- Name + Role -->
         <div ref="heroNameRef">
-          <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold mb-2 md:mb-3 leading-tight" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em; color: hsl(var(--color-primary-hsl) / 1);">
+          <h1 ref="nameRef" class="text-4xl md:text-6xl font-bold mb-2 md:mb-3 leading-tight text-white" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em;">
             NICK KAMPE
           </h1>
           <p ref="roleRef" class="text-sm md:text-lg tracking-wider font-semibold inline-flex gap-1 md:gap-2 flex-wrap justify-center px-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 500; letter-spacing: 0.08em; opacity: 0; color: hsl(var(--color-secondary-hsl) / 1);">
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Tagline -->
-        <p ref="taglineRef" class="text-sm md:text-base max-w-sm md:max-w-5xl mx-auto leading-relaxed px-2" style="font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0; color: hsl(var(--color-primary-hsl) / 0.7);">
+        <p ref="taglineRef" class="text-sm md:text-base max-w-sm md:max-w-5xl mx-auto leading-relaxed px-2 text-white/80" style="font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0;">
           Expert infrastructure architect & DevOps specialist scaling production systems for startups and enterprise. <br class="hidden md:block">Designing cloud migrations, deploying modern CI/CD solutions, and building scalable platforms. <br class="hidden md:block"><span class="whitespace-nowrap">15+ years of proven expertise.</span> <span class="whitespace-nowrap">Available for strategic long-term engagements.</span>
         </p>
 
