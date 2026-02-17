@@ -87,7 +87,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
               <div class="p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.25s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud & Hosting Platforms</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">AWS, GCP, Azure, Cloudflare, DigitalOcean, Hetzner, Linode, Civo, Vercel, Railway, Proxmox</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">AWS, GCP, Azure, Cloudflare, DigitalOcean, Hetzner, Linode, Civo, Vercel, Railway, Proxmox, EBS</p>
               </div>
               <div class="p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300" style="animation: slideInUp 0.5s ease-out 0.3s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Cloud Native Solutions</h3>
@@ -155,7 +155,7 @@
               </div>
               <div class="relative p-3 md:p-4 border-2 border-cyan-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-cyan-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.1s both;">
                 <h3 class="text-cyan-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets & Security</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, Consul, cert-manager, mTLS, RBAC, OpenSSL</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, Consul, cert-manager, External Secrets, 1Password, Bitwarden, mTLS, RBAC, OpenSSL</p>
               </div>
               <div class="relative p-3 md:p-4 border-2 border-magenta-500/50 bg-slate-900/50 hover:bg-slate-900/80 hover:border-magenta-400 transition-all duration-300 group" style="animation: slideInUp 0.5s ease-out 1.15s both;">
                 <h3 class="text-magenta-300 font-bold text-xs uppercase tracking-wider mb-2">▸ Security Scanning</h3>
