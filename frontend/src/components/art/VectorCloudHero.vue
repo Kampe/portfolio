@@ -22,7 +22,7 @@
 
         <!-- Tagline -->
         <p ref="taglineRef" class="text-sm md:text-base text-slate-300 max-w-sm md:max-w-5xl mx-auto leading-relaxed px-2" style="font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0;">
-          Expert infrastructure architect & DevOps specialist scaling production systems for startups and enterprise.<br class="hidden md:block">Designing cloud migrations, deploying modern CI/CD solutions, and building scalable platforms.<br class="hidden md:block"><span class="whitespace-nowrap">15+ years of proven expertise.</span> <span class="whitespace-nowrap">Available for strategic long-term engagements.</span>
+          Expert infrastructure architect & DevOps specialist scaling production systems for startups and enterprise. <br class="hidden md:block">Designing cloud migrations, deploying modern CI/CD solutions, and building scalable platforms. <br class="hidden md:block"><span class="whitespace-nowrap">15+ years of proven expertise.</span> <span class="whitespace-nowrap">Available for strategic long-term engagements.</span>
         </p>
 
         <!-- CTA Buttons -->
