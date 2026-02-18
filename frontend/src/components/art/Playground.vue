@@ -258,6 +258,7 @@ const initScene = () => {
         energizedLevel,
         clickPulse: 0,
         deltaTime: 0.016,
+        parameters: currentParams,
       })
     }
   }
