@@ -118,7 +118,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ DevTools</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Linux, macOS, VS Code, Vim, Vagrant</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Linux, macOS, VS Code, Vim, Vagrant, PowerShell</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Languages</h3>
