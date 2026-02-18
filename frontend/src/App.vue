@@ -143,7 +143,7 @@
                 <p class="text-white/70 text-xs font-light leading-relaxed">Solidity, Vyper, Forge, Hardhat, Smart contracts, Smart contract audits, Layer 2 systems, Web3 tooling, Node hosting, Node RPC Providers, ethers.js, RainbowKit, Privy, Halliday, Echidna</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
-                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ GenAI/Large Language Models</h3>
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ GenAI/LLMs</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Copilot, Gemini, DeepSeek, AWS Bedrock, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe, Feast, Elyra, ADK, AP2, Pi, openclaw/clawdbot, PyTorch, Keras</p>
               </div>
 
