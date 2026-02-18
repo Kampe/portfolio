@@ -53,6 +53,7 @@
           <template v-if="activeSection === 'about'">
             <div class="mb-8 md:mb-12">
               <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="letter-spacing: -2px;">ABOUT</h2>
+              <div class="h-1 mt-4 bg-gradient-to-r" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.8), hsl(var(--color-secondary-hsl) / 0.4), transparent)` }"></div>
             </div>
             <div class="space-y-5 md:space-y-6 text-white/80 leading-relaxed font-light">
               <p class="text-sm md:text-base pl-4 py-2 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, borderLeftWidth: '4px' }" style="animation: slideInLeft 0.6s ease-out 0.3s both;">
@@ -75,6 +76,7 @@
           <template v-if="activeSection === 'skills'">
             <div class="mb-8 md:mb-12">
               <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }" style="letter-spacing: -2px;">SKILLS</h2>
+              <div class="h-1 mt-4 bg-gradient-to-r" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-secondary-hsl) / 0.8), hsl(var(--color-primary-hsl) / 0.4), transparent)` }"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0 pb-12">
               <!-- TIER 1: Infrastructure Core -->
@@ -231,6 +233,7 @@
           <template v-if="activeSection === 'resume'">
             <div class="mb-8 md:mb-12">
               <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="letter-spacing: -2px;">RESUME</h2>
+              <div class="h-1 mt-4 bg-gradient-to-r" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.8), hsl(var(--color-secondary-hsl) / 0.4), transparent)` }"></div>
             </div>
             <div class="space-y-6 md:space-y-8 mt-0 pb-12" style="animation: slideInUp 0.6s ease-out 0.2s both;">
               <!-- Professional Summary -->
@@ -342,13 +345,10 @@
           <template v-if="activeSection === 'contact'">
             <div class="mb-8 md:mb-12">
               <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }" style="letter-spacing: -2px;">CONTACT</h2>
+              <div class="h-1 mt-4 bg-gradient-to-r" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-secondary-hsl) / 0.8), hsl(var(--color-primary-hsl) / 0.4), transparent)` }"></div>
             </div>
             <div class="space-y-6 md:space-y-8 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
               <div>
-                <h3 class="font-bold mb-3 md:mb-4 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">
-                  <span>▸ CONNECT WITH ME</span>
-                  <span class="flex-1 h-px" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.5), transparent)` }"></span>
-                </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                   <a href="https://github.com/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
                     <Github size="18" class="transition-transform duration-300 group-hover:scale-110" />
@@ -384,7 +384,13 @@
                   </a>
                 </div>
               </div>
-              <div class="pt-3 md:pt-6" :style="{ borderTop: `1px solid hsl(var(--color-primary-hsl) / 0.2)` }">
+              <div>
+                <h3 class="font-bold mb-0 uppercase tracking-wider text-xs md:text-sm flex items-center gap-2" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">
+                  <span>▸ CONNECT WITH ME</span>
+                  <span class="flex-1 h-px" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.5), transparent)` }"></span>
+                </h3>
+              </div>
+              <div>
                 <template v-if="formSuccess">
                   <div class="flex flex-col items-center justify-center py-12 text-center" style="animation: slideInUp 0.4s ease-out;">
                     <div class="text-4xl md:text-5xl mb-4" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">✓</div>
