@@ -10,6 +10,15 @@ export default defineConfig({
     minify: 'terser',
     sourcemap: false,
     target: 'esnext',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        unused: true
+      },
+      format: {
+        comments: false
+      }
+    },
     rollupOptions: {
       output: {
         manualChunks: {

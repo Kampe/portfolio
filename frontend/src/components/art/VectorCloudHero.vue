@@ -201,16 +201,6 @@ const initScene = () => {
     wheelScrollTime = performance.now() + 2000
   }
 
-  // Handle keyboard for theme switching
-  const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key === '1') switchTheme('spectrum')
-    if (event.key === '2') switchTheme('kaleidoscope')
-    if (event.key === '3') switchTheme('milkdrop')
-    if (event.key === '4') switchTheme('dmt')
-    if (event.key === '5') switchTheme('vectorfield')
-    if (event.key === '6') switchTheme('magnetosphere')
-  }
-
   // Handle touch move (mobile equivalent of mouse move)
   const handleTouchMove = (event: TouchEvent) => {
     if (event.touches.length > 0) {
@@ -229,7 +219,6 @@ const initScene = () => {
   window.addEventListener('touchstart', handleTouch)
   window.addEventListener('touchmove', handleTouchMove, { passive: true })
   window.addEventListener('wheel', handleWheel, { passive: true })
-  window.addEventListener('keydown', handleKeydown)
 
   // Animation loop
   let lastFrameTime = performance.now()
@@ -308,7 +297,6 @@ const initScene = () => {
     window.removeEventListener('touchstart', handleTouch)
     window.removeEventListener('touchmove', handleTouchMove)
     window.removeEventListener('wheel', handleWheel)
-    window.removeEventListener('keydown', handleKeydown)
 
     // Theme manager handles all cleanup (renderer, composer, geometries, materials)
     if (themeManager) {

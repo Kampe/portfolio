@@ -13,19 +13,19 @@
       <nav ref="navRef" class="flex gap-3 md:gap-6 text-xs md:text-sm tracking-wider uppercase font-bold pointer-events-auto" style="opacity: 0;">
         <button ref="navAboutRef" @click="activeSection = 'about'" class="relative text-white transition-all duration-200 group" :style="{ '--hover-color': `hsl(var(--color-primary-hsl) / 1)` }">
           <span class="block hover:opacity-70">ABOUT</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
+          <span class="absolute bottom-0 left-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)`, width: '100%' }"></span>
         </button>
         <button ref="navSkillsRef" @click="activeSection = 'skills'" class="relative text-white transition-all duration-200 group">
           <span class="block hover:opacity-70">SKILLS</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
+          <span class="absolute bottom-0 left-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)`, width: '100%' }"></span>
         </button>
         <button ref="navResumeRef" @click="activeSection = 'resume'" class="relative text-white transition-all duration-200 group">
           <span class="block hover:opacity-70">RESUME</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
+          <span class="absolute bottom-0 left-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)`, width: '100%' }"></span>
         </button>
         <button ref="navContactRef" @click="activeSection = 'contact'" class="relative text-white transition-all duration-200 group">
           <span class="block hover:opacity-70">CONTACT</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)` }"></span>
+          <span class="absolute bottom-0 left-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)`, width: '100%' }"></span>
         </button>
       </nav>
     </header>
