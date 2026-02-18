@@ -123,6 +123,15 @@ const isDev = props.isDev !== false
 
 const bottleneck = ref('none')
 
+// Create default parameters as a single source of truth
+const createDefaultParameters = () => ({
+  scale: { name: 'Scale', type: 'range' as const, min: 0.1, max: 3, value: 1, step: 0.1, category: 'General' },
+  speed: { name: 'Speed', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'General' },
+  brightness: { name: 'Brightness', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'Rendering' },
+  bloomStrength: { name: 'Bloom Strength', type: 'range' as const, min: 0, max: 3, value: 1.2, step: 0.1, category: 'Rendering' },
+  particleSize: { name: 'Particle Size', type: 'range' as const, min: 0.5, max: 10, value: 2, step: 0.5, category: 'Particles' },
+})
+
 const initScene = () => {
   if (!canvasRef.value) return
 
@@ -139,13 +148,7 @@ const initScene = () => {
   renderer = themeSetup.renderer
 
   // Initialize default parameters
-  const defaultParams = {
-    scale: { name: 'Scale', type: 'range' as const, min: 0.1, max: 3, value: 1, step: 0.1, category: 'General' },
-    speed: { name: 'Speed', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'General' },
-    brightness: { name: 'Brightness', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'Rendering' },
-    bloomStrength: { name: 'Bloom Strength', type: 'range' as const, min: 0, max: 3, value: 1.2, step: 0.1, category: 'Rendering' },
-    particleSize: { name: 'Particle Size', type: 'range' as const, min: 0.5, max: 10, value: 2, step: 0.5, category: 'Particles' },
-  }
+  const defaultParams = createDefaultParameters()
 
   Object.assign(paramDefinitions, defaultParams)
   Object.entries(defaultParams).forEach(([key, def]) => {
@@ -172,16 +175,36 @@ const initScene = () => {
   handleResize()
   window.addEventListener('resize', handleResize)
 
+  // Convert screen coordinates to scene coordinates for PerspectiveCamera
+  const screenToSceneCoordinates = (screenX: number, screenY: number): THREE.Vector3 => {
+    if (!camera) return new THREE.Vector3(0, 0, 50)
+
+    // Normalize to NDC [-1, 1]
+    const ndc = new THREE.Vector3(
+      (screenX / canvasRef.value!.clientWidth) * 2 - 1,
+      -(screenY / canvasRef.value!.clientHeight) * 2 + 1,
+      0
+    )
+
+    // Project to a plane 50 units in front of camera
+    const vFOV = (camera.fov * Math.PI) / 180 // vertical FOV in radians
+    const height = 2 * Math.tan(vFOV / 2) * 50 // height at focal distance 50
+    const width = height * camera.aspect
+
+    return new THREE.Vector3(
+      (ndc.x * width) / 2,
+      (ndc.y * height) / 2,
+      50
+    )
+  }
+
   // Interaction handlers
   const handleMouseMove = (e: MouseEvent) => {
     const rect = canvasRef.value!.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width
-    const y = (e.clientY - rect.top) / rect.height
+    const screenX = e.clientX - rect.left
+    const screenY = e.clientY - rect.top
 
-    if (camera) {
-      mousePos.x = (x - 0.5) * (camera.right - camera.left)
-      mousePos.y = -(y - 0.5) * (camera.top - camera.bottom)
-    }
+    mousePos.copy(screenToSceneCoordinates(screenX, screenY))
   }
 
   const handleWheel = (e: WheelEvent) => {
@@ -259,13 +282,7 @@ const switchTheme = (themeName: ThemeName | string) => {
   renderer = setup.renderer
 
   // Load default parameters for theme
-  const defaultParams = {
-    scale: { name: 'Scale', type: 'range' as const, min: 0.1, max: 3, value: 1, step: 0.1, category: 'General' },
-    speed: { name: 'Speed', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'General' },
-    brightness: { name: 'Brightness', type: 'range' as const, min: 0, max: 2, value: 1, step: 0.1, category: 'Rendering' },
-    bloomStrength: { name: 'Bloom Strength', type: 'range' as const, min: 0, max: 3, value: 1.2, step: 0.1, category: 'Rendering' },
-    particleSize: { name: 'Particle Size', type: 'range' as const, min: 0.5, max: 10, value: 2, step: 0.5, category: 'Particles' },
-  }
+  const defaultParams = createDefaultParameters()
 
   Object.assign(paramDefinitions, defaultParams)
   Object.entries(defaultParams).forEach(([key, def]) => {
