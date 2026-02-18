@@ -21,30 +21,31 @@ COPY e2e/package.json ./e2e/package.json
 # Install dependencies (cached if lock files unchanged)
 RUN bun install
 
-# Copy full source code
+# Copy full source code (.dockerignore prevents build artifacts from being copied)
 COPY frontend ./frontend
 COPY backend ./backend
 COPY e2e ./e2e
 
-# Clean stale build artifacts
-RUN rm -rf frontend/dist backend/public
-
-# Build frontend
+# Build frontend - outputs to backend/public/
 RUN echo "Building frontend at ${BUILD_DATE}" && bun run build:frontend
+
+# Copy SEO files into backend/public after build
+RUN mkdir -p backend/public/.well-known
+COPY backend/public/robots.txt ./backend/public/
+COPY backend/public/sitemap.xml ./backend/public/
+COPY backend/public/manifest.json ./backend/public/
+COPY backend/public/.well-known/security.txt ./backend/public/.well-known/
 
 # Stage 2: Runtime
 FROM oven/bun:latest
 
 WORKDIR /app
 
-# Copy backend source and built frontend
+# Copy backend source and built frontend (includes public files with SEO metadata)
 COPY --from=frontend-builder /app/backend ./backend
 COPY --from=frontend-builder /app/package.json ./
 COPY --from=frontend-builder /app/bun.lock ./
 COPY --from=frontend-builder /app/.formspree.json ./
-
-# Copy all public files (SEO files, assets, etc.)
-COPY backend/public/ ./backend/public/
 
 WORKDIR /app/backend
 
