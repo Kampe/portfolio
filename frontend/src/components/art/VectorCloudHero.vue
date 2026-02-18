@@ -29,12 +29,12 @@
         <div ref="buttonsRef" class="flex flex-col md:flex-row gap-3 md:gap-4 justify-center pt-2 md:pt-4 pointer-events-auto px-2" style="opacity: 0;">
           <button @click="$emit('open-contact')" class="relative px-4 md:px-6 py-2 border-2 text-white font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden rounded-lg" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 1)`, color: 'white', textShadow: '0 0 8px rgba(0,0,0,0.6), 1px 1px 2px rgba(0,0,0,0.7)' }" @mouseenter="hoverPrimaryBtn = true" @mouseleave="hoverPrimaryBtn = false">
             <span class="absolute inset-0 transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / ${hoverPrimaryBtn ? 0.1 : 0.05})` }"></span>
-            <span class="relative block">💬 Contact Me</span>
+            <span class="relative flex items-center gap-2"><Mail size="18" />Contact Me</span>
             <span class="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 1), hsl(var(--color-secondary-hsl) / 1))`, width: hoverPrimaryBtn ? '100%' : '0%' }"></span>
           </button>
           <a href="https://github.com/Kampe" target="_blank" class="relative inline-block px-4 md:px-6 py-2 border-2 text-white font-semibold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest whitespace-nowrap group overflow-hidden rounded-lg" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 1)`, color: 'white', textShadow: '0 0 8px rgba(0,0,0,0.6), 1px 1px 2px rgba(0,0,0,0.7)' }" @mouseenter="hoverGithubBtn = true" @mouseleave="hoverGithubBtn = false">
             <span class="absolute inset-0 transition-colors duration-300" :style="{ backgroundColor: `hsl(var(--color-accent-hsl) / ${hoverGithubBtn ? 0.1 : 0.05})` }"></span>
-            <span class="relative block">🐙 GitHub</span>
+            <span class="relative flex items-center gap-2"><Github size="18" />GitHub</span>
             <span class="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 1), hsl(var(--color-secondary-hsl) / 1))`, width: hoverGithubBtn ? '100%' : '0%' }"></span>
           </a>
         </div>
@@ -78,6 +78,7 @@
 import { onMounted, onUnmounted, ref, nextTick, defineEmits, defineProps } from 'vue'
 import * as THREE from 'three'
 import gsap from 'gsap'
+import { Mail, Github } from 'lucide-vue-next'
 import { ThemeManager, getThemeFromURL, type ThemeName, type ThemeInteractionState } from './vectorCloud/themes'
 import { synthesizePattern } from './vectorCloud/synthesis'
 import type { ColorPalette } from '../../utils/colorPalettes'
