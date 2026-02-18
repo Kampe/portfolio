@@ -43,11 +43,8 @@
           <div class="absolute inset-0 rounded-lg pointer-events-none opacity-20" :style="{ backgroundImage: `linear-gradient(0deg, transparent 24%, hsl(var(--color-primary-hsl) / 0.1) 25%, hsl(var(--color-primary-hsl) / 0.1) 26%, transparent 27%, transparent 74%, hsl(var(--color-primary-hsl) / 0.1) 75%, hsl(var(--color-primary-hsl) / 0.1) 76%, transparent 77%, transparent)`, backgroundSize: '100% 4px', animation: 'scanlines 8s linear infinite' }"></div>
 
           <!-- Close Button - Fixed to modal corner -->
-          <button @click="activeSection = null" class="absolute top-4 md:top-6 right-4 md:right-6 z-20 hover:text-lg transition-all duration-200 font-bold text-2xl" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)` }" style="animation: slideInTop 0.4s ease-out 0.1s both;">
-            <span class="relative block">
-              ✕
-              <span class="absolute inset-0 text-magenta-500 opacity-0 animate-pulse" style="animation: glitchText 0.3s ease-out; animation-delay: 0.3s;">✕</span>
-            </span>
+          <button @click="activeSection = null" class="absolute top-4 md:top-6 right-4 md:right-6 z-20 hover:scale-110 transition-all duration-200" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)` }" style="animation: slideInTop 0.4s ease-out 0.1s both;">
+            <X size="24" />
           </button>
 
           <!-- Content -->
@@ -396,11 +393,13 @@
                   </div>
                 </template>
                 <form v-else @submit.prevent="submitForm" class="space-y-3 md:space-y-4">
-                  <input id="contact-name" name="name" v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required />
-                  <input id="contact-email" name="email" v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.5)` }" required />
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                    <input id="contact-name" name="name" v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required />
+                    <input id="contact-email" name="email" v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.5)` }" required />
+                  </div>
                   <textarea id="contact-message" name="message" v-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required></textarea>
-                  <button id="contact-submit" type="submit" class="w-full px-6 md:px-8 py-3 md:py-4 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg border-2" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.6), hsl(var(--color-secondary-hsl) / 0.6))`, borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, boxShadow: `0 0 30px hsl(var(--color-primary-hsl) / 0.25)` }">
-                    ▸ SEND MESSAGE
+                  <button id="contact-submit" type="submit" class="w-full px-6 md:px-8 py-3 md:py-4 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg border-2 flex items-center justify-center gap-2" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.6), hsl(var(--color-secondary-hsl) / 0.6))`, borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, boxShadow: `0 0 30px hsl(var(--color-primary-hsl) / 0.25)` }">
+                    <Send size="20" />SEND MESSAGE
                   </button>
                 </form>
               </div>
@@ -416,6 +415,7 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick, watch } from 'vue'
 import gsap from 'gsap'
+import { Send, X } from 'lucide-vue-next'
 import VectorCloudHero from './components/art/VectorCloudHero.vue'
 import { getRandomPalette, applyPaletteToDOM } from './utils/colorPalettes'
 
