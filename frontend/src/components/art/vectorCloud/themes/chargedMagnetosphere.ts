@@ -244,6 +244,20 @@ export const createChargedMagnetosphereTheme = (
     const particleColors = particleGeometry.attributes.color.array as Float32Array
     const dt = interaction.deltaTime || 1 / 60 // Use actual delta time, fallback to 60fps
 
+    // Get live-tuned parameters from interaction, fallback to defaults
+    const params = {
+      particleSize: (interaction.parameters?.particleSize as number) || PARAMS.particleSize,
+      interactionRadius: (interaction.parameters?.['speed'] as number) ? PARAMS.interactionRadius * ((interaction.parameters?.speed as number) || 1) : PARAMS.interactionRadius,
+      chargeStrength: (interaction.parameters?.['brightness'] as number) ? PARAMS.chargeStrength * ((interaction.parameters?.brightness as number) || 1) : PARAMS.chargeStrength,
+      velocityDamping: (interaction.parameters?.['speed'] as number) ? Math.pow(PARAMS.velocityDamping, ((interaction.parameters?.speed as number) || 1) * 0.5) : PARAMS.velocityDamping,
+      beatResponsiveness: PARAMS.beatResponsiveness,
+    }
+
+    // Update particle material size if changed
+    if (particleMaterial.size !== params.particleSize) {
+      particleMaterial.size = params.particleSize
+    }
+
     // Update particles with charged particle physics
     for (let i = 0; i < particleCount; i++) {
       const particle = particles[i]
@@ -268,11 +282,11 @@ export const createChargedMagnetosphereTheme = (
           const dist = Math.sqrt(distSq)
 
           if (dist < 0.05) continue // Skip if too close
-          if (dist > PARAMS.interactionRadius) continue // Skip if too far
+          if (dist > params.interactionRadius) continue // Skip if too far
 
           // Coulomb-like force: stronger repulsion/attraction
           const chargeProduct = particle.charge * other.charge
-          const forceMagnitude = (chargeProduct * PARAMS.chargeStrength) / (distSq + 0.5)
+          const forceMagnitude = (chargeProduct * params.chargeStrength) / (distSq + 0.5)
 
           forceX += (dx / dist) * forceMagnitude
           forceY += (dy / dist) * forceMagnitude
@@ -285,7 +299,7 @@ export const createChargedMagnetosphereTheme = (
         particle.velocity.z += forceZ * 0.02
 
         // Damping for drift trails
-        particle.velocity.multiplyScalar(PARAMS.velocityDamping)
+        particle.velocity.multiplyScalar(params.velocityDamping)
 
         // Update position
         particle.position.addScaledVector(particle.velocity, 1.0)
@@ -310,7 +324,7 @@ export const createChargedMagnetosphereTheme = (
         // Adjust brightness based on pattern energy
         const baseLightness = 0.55 * (1 - Math.min(1, ageRatio) * 0.3)
         const energyBoost = ageRatio <= 1 ?
-          (pattern.lightIntensity * PARAMS.beatResponsiveness * 0.05 +
+          (pattern.lightIntensity * params.beatResponsiveness * 0.05 +
           pattern.frequency.peak * 0.08) : 0
         const finalBrightness = Math.min(0.65, baseLightness + energyBoost)
 
@@ -329,7 +343,7 @@ export const createChargedMagnetosphereTheme = (
 
         const baseLightness = Math.max(0, 0.55 * (1 - Math.min(1, ageRatio) * 0.3))
         const energyBoost = ageRatio <= 1 ?
-          (pattern.lightIntensity * PARAMS.beatResponsiveness * 0.05 +
+          (pattern.lightIntensity * params.beatResponsiveness * 0.05 +
           pattern.frequency.peak * 0.08) : 0
         const lightness = Math.min(0.65, baseLightness + energyBoost)
 

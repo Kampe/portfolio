@@ -4,6 +4,7 @@
  */
 
 export { ThemeManager, getThemeFromURL, registerTheme, type ThemeName } from './themeManager'
+export { LazyThemeManager, lazyThemeRegistry, type LazyThemeFactory } from './themeManagerLazy'
 export { createSpectrumAnalyzerTheme } from './spectrumAnalyzer'
 export { createKaleidoscopeFractalsTheme } from './kaleidoscopeFractals'
 export { createDMTMorphingTheme } from './dmtMorphing'
@@ -17,6 +18,7 @@ export {
   type CursorState,
   type ThemeConfig,
   type ThemeFactory,
+  type PostProcessingComposer,
 } from './themeTypes'
 export {
   calculateCursorForce,
