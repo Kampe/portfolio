@@ -350,35 +350,35 @@
             <div class="space-y-6 md:space-y-8 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
               <div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
-                  <a href="https://github.com/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                  <a href="https://github.com/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
                     <Github size="18" class="transition-transform duration-300 group-hover:scale-110" />
                     <span>GitHub</span>
                   </a>
-                  <a href="https://linkedin.com/in/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                  <a href="https://linkedin.com/in/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
                     <Linkedin size="18" class="transition-transform duration-300 group-hover:scale-110" />
                     <span>LinkedIn</span>
                   </a>
-                  <a href="https://twitter.com/NickKampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                  <a href="https://twitter.com/NickKampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
                     <Twitter size="18" class="transition-transform duration-300 group-hover:scale-110" />
                     <span>Twitter/X</span>
                   </a>
-                  <a href="https://bitbucket.org/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                  <a href="https://bitbucket.org/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
                     <svg size="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-[18px] h-[18px] transition-transform duration-300 group-hover:scale-110"><path d="M6 7c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V7Z"/><path d="M6 17c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v0c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2v0Z"/></svg>
                     <span>BitBucket</span>
                   </a>
-                  <a href="https://stackoverflow.com/users/201297/nickkampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                  <a href="https://stackoverflow.com/users/201297/nickkampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
                     <svg size="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-[18px] h-[18px] transition-transform duration-300 group-hover:scale-110"><path d="M6.5 12h11M6.5 16h11M8 19h8M8 8h8M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/></svg>
                     <span>Stack Overflow</span>
                   </a>
-                  <a href="https://angel.co/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                  <a href="https://angel.co/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
                     <svg size="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-[18px] h-[18px] transition-transform duration-300 group-hover:scale-110"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 12h6"/></svg>
                     <span>AngelList</span>
                   </a>
-                  <a href="https://quora.com/Nick-Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                  <a href="https://quora.com/Nick-Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
                     <svg size="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-[18px] h-[18px] transition-transform duration-300 group-hover:scale-110"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm3.43-5.71C15.5 12.5 14 14.02 14 15.5v.5h-2v-.5c0-2.23 1.77-3.82 4-4.13V9.62c0-.88-.56-1.62-1.5-1.62-.95 0-1.5.75-1.5 1.62h-2c0-2.02 1.45-3.62 3.5-3.62 2.1 0 3.5 1.6 3.5 3.62v3.36z"/></svg>
                     <span>Quora</span>
                   </a>
-                  <a href="https://facebook.com/NickKampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-light px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                  <a href="https://facebook.com/NickKampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
                     <Facebook size="18" class="transition-transform duration-300 group-hover:scale-110" />
                     <span>Facebook</span>
                   </a>
