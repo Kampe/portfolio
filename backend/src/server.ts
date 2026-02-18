@@ -16,6 +16,8 @@ function getMimeType(filePath: string): string {
     'css': 'text/css',
     'js': 'application/javascript',
     'json': 'application/json',
+    'xml': 'application/xml',
+    'txt': 'text/plain',
     'png': 'image/png',
     'jpg': 'image/jpeg',
     'jpeg': 'image/jpeg',
@@ -30,10 +32,38 @@ function getMimeType(filePath: string): string {
   return mimeTypes[ext || ''] || 'application/octet-stream'
 }
 
+function getCacheHeaders(filePath: string): Record<string, string> {
+  const ext = filePath.split('.').pop()?.toLowerCase()
+
+  // Immutable assets (hashed filenames)
+  if (filePath.includes('/assets/')) {
+    return { 'Cache-Control': 'public, max-age=31536000, immutable' } // 1 year
+  }
+
+  // Long cache for fonts
+  if (['woff', 'woff2', 'ttf'].includes(ext || '')) {
+    return { 'Cache-Control': 'public, max-age=31536000, immutable' } // 1 year
+  }
+
+  // Medium cache for images
+  if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'].includes(ext || '')) {
+    return { 'Cache-Control': 'public, max-age=604800' } // 1 week
+  }
+
+  // Short cache for HTML
+  if (ext === 'html') {
+    return { 'Cache-Control': 'public, max-age=3600, must-revalidate' } // 1 hour, with revalidation
+  }
+
+  // No cache for everything else
+  return { 'Cache-Control': 'public, max-age=0, must-revalidate' }
+}
+
 export function startServer() {
   const server = Bun.serve({
     port: PORT,
     hostname: '0.0.0.0',
+    development: process.env.NODE_ENV !== 'production',
     async fetch(request: any) {
       const url = new URL(request.url)
       const pathname = url.pathname
@@ -83,8 +113,12 @@ export function startServer() {
       if (existsSync(filePath)) {
         const file = Bun.file(filePath)
         const mimeType = getMimeType(filePath)
+        const cacheHeaders = getCacheHeaders(filePath)
         return new Response(file, {
-          headers: { 'Content-Type': mimeType }
+          headers: {
+            'Content-Type': mimeType,
+            ...cacheHeaders
+          }
         })
       }
 
