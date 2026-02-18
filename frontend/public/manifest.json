@@ -1,0 +1,18 @@
+{
+  "name": "Nick Kampe - Automation Specialist & DevOps Engineer",
+  "short_name": "Nick Kampe",
+  "description": "Portfolio of automation specialist and DevOps engineer with expertise in Kubernetes, infrastructure, and modern tooling",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#ff006e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
