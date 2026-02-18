@@ -21,7 +21,7 @@
         </div>
 
         <!-- Tagline -->
-        <p ref="taglineRef" class="text-sm md:text-base max-w-sm md:max-w-5xl mx-auto leading-relaxed px-2 text-white/80" style="font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0;">
+        <p ref="taglineRef" class="text-sm md:text-base max-w-sm md:max-w-5xl mx-auto leading-relaxed px-2 text-white/80" style="font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0; text-shadow: 0 0 10px rgba(0,0,0,0.6), 1px 1px 2px rgba(0,0,0,0.7);">
           Expert infrastructure architect & DevOps specialist scaling production systems for startups and enterprise. <br class="hidden md:block">Designing cloud migrations, deploying modern CI/CD solutions, and building scalable platforms. <br class="hidden md:block"><span class="whitespace-nowrap">15+ years of proven expertise.</span> <span class="whitespace-nowrap">Available for strategic long-term engagements.</span>
         </p>
 
