@@ -90,7 +90,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ IaC</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, OpenTofu, Pulumi, Ansible, Chef, Puppet, CloudFormation, CDK, Crossplane, Packer</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, OpenTofu, Pulumi, Ansible, Chef, Puppet, CloudFormation, CDK, Crossplane, Packer, OpenShift, Salt</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ GitOps</h3>
@@ -118,7 +118,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ DevTools</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Linux, macOS, VS Code, Vim, Vagrant</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Linux, macOS, VS Code, Vim, Vagrant, PowerShell</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Languages</h3>
@@ -126,24 +126,24 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Software Craftsmanship</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">TDD, BDD, XP, Agile, Clean Code, Design Patterns, SOLID Principles, Refactoring, 12FA</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">SDLC, TDD, BDD, XP, Agile, Clean Code, Design Patterns, SOLID Principles, Refactoring, 12FA</p>
               </div>
 
               <!-- TIER 4: Data -->
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Relational Databases</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MySQL, CockroachDB, Aurora SQL, TimescaleDB, PostGIS, GeoJSON</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">PostgreSQL, MySQL, CockroachDB, Aurora SQL, TimescaleDB, PostGIS</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ NoSQL, Search & Analytics</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">MongoDB, Redis, ElasticSearch, DynamoDB, Firebase, Supabase, Qdrant, CouchDB, Memcached, InfluxDB, Clickhouse, Snowflake, Scylla</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
-                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Messaging</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">RabbitMQ, NATS, MQTT, Kafka, Redis Streams, SQS, ZeroMQ</p>
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Solidity, Vyper, Forge, Hardhat, Smart contracts, Smart contract audits, Layer 2 systems, Web3 tooling, Node hosting, Node RPC Providers, ethers.js, RainbowKit, Privy, Halliday, Echidna</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
-                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ GenAI/Large Language Models</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Copilot, Gemini, DeepSeek, AWS Bedrock, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe, Feast, Elyra, ADK, AP2, Pi, openclaw/clawdbot, PyTorch, Keras</p>
               </div>
 
@@ -162,7 +162,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ API Frameworks</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">gRPC, Express, FastAPI, Hapi, Flask, Gin</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">gRPC, Express, FastAPI, Hapi, Flask, Gin, GeoJSON, Salesforce</p>
               </div>
 
               <!-- TIER 6: Specialized/Modern -->
@@ -171,8 +171,8 @@
                 <p class="text-white/70 text-xs font-light leading-relaxed">Kubeflow, Airbyte, dbt, MLflow, Spark, Databricks</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
-                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Blockchain</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Solidity, Vyper, Forge, Hardhat, Smart contracts, Smart contract audits, Layer 2 systems, Web3 tooling, Node hosting, ethers.js, RainbowKit, Privy, Halliday, Echidna</p>
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Messaging</h3>
+                <p class="text-white/70 text-xs font-light leading-relaxed">RabbitMQ, NATS, MQTT, Kafka, Redis Streams, SQS, ZeroMQ</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Security Scanning</h3>
@@ -302,7 +302,7 @@
                   <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Languages:</strong> Go, Rust, Python, TypeScript, Node.js</div>
                   <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Databases:</strong> PostgreSQL, MongoDB, Redis, MySQL</div>
                   <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Messaging:</strong> RabbitMQ, Kafka, MQTT, AWS SQS</div>
-                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">AI/LLMs:</strong> Claude, Gemini, Codex/ChatGPT, LangChain</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">GenAI/LLMs:</strong> Claude, Gemini, Codex/ChatGPT, LangChain</div>
                   <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Automation:</strong> Bash, Python, CI/CD, Workflows</div>
                 </div>
               </div>
