@@ -143,7 +143,7 @@
                 <p class="text-white/70 text-xs font-light leading-relaxed">RabbitMQ, NATS, MQTT, Kafka, Redis Streams, SQS, ZeroMQ</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
-                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
+                <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ GenAI/Large Language Models</h3>
                 <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Copilot, Gemini, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe, Feast, Elyra, ADK, AP2, Pi, openclaw/clawdbot</p>
               </div>
 
@@ -302,7 +302,7 @@
                   <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Languages:</strong> Go, Rust, Python, TypeScript, Node.js</div>
                   <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">Databases:</strong> PostgreSQL, MongoDB, Redis, MySQL</div>
                   <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Messaging:</strong> RabbitMQ, Kafka, MQTT, AWS SQS</div>
-                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">AI/LLMs:</strong> Claude, Gemini, Codex/ChatGPT, LangChain</div>
+                  <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }">GenAI/LLMs:</strong> Claude, Gemini, Codex/ChatGPT, LangChain</div>
                   <div class="p-2 md:p-3 border-l-2 bg-slate-900/30 hover:bg-slate-900/50 transition-colors duration-300" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.6)` }"><strong :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }">Automation:</strong> Bash, Python, CI/CD, Workflows</div>
                 </div>
               </div>
