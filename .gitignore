@@ -50,6 +50,7 @@ Thumbs.db
 
 # Prompts & AI
 .claude/
+prompt/
 prompts/
 *.prompt
 claude-prompts/
