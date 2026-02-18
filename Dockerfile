@@ -43,6 +43,9 @@ COPY --from=frontend-builder /app/package.json ./
 COPY --from=frontend-builder /app/bun.lock ./
 COPY --from=frontend-builder /app/.formspree.json ./
 
+# Copy all public files (SEO files, assets, etc.)
+COPY backend/public/ ./backend/public/
+
 WORKDIR /app/backend
 
 # Install only backend dependencies
