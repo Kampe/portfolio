@@ -90,15 +90,15 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ IaC</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, OpenTofu, Pulumi, Ansible, CloudFormation, CDK, Crossplane, Packer</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Terraform, OpenTofu, Pulumi, Ansible, Chef, Puppet, CloudFormation, CDK, Crossplane, Packer</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ GitOps</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">ArgoCD, GitHub Actions, Jenkins, Tekton, Flux, TeamCity</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">ArgoCD, GitHub Actions, Azure DevOps, Jenkins, Tekton, Flux, TeamCity</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Secrets, IAM & Security</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, cert-manager, External Secrets, 1Password, Bitwarden, mTLS, RBAC, OpenSSL, Boundary, Cloudflare Zero Trust, Okta, Authentik, Keycloak, IAM</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Vault, cert-manager, External Secrets, 1Password, Bitwarden, mTLS, RBAC, OpenSSL, Boundary, Cloudflare Zero Trust, Okta, Authentik, Keycloak, IAM, Azure Key Vault, AWS Secrets Manager, Google Secret Manager</p>
               </div>
 
               <!-- TIER 2: Observability -->
@@ -122,7 +122,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Languages</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Go, Rust, Python, TypeScript, JavaScript, PHP, Bash, LUA</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Go, Rust, Python, TypeScript, JavaScript, PHP, Bash, LUA, PowerShell</p>
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ Software Craftsmanship</h3>
@@ -144,7 +144,7 @@
               </div>
               <div class="p-3 md:p-4 border-2 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 hover:shadow-lg hover:scale-105" style="border-color: hsl(var(--color-primary-hsl) / 0.6); animation: slideInUp 0.5s ease-out;">
                 <h3 class="text-white font-bold text-xs uppercase tracking-wider mb-2">▸ AI/LLMs</h3>
-                <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Copilot, Gemini, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe, Feast, Elyra, ADK, AP2, Pi, openclaw/clawdbot</p>
+                <p class="text-white/70 text-xs font-light leading-relaxed">Claude, OpenAI, Copilot, Gemini, DeepSeek, AWS Bedrock, LangChain, Ollama, Hugging Face, TensorFlow Serving, KServe, Feast, Elyra, ADK, AP2, Pi, openclaw/clawdbot, PyTorch, Keras</p>
               </div>
 
               <!-- TIER 5: Advanced -->
