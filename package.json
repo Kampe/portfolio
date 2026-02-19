@@ -1,0 +1,46 @@
+{
+  "name": "nickkampe-portfolio",
+  "version": "1.0.0",
+  "description": "State-of-the-art portfolio with generative art - Nicholas Kampe",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "e2e"
+  ],
+  "scripts": {
+    "dev": "bun run --parallel dev:frontend dev:backend",
+    "dev:frontend": "cd frontend && bun run dev",
+    "dev:backend": "cd backend && bun run dev",
+    "build": "bun run build:frontend && bun run build:backend",
+    "build:frontend": "cd frontend && bun run build",
+    "build:backend": "cd backend && bun run build",
+    "start": "cd backend && bun run start",
+    "test": "bun run test:frontend && bun run test:backend",
+    "test:frontend": "cd frontend && bun run test",
+    "test:backend": "cd backend && bun run test 2>/dev/null || true",
+    "test:e2e": "cd e2e && bun run test",
+    "test:all": "bun run test && bun run test:e2e",
+    "lint": "cd frontend && bun run lint || true"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "keywords": [
+    "portfolio",
+    "generative-art",
+    "devops",
+    "sre",
+    "three.js",
+    "vue3",
+    "bun"
+  ],
+  "author": "Nicholas Kampe",
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.48"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}

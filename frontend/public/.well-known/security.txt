@@ -1,0 +1,4 @@
+Contact: https://github.com/Kampe
+Preferred-Languages: en
+Expires: 2028-02-18T00:00:00.000Z
+Canonical: https://nickkampe.com/.well-known/security.txt

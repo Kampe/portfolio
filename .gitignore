@@ -1,0 +1,75 @@
+# Dependencies
+node_modules/
+*.pnp
+.pnp.js
+bun.lockb
+
+# Testing
+coverage/
+.nyc_output/
+
+# Production
+dist/
+build/
+backend/public/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.production.local
+.formspree.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# Build artifacts
+.next/
+out/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+.eslintcache
+
+# Prompts & AI
+.claude/
+prompt/
+prompts/
+*.prompt
+claude-prompts/
+ai-instructions/
+
+# Smart contracts & sensitive
+.secrets/
+.smartthings/
+smart-home-config/
+secrets.json
+private-keys/
+
+# Temporary
+tmp/
+temp/
+.tmp
+*.temp
+
+# Docker
+.dockerignore
+docker-compose.override.yml
