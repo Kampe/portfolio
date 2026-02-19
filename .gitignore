@@ -19,6 +19,7 @@ backend/public/
 .env.local
 .env.*.local
 .env.production.local
+.formspree.json
 
 # IDE
 .vscode/
