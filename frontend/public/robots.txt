@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.well-known/
+
+# Sitemaps
+Sitemap: https://nickkampe.com/sitemap.xml

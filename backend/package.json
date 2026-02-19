@@ -1,0 +1,20 @@
+{
+  "name": "portfolio-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "build": "echo 'Backend compiled on-demand by Bun runtime'",
+    "start": "bun src/index.ts",
+    "test": "bun test src/__tests__/*.test.ts",
+    "test:watch": "bun test src/__tests__/*.test.ts --watch"
+  },
+  "dependencies": {
+    "elysia": "latest",
+    "@sinclair/typebox": "^0.34.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "bun-types": "latest"
+  }
+}
