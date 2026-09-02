@@ -71,6 +71,7 @@ beforeEach(() => {
   themeMocks.loadTheme.mockClear()
   themeMocks.update.mockClear()
   themeMocks.dispose.mockClear()
+  themeMocks.render.mockClear()
 })
 
 afterEach(() => {
@@ -92,6 +93,20 @@ describe('VectorCloudHero.vue', () => {
       color2: 0x00ffff,
       color3: 0x0099ff,
     })
+  })
+
+  it('renders the initialized scene before starting particle physics', async () => {
+    wrapper = mount(VectorCloudHero, { props: { palette: palettes[0] } })
+    await advanceInitialPaint()
+
+    expect(wrapper.get('canvas').attributes('data-animation-state')).toBe('ready')
+    expect(themeMocks.render).toHaveBeenCalledTimes(1)
+    expect(themeMocks.update).not.toHaveBeenCalled()
+
+    animationFrames.shift()?.(performance.now())
+
+    expect(themeMocks.update).toHaveBeenCalledTimes(1)
+    expect(themeMocks.render).toHaveBeenCalledTimes(2)
   })
 
   it('emits the existing contact action', async () => {

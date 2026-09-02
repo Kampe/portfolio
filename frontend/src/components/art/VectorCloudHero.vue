@@ -217,6 +217,16 @@ const initScene = async () => {
   let lastReducedMotionFrame = 0
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+  const renderScene = () => {
+    if (!scene || !renderer || !camera) return
+
+    if (composer) {
+      composer.render()
+    } else {
+      renderer.render(scene, camera)
+    }
+  }
+
   const animate = () => {
     animationId = requestAnimationFrame(animate)
 
@@ -271,16 +281,18 @@ const initScene = async () => {
         currentTheme.update(now, pattern, interactionState)
 
         // Render
-        if (composer) {
-          composer.render()
-        } else {
-          renderer.render(scene, camera)
-        }
+        renderScene()
       }
     }
   }
 
-  animate()
+  // Present the initialized particle field before starting the expensive
+  // physics loop. Calling animate() synchronously here made the hardware path
+  // block its first browser paint while calculating particle interactions,
+  // leaving a black canvas during startup.
+  renderScene()
+  canvasRef.value.dataset.animationState = 'ready'
+  animationId = requestAnimationFrame(animate)
 
   // Cleanup function
   cleanupScene = () => {
@@ -303,6 +315,7 @@ const initScene = async () => {
     camera = null
     renderer = null
     composer = undefined
+    canvasRef.value?.removeAttribute('data-animation-state')
   }
 }
 

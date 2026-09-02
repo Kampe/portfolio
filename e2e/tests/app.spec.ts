@@ -16,6 +16,46 @@ test('preserves the original hero, content, and navigation', async ({ page }) =>
   }
 })
 
+test('the Three.js canvas paints particles and advances frames', async ({ page }) => {
+  await page.goto('/')
+
+  const canvas = page.locator('canvas[data-animation-state="ready"]')
+  await expect(canvas).toBeVisible()
+
+  const readFrame = () => page.evaluate(() => new Promise<{ hash: number; litPixels: number }>((resolve) => {
+    requestAnimationFrame(() => {
+      const canvas = document.querySelector<HTMLCanvasElement>('canvas[data-animation-state="ready"]')
+      const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
+      if (!canvas || !gl) {
+        resolve({ hash: 0, litPixels: 0 })
+        return
+      }
+
+      const pixels = new Uint8Array(canvas.width * canvas.height * 4)
+      gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
+
+      let hash = 2166136261
+      let litPixels = 0
+      for (let index = 0; index < pixels.length; index += 4) {
+        const brightness = pixels[index] + pixels[index + 1] + pixels[index + 2]
+        if (brightness > 30) litPixels += 1
+        hash ^= brightness
+        hash = Math.imul(hash, 16777619)
+      }
+
+      resolve({ hash: hash >>> 0, litPixels })
+    })
+  }))
+
+  let firstFrame = await readFrame()
+  await expect.poll(async () => {
+    firstFrame = await readFrame()
+    return firstFrame.litPixels
+  }).toBeGreaterThan(0)
+
+  await expect.poll(async () => (await readFrame()).hash).not.toBe(firstFrame.hash)
+})
+
 test('section dialogs retain their original content and hash navigation', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: 'ABOUT' }).click()
