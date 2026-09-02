@@ -59,7 +59,7 @@ function isCompressible(contentType: string): boolean {
   return /^(?:text\/|application\/(?:javascript|json|manifest\+json|xml)|image\/svg\+xml)/.test(contentType)
 }
 
-async function staticResponse(request: Request, filePath: string): Promise<Response> {
+export async function staticResponse(request: Request, filePath: string): Promise<Response> {
   const contentType = getMimeType(filePath)
   const headers = responseHeaders({ 'Content-Type': contentType, 'Cache-Control': cacheControl(filePath) })
   const acceptsGzip = request.headers.get('accept-encoding')?.split(',').some((value) => value.trim().startsWith('gzip'))

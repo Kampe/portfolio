@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'bun:test'
-import { handleRequest } from '../server'
+import { resolve } from 'node:path'
+import { handleRequest, staticResponse } from '../server'
 
 describe('request handler', () => {
   it('returns a health response with security and no-cache headers', async () => {
@@ -16,9 +17,9 @@ describe('request handler', () => {
   })
 
   it('compresses text assets when the client accepts gzip', async () => {
-    const response = await handleRequest(new Request('http://localhost/', {
+    const response = await staticResponse(new Request('http://localhost/', {
       headers: { 'Accept-Encoding': 'gzip' },
-    }))
+    }), resolve(import.meta.dir, '../../../frontend/index.html'))
     expect(response.status).toBe(200)
     expect(response.headers.get('content-encoding')).toBe('gzip')
     expect(response.headers.get('vary')).toContain('Accept-Encoding')
