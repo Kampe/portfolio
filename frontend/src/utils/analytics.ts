@@ -53,6 +53,26 @@ export function trackEvent(eventName: string, eventData: Record<string, unknown>
   window.gtag('event', eventName, eventData)
 }
 
-export function trackFormSubmission(formName: string, success: boolean): void {
-  trackEvent('form_submit', { form_name: formName, success })
+export function trackFormSubmission(formName: string, success: boolean, error?: string): void {
+  trackEvent('form_submit', { form_name: formName, success, error_message: error })
+}
+
+export function trackSectionView(section: string): void {
+  trackEvent('section_view', { section_name: section })
+}
+
+export function trackExternalLink(url: string, linkText?: string): void {
+  trackEvent('external_link_click', { url, link_text: linkText })
+}
+
+export function trackNavigation(target: string): void {
+  trackEvent('navigation', { target })
+}
+
+export function trackScrollDepth(depth: number): void {
+  trackEvent('scroll_depth', { depth_percent: Math.round(depth) })
+}
+
+export function trackError(errorName: string, errorMessage: string): void {
+  trackEvent('exception', { description: `${errorName}: ${errorMessage}`, fatal: false })
 }

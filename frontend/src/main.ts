@@ -1,9 +1,11 @@
-import { ViteSSG } from 'vite-ssg'
+import { createApp } from 'vue'
 import App from './App.vue'
-import { routes } from './router'
 import './styles/global.css'
-import { trackPageView } from './utils/analytics'
+import { initializeGoogleAnalytics } from './utils/analytics'
 
-export const createApp = ViteSSG(App, { routes, scrollBehavior: () => ({ top: 0 }) }, ({ router, isClient }) => {
-  if (isClient) router.afterEach((to) => trackPageView(to.fullPath))
-})
+const app = createApp(App)
+
+if (['nickkampe.com', 'www.nickkampe.com'].includes(window.location.hostname)) {
+  initializeGoogleAnalytics()
+}
+app.mount('#app')

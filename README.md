@@ -1,104 +1,305 @@
-# Nick Kampe portfolio
+# Nick Kampe's Portfolio
 
-A proof-led platform-engineering portfolio for [nickkampe.com](https://nickkampe.com). The site pairs statically rendered case studies with an optional generative WebGL lab and a small Bun contact API.
+A cutting-edge portfolio website featuring dynamic WebGL visualizations built with **Three.js**, showcasing expertise in DevOps engineering, infrastructure automation, and cloud-native technologies.
 
-## What the site includes
+## Overview
 
-- Static, crawlable pages for the homepage, work, case studies, expertise, resume, contact, lab, and privacy
-- Case studies based on real work at Yuga Labs, PowerFlex / EDF Renewables, and Emerson
-- Route-specific titles, descriptions, canonical links, sitemap entries, structured data, social preview art, and install icons
-- Responsive navigation, semantic landmarks, visible form labels, keyboard focus, reduced-motion support, and automated Axe checks
-- Consent-controlled analytics that respects Do Not Track and Global Privacy Control
-- A progressive Three.js experience that is skipped on small screens, reduced-motion devices, and data-saver connections
-- Server-side validation, body limits, provider timeouts, rate limiting, a honeypot, accurate HTTP errors, secure static paths, security headers, and real 404 responses
+This portfolio is designed for **DevOps automation contract engagements**, featuring:
 
-## Stack
+- **Interactive 3D Visualizations** — Charged Magnetosphere particle system (inspired by Robert Hodgin's iconic visualizer)
+- **Performance-Optimized** — 60fps rendering on desktop, 30-45fps on mobile
+- **Modern Tech Stack** — Vue 3, TypeScript, Vite, Docker
+- **Responsive Design** — Works seamlessly on mobile, tablet, and desktop
+- **AI-Enhanced** — Leveraging Claude, Gemini, and modern LLMs
 
-- Vue 3, Vue Router, TypeScript, Vite, and Vite SSG
-- Three.js, isolated behind a dynamic import
-- Bun HTTP server and test runner
-- Playwright and Axe for browser and accessibility coverage
-- Docker, Trivy, Lighthouse CI, Dependabot, and SPDX SBOM generation
+## Tech Stack
 
-## Local development
+### Frontend
+- **Vue 3** — Progressive JavaScript framework for reactive UIs
+- **TypeScript** — Type-safe development
+- **Three.js** — WebGL rendering library for 3D graphics
+- **GSAP** — Animation library for smooth transitions
+- **Tailwind CSS** — Utility-first CSS framework
+- **Vite** — Next-generation frontend build tool
 
-Requirements: Bun 1.3.13+, a current Chromium installation for browser tests, and Docker only when testing the container.
+### Backend
+- **Elysia** — Lightweight, fast Bun HTTP server
+- **TypeScript** — End-to-end type safety
+- **Bun** — Ultra-fast JavaScript runtime
 
-```zsh
-bun install --frozen-lockfile
-bun run dev
+### Infrastructure
+- **Docker** — Containerization for consistent deployments
+- **Docker Compose** — Multi-container orchestration
+
+## Features
+
+### Visualizations
+
+**Charged Magnetosphere Theme** (Default)
+- Charged particle system with attractive/repulsive forces
+- Complementary color pairs randomized at load
+- Smooth drift and organic particle interactions
+- Perfect backdrop for portfolio content
+
+### Navigation
+- Clean, minimal top-right navigation (ABOUT, SKILLS, RESUME, CONTACT)
+- Smooth modal overlays with content sections
+- Fully responsive on mobile devices
+
+### Content Sections
+
+**About**
+- Professional background and expertise summary
+- Focus on DevOps automation and contract work
+- AI/LLM integration capabilities
+
+**Skills**
+- Organized grid of technical expertise
+- Cloud platforms (AWS, GCP, Azure)
+- Kubernetes and orchestration tools
+- Infrastructure-as-Code (Terraform, Ansible, Crossplane)
+- Observability stack (Prometheus, Grafana, Loki, Tempo)
+- GitOps solutions (ArgoCD, Flux)
+- AI/LLM tools (Claude, Gemini, LangChain)
+
+**Resume**
+- Professional summary emphasizing DevOps consulting
+- Core experience from staff-level roles
+- Technical expertise grid
+- Education and achievements
+
+**Contact**
+- Social links (GitHub, LinkedIn, Twitter)
+- Contact form with backend integration
+- Email notification support
+
+## Development
+
+### Prerequisites
+- **Node.js 18+** or **Bun** runtime
+- **Docker** and **Docker Compose**
+- **Git**
+
+### Installation
+
+```bash
+# Clone repository
+git clone <repo-url>
+cd portfolio
+
+# Install dependencies (frontend)
+cd frontend
+npm install    # or: bun install
+
+# Install dependencies (backend)
+cd ../backend
+npm install    # or: bun install
 ```
 
-The Vite frontend runs on `http://localhost:5173`; the Bun server runs on `http://localhost:3001`. Vite proxies `/api` requests to the Bun server so the contact flow works in development.
+### Local Development
 
-```zsh
-bun run build
-bun run start
+**With Docker (Recommended)**
+```bash
+docker compose up --build
 ```
 
-The production server is then available at `http://localhost:3001`.
+The app will be available at `http://localhost:3001`
 
-## Quality gates
+**Without Docker**
+```bash
+# Terminal 1: Frontend (Vite dev server)
+cd frontend
+npm run dev        # or: bun run dev
 
-```zsh
-bun run check       # lint, typecheck, unit tests, production build
-bun run test:e2e    # desktop and mobile browser + Axe tests
-bun audit           # dependency advisory scan
-trivy fs --scanners vuln,misconfig,secret --severity HIGH,CRITICAL --ignore-unfixed .
+# Terminal 2: Backend
+cd backend
+npm run dev        # or: bun run dev
 ```
 
-Lighthouse budgets live in `.lighthouserc.cjs`. CI enforces performance, accessibility, best-practices, and SEO thresholds on the home, work, and contact pages.
+### Project Structure
+
+```
+portfolio/
+├── frontend/                    # Vue 3 application
+│   ├── src/
+│   │   ├── components/         # Vue components
+│   │   │   └── art/
+│   │   │       └── vectorCloud/ # 3D visualization system
+│   │   │           └── themes/  # Visualization themes
+│   │   ├── styles/             # Global styles & fonts
+│   │   ├── App.vue             # Root component
+│   │   └── main.ts
+│   ├── package.json
+│   └── vite.config.ts
+├── backend/                     # Elysia HTTP server
+│   ├── src/
+│   │   ├── routes/             # API endpoints
+│   │   └── index.ts            # Server entry point
+│   └── package.json
+├── Dockerfile                  # Single unified container
+├── docker-compose.yml          # Container orchestration
+└── README.md                   # This file
+```
+
+### Building for Production
+
+```bash
+# Build container
+docker compose build
+
+# Run in production
+docker compose up
+
+# Or deploy image
+docker push <registry>/portfolio:latest
+```
+
+## Visualization System
+
+### Theme Architecture
+
+The visualization system is modular and extensible:
+
+```
+ThemeManager
+├── Themes
+│   ├── chargedMagnetosphere.ts    (Primary theme)
+│   ├── chargedMagnetosphereV2.ts  (Improved iteration)
+│   ├── spectrumAnalyzer.ts
+│   ├── kaleidoscopeFractals.ts
+│   ├── dmtGeometry.ts
+│   ├── milkdropMorphing.ts
+│   └── vectorFieldFloor.ts
+├── Synthesis Engine
+│   └── Procedural pattern generation
+└── Interaction State
+    └── Cursor, click, and scroll handling
+```
+
+### Adding New Themes
+
+1. Create a new theme file in `frontend/src/components/art/vectorCloud/themes/`
+2. Implement the `createTheme()` export following the pattern in existing themes
+3. Register in `themeManager.ts`
+4. Optional: Add theme switcher UI
+
+## Performance Optimization
+
+- **DPR Limiting** — Constrained to 1.5× for performance
+- **Efficient Particle Physics** — Frame-rate independent deltaTime
+- **Bloom Pass Tuning** — Balanced glow without text washout
+- **Frustum Culling** — Built-in Three.js optimization
+- **Lazy Loading** — Themes loaded on demand
+
+## Deployment
+
+### Docker
+```bash
+docker compose up --build -d
+```
+
+### Health Check
+```bash
+curl http://localhost:3001/health
+```
+
+Should return:
+```json
+{"status":"ok","timestamp":"2026-02-16T03:22:53.804Z"}
+```
 
 ## Configuration
 
-| Variable | Phase | Purpose |
-| --- | --- | --- |
-| `FORMSPREE_ID` | Runtime | Formspree form identifier. Defaults to the portfolio’s public form ID. |
-| `PORT` | Runtime | Bun server port. Defaults to `3001`. |
-| `PUBLIC_DIR` | Runtime | Static build directory. Set by the container. |
-| `PUBLIC_ORIGIN` | Runtime | Optional canonical origin allowed to submit the contact form when a reverse proxy changes the request host. |
-| `VITE_GA_ID` | Build | Google Analytics measurement ID. Defaults to the production property. |
+### Frontend
+- `frontend/vite.config.ts` — Build and dev server configuration
+- `frontend/tailwind.config.js` — Tailwind CSS customization
 
-Analytics does not load until a visitor opts in. Contact messages are sent to Formspree only after local validation succeeds. Do not put secrets in frontend variables or contact-form submissions.
+### Backend
+- `backend/src/index.ts` — Server routes and middleware
+- `Dockerfile` — Single unified container build
 
-## Project layout
+### Environment
+- Create `.env` file for environment-specific variables (not committed to git)
 
-```text
-frontend/
-  public/                 SEO, PWA, security, and social assets
-  src/components/         Shared shell, cards, consent, and progressive visual
-  src/content/            Typed portfolio content
-  src/pages/              Route-level pages
-  src/router.ts           Public route map
-backend/
-  src/routes/contact.ts   Validation and Formspree adapter
-  src/server.ts           Static server, API boundary, headers, and 404 handling
-e2e/
-  tests/                  Product, mobile, form, 404, and Axe coverage
-.github/
-  workflows/ci.yml        Quality, browser, Lighthouse, image scan, and SBOM jobs
+## Typography
+
+The site uses a professional font stack:
+- **Headings**: Space Grotesk (geometric, modern)
+- **Body**: Inter (clean, readable)
+- Imported from Google Fonts
+
+## API Endpoints
+
+### Health Check
+```
+GET /health
+```
+Returns server status and timestamp.
+
+### Contact Form
+```
+POST /api/contact
+Content-Type: application/json
+
+{
+  "name": "string",
+  "email": "string",
+  "message": "string"
+}
 ```
 
-The frontend build writes static assets and rendered HTML directly to `backend/public/`. That directory is generated and intentionally ignored by Git.
+## Browser Support
 
-## Container
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+- Mobile browsers (iOS Safari, Chrome Android)
 
-The image uses a digest-pinned Bun Alpine base, applies available Alpine security upgrades, carries no runtime package installation, and runs as the unprivileged `bun` user. Compose removes Linux capabilities, prevents privilege escalation, uses a read-only root filesystem, and supplies only a small temporary filesystem.
+## Performance Targets
 
-```zsh
-BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ) docker compose build
-docker compose up
-curl --fail http://127.0.0.1:3001/health
-```
+- **Desktop**: 60 FPS with Magnetosphere theme
+- **Mobile**: 30-45 FPS with particle physics
+- **Page Load**: < 3 seconds
+- **Lighthouse**: 90+ score
 
-CI scans both the repository and final image with Trivy and uploads an SPDX JSON SBOM. Image signing belongs in the registry publishing workflow once a deployment registry is configured; this repository does not claim to sign an image it does not publish.
+## Known Limitations
 
-## Content and design rules
+- Particle physics is computationally intensive on low-end devices
+- Mobile devices may experience 30-45 FPS instead of 60
+- Very large screens (8K+) may require DPR adjustment
 
-- Do not invent impact metrics. Use a qualitative outcome when a verified number is unavailable.
-- Keep work details generalized where confidentiality requires it.
-- Treat the lab as optional enhancement, never a prerequisite for reading or navigation.
-- Preserve 44px minimum interactive targets, visible focus, useful labels, and reduced-motion behavior.
-- Measure any new client-side dependency against the initial bundle and Lighthouse budgets.
+## Customization
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution expectations, [SECURITY.md](SECURITY.md) for private vulnerability reporting, and [LICENSE](LICENSE) for usage terms.
+### Themes
+Each theme is fully customizable through `PARAMS` object at the top of theme files. Modify:
+- Particle count
+- Bloom settings
+- Physics parameters
+- Color palettes
+- Motion speeds
+
+### Colors & Styling
+- Global colors: `frontend/src/styles/global.css`
+- Component styles: Tailwind classes throughout
+- SVG icons: Inline in Vue templates
+
+## Security Considerations
+
+- ✅ No API keys exposed in frontend code
+- ✅ `.gitignore` excludes `.env` and secrets
+- ✅ Backend validates all input
+- ✅ Container runs non-root (build-time verified)
+
+## Contributing
+
+This is a personal portfolio. For suggestions or improvements, please contact directly.
+
+## License
+
+Personal portfolio © 2026 Nick Kampe. All rights reserved.
+
+---
+
+**Built with**: Vue 3 • Three.js • TypeScript • Bun • Docker
+
+**Contact**: [GitHub](https://github.com/Kampe) | [LinkedIn](https://linkedin.com/in/Kampe) | [Twitter](https://twitter.com/NickKampe)

@@ -4,21 +4,14 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   publicDir: 'public',
-  ssgOptions: {
-    includedRoutes() {
-      return [
-        '/', '/work', '/work/yuga-platform', '/work/powerflex-multicloud', '/work/emerson-iot',
-        '/about', '/resume', '/contact', '/lab', '/privacy', '/404',
-      ]
-    },
-  },
   build: {
     outDir: '../backend/public',
     emptyOutDir: true,
     minify: 'terser',
     sourcemap: false,
     target: 'esnext',
-    chunkSizeWarningLimit: 550,
+    // Three.js is intentionally isolated behind the visualizer's dynamic import.
+    chunkSizeWarningLimit: 750,
     terserOptions: {
       compress: {
         drop_console: true,

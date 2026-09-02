@@ -1,24 +1,54 @@
-import { mount, RouterLinkStub } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import App from '../App.vue'
 
-describe('application shell', () => {
-  it('provides landmarks, a skip link, and primary navigation', () => {
-    const wrapper = mount(App, {
-      global: { stubs: { RouterLink: RouterLinkStub, RouterView: { template: '<div>Page content</div>' }, PrivacyControls: true, RouteAnnouncer: true } },
-    })
-    expect(wrapper.find('header').exists()).toBe(true)
-    expect(wrapper.get('main').attributes('id')).toBe('main-content')
-    expect(wrapper.find('footer').exists()).toBe(true)
-    expect(wrapper.get('.skip-link').attributes('href')).toBe('#main-content')
-    expect(wrapper.get('nav').attributes('aria-label')).toBe('Primary')
+let wrapper: VueWrapper | undefined
+
+function mountApp() {
+  wrapper = mount(App, {
+    attachTo: document.body,
+    global: {
+      stubs: {
+        Teleport: true,
+        VectorCloudHero: { template: '<div data-testid="hero">NICK KAMPE</div>' },
+      },
+    },
+  })
+  return wrapper
+}
+
+afterEach(() => {
+  wrapper?.unmount()
+  wrapper = undefined
+  window.history.replaceState({}, '', '/')
+  document.body.innerHTML = ''
+})
+
+describe('App.vue', () => {
+  it('preserves the original hero and section navigation', () => {
+    const app = mountApp()
+    expect(app.text()).toContain('NICK KAMPE')
+    expect(app.find('nav[aria-label="Portfolio sections"]').text()).toContain('ABOUT')
+    expect(app.find('nav[aria-label="Portfolio sections"]').text()).toContain('SKILLS')
+    expect(app.find('nav[aria-label="Portfolio sections"]').text()).toContain('RESUME')
+    expect(app.find('nav[aria-label="Portfolio sections"]').text()).toContain('CONTACT')
   })
 
-  it('uses semantic links for every primary destination', () => {
-    const wrapper = mount(App, {
-      global: { stubs: { RouterLink: RouterLinkStub, RouterView: true, PrivacyControls: true, RouteAnnouncer: true } },
-    })
-    const destinations = wrapper.findAllComponents(RouterLinkStub).map((link) => link.props('to'))
-    expect(destinations).toEqual(expect.arrayContaining(['/work', '/about', '/resume', '/lab', '/contact']))
+  it('opens the original about content in an accessible dialog', async () => {
+    const app = mountApp()
+    await app.get('button').trigger('click')
+
+    const dialog = app.get('[role="dialog"]')
+    expect(dialog.attributes('aria-modal')).toBe('true')
+    expect(dialog.text()).toContain('Infrastructure Architect & Platform Engineer')
+    expect(window.location.hash).toBe('#about')
+  })
+
+  it('closes a section with Escape', async () => {
+    const app = mountApp()
+    await app.get('button').trigger('click')
+    await app.get('[role="dialog"]').trigger('keydown', { key: 'Escape' })
+
+    expect(app.find('[role="dialog"]').exists()).toBe(false)
   })
 })

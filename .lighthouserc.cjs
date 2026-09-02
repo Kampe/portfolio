@@ -1,8 +1,8 @@
 module.exports = {
   ci: {
     collect: {
-      url: ['http://127.0.0.1:3001/', 'http://127.0.0.1:3001/work', 'http://127.0.0.1:3001/contact'],
-      numberOfRuns: 2,
+      url: ['http://127.0.0.1:3001/'],
+      numberOfRuns: 3,
       settings: { chromeFlags: '--no-sandbox --headless=new' },
     },
     assert: {

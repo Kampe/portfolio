@@ -8,6 +8,8 @@ const PUBLIC_DIR = process.env.PUBLIC_DIR || (process.env.NODE_ENV === 'producti
 const MAX_BODY_BYTES = 64 * 1024
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT_MAX = 5
+const MIN_COMPRESSIBLE_BYTES = 1024
+const compressedFiles = new Map<string, Uint8Array>()
 
 const securityHeaders: Record<string, string> = {
   'Content-Security-Policy': "default-src 'self'; base-uri 'self'; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; font-src 'self' data:; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; upgrade-insecure-requests",
@@ -51,6 +53,35 @@ function cacheControl(filePath: string): string {
   if (filePath.includes(`${sep}assets${sep}`)) return 'public, max-age=31536000, immutable'
   if (/\.(?:png|jpe?g|gif|svg|ico|webp|avif|woff2?|ttf)$/.test(filePath)) return 'public, max-age=604800'
   return 'public, max-age=0, must-revalidate'
+}
+
+function isCompressible(contentType: string): boolean {
+  return /^(?:text\/|application\/(?:javascript|json|manifest\+json|xml)|image\/svg\+xml)/.test(contentType)
+}
+
+async function staticResponse(request: Request, filePath: string): Promise<Response> {
+  const contentType = getMimeType(filePath)
+  const headers = responseHeaders({ 'Content-Type': contentType, 'Cache-Control': cacheControl(filePath) })
+  const acceptsGzip = request.headers.get('accept-encoding')?.split(',').some((value) => value.trim().startsWith('gzip'))
+  const file = Bun.file(filePath)
+
+  if (acceptsGzip && isCompressible(contentType) && file.size >= MIN_COMPRESSIBLE_BYTES) {
+    let compressed = compressedFiles.get(filePath)
+    if (!compressed) {
+      compressed = Bun.gzipSync(new Uint8Array(await file.arrayBuffer()))
+      compressedFiles.set(filePath, compressed)
+    }
+    headers.set('Content-Encoding', 'gzip')
+    headers.set('Vary', 'Accept-Encoding')
+    headers.set('Content-Length', String(compressed.byteLength))
+    const body = compressed.buffer.slice(
+      compressed.byteOffset,
+      compressed.byteOffset + compressed.byteLength,
+    ) as ArrayBuffer
+    return new Response(request.method === 'HEAD' ? null : body, { headers })
+  }
+
+  return new Response(request.method === 'HEAD' ? null : file, { headers })
 }
 
 function isFile(filePath: string): boolean {
@@ -135,8 +166,7 @@ export async function handleRequest(request: Request, server?: Server<undefined>
 
   const filePath = findStaticFile(url.pathname)
   if (filePath) {
-    const headers = responseHeaders({ 'Content-Type': getMimeType(filePath), 'Cache-Control': cacheControl(filePath) })
-    return new Response(request.method === 'HEAD' ? null : Bun.file(filePath), { headers })
+    return staticResponse(request, filePath)
   }
 
   const notFoundPath = findStaticFile('/404')

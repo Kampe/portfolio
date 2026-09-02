@@ -15,6 +15,15 @@ describe('request handler', () => {
     expect(response.status).toBe(404)
   })
 
+  it('compresses text assets when the client accepts gzip', async () => {
+    const response = await handleRequest(new Request('http://localhost/', {
+      headers: { 'Accept-Encoding': 'gzip' },
+    }))
+    expect(response.status).toBe(200)
+    expect(response.headers.get('content-encoding')).toBe('gzip')
+    expect(response.headers.get('vary')).toContain('Accept-Encoding')
+  })
+
   it('rejects invalid JSON and wrong content types', async () => {
     const wrongType = await handleRequest(new Request('http://localhost/api/contact', { method: 'POST', body: 'hello' }))
     expect(wrongType.status).toBe(415)
