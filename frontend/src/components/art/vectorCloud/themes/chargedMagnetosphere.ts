@@ -124,23 +124,34 @@ export const createChargedMagnetosphereTheme = (
   renderer.toneMapping = THREE.ACESFilmicToneMapping
   renderer.toneMappingExposure = PARAMS.toneMappingExposure
 
-  // ===== POSTPROCESSING =====
-  const composer = new EffectComposer(renderer)
-  const renderPass = new RenderPass(scene, camera)
-  composer.addPass(renderPass)
+  const gl = renderer.getContext()
+  const debugRendererInfo = gl.getExtension('WEBGL_debug_renderer_info')
+  const rendererDescription = debugRendererInfo
+    ? String(gl.getParameter(debugRendererInfo.UNMASKED_RENDERER_WEBGL))
+    : ''
+  const isSoftwareRenderer = /swiftshader|llvmpipe|software rasterizer/i.test(rendererDescription)
+  const isConstrainedRenderer = isSoftwareRenderer || (navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 2)
 
-  const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(width, height),
-    PARAMS.bloomStrength, // strength - intense glow
-    PARAMS.bloomRadius, // radius
-    PARAMS.bloomThreshold // threshold
-  )
-  composer.addPass(bloomPass)
+  // ===== POSTPROCESSING =====
+  let composer: EffectComposer | undefined
+  if (!isConstrainedRenderer && !prefersReducedMotion) {
+    composer = new EffectComposer(renderer)
+    const renderPass = new RenderPass(scene, camera)
+    composer.addPass(renderPass)
+
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(width, height),
+      PARAMS.bloomStrength,
+      PARAMS.bloomRadius,
+      PARAMS.bloomThreshold
+    )
+    composer.addPass(bloomPass)
+  }
 
   // ===== PARTICLE SYSTEM =====
   // Keep the full original density on desktop, while avoiding an unnecessarily
   // expensive 2,000-particle simulation on small or reduced-motion devices.
-  const particleCount = prefersReducedMotion ? 500 : width < 768 ? 900 : PARAMS.particleCount
+  const particleCount = isConstrainedRenderer ? 200 : prefersReducedMotion ? 500 : width < 768 ? 900 : PARAMS.particleCount
   const particles: ChargedParticle[] = []
 
   const particleGeometry = new THREE.BufferGeometry()
@@ -243,7 +254,7 @@ export const createChargedMagnetosphereTheme = (
     camera.aspect = newWidth / newHeight
     camera.updateProjectionMatrix()
     renderer.setSize(newWidth, newHeight)
-    composer.setSize(newWidth, newHeight)
+    composer?.setSize(newWidth, newHeight)
   }
 
   window.addEventListener('resize', handleResize)
@@ -438,7 +449,7 @@ export const createChargedMagnetosphereTheme = (
     particleGeometry.dispose()
     particleMaterial.dispose()
     glowTexture.dispose()
-    composer.dispose()
+    composer?.dispose()
     renderer.dispose()
   }
 

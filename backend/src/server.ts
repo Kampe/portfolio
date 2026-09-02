@@ -9,7 +9,12 @@ const MAX_BODY_BYTES = 64 * 1024
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT_MAX = 5
 const MIN_COMPRESSIBLE_BYTES = 1024
-const compressedFiles = new Map<string, Uint8Array>()
+interface CompressedFileCacheEntry {
+  bytes: Uint8Array
+  mtimeMs: number
+  size: number
+}
+const compressedFiles = new Map<string, CompressedFileCacheEntry>()
 
 const securityHeaders: Record<string, string> = {
   'Content-Security-Policy': "default-src 'self'; base-uri 'self'; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; font-src 'self' data:; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; upgrade-insecure-requests",
@@ -64,13 +69,19 @@ export async function staticResponse(request: Request, filePath: string): Promis
   const headers = responseHeaders({ 'Content-Type': contentType, 'Cache-Control': cacheControl(filePath) })
   const acceptsGzip = request.headers.get('accept-encoding')?.split(',').some((value) => value.trim().startsWith('gzip'))
   const file = Bun.file(filePath)
+  const metadata = statSync(filePath)
 
-  if (acceptsGzip && isCompressible(contentType) && file.size >= MIN_COMPRESSIBLE_BYTES) {
-    let compressed = compressedFiles.get(filePath)
-    if (!compressed) {
-      compressed = Bun.gzipSync(new Uint8Array(await file.arrayBuffer()))
-      compressedFiles.set(filePath, compressed)
+  if (acceptsGzip && isCompressible(contentType) && metadata.size >= MIN_COMPRESSIBLE_BYTES) {
+    let cached = compressedFiles.get(filePath)
+    if (!cached || cached.mtimeMs !== metadata.mtimeMs || cached.size !== metadata.size) {
+      cached = {
+        bytes: Bun.gzipSync(new Uint8Array(await file.arrayBuffer())),
+        mtimeMs: metadata.mtimeMs,
+        size: metadata.size,
+      }
+      compressedFiles.set(filePath, cached)
     }
+    const compressed = cached.bytes
     headers.set('Content-Encoding', 'gzip')
     headers.set('Vary', 'Accept-Encoding')
     headers.set('Content-Length', String(compressed.byteLength))

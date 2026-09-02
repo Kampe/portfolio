@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'bun:test'
-import { resolve } from 'node:path'
+import { mkdtempSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join, resolve } from 'node:path'
 import { handleRequest, staticResponse } from '../server'
 
 describe('request handler', () => {
@@ -23,6 +25,24 @@ describe('request handler', () => {
     expect(response.status).toBe(200)
     expect(response.headers.get('content-encoding')).toBe('gzip')
     expect(response.headers.get('vary')).toContain('Accept-Encoding')
+  })
+
+  it('invalidates compressed assets after their source file changes', async () => {
+    const fixtureDirectory = mkdtempSync(join(tmpdir(), 'portfolio-compression-'))
+    const fixturePath = join(fixtureDirectory, 'index.html')
+    const request = new Request('http://localhost/', { headers: { 'Accept-Encoding': 'gzip' } })
+
+    try {
+      await Bun.write(fixturePath, `first-${'a'.repeat(2048)}`)
+      await staticResponse(request, fixturePath)
+      await Bun.write(fixturePath, `second-${'b'.repeat(2049)}`)
+
+      const refreshed = await staticResponse(request, fixturePath)
+      const uncompressed = Bun.gunzipSync(new Uint8Array(await refreshed.arrayBuffer()))
+      expect(new TextDecoder().decode(uncompressed)).toStartWith('second-')
+    } finally {
+      rmSync(fixtureDirectory, { recursive: true, force: true })
+    }
   })
 
   it('rejects invalid JSON and wrong content types', async () => {
