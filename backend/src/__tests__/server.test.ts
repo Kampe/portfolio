@@ -13,6 +13,18 @@ describe('request handler', () => {
     expect((await response.json() as { status: string }).status).toBe('ok')
   })
 
+  it('only enforces HTTPS upgrades for secure requests', async () => {
+    const lanResponse = await handleRequest(new Request('http://192.168.1.21/health'))
+    expect(lanResponse.headers.get('content-security-policy')).not.toContain('upgrade-insecure-requests')
+    expect(lanResponse.headers.get('cross-origin-opener-policy')).toBeNull()
+    expect(lanResponse.headers.get('strict-transport-security')).toBeNull()
+
+    const productionResponse = await handleRequest(new Request('https://nickkampe.com/health'))
+    expect(productionResponse.headers.get('content-security-policy')).toContain('upgrade-insecure-requests')
+    expect(productionResponse.headers.get('cross-origin-opener-policy')).toBe('same-origin')
+    expect(productionResponse.headers.get('strict-transport-security')).toContain('max-age=63072000')
+  })
+
   it('returns 404 for an unknown API endpoint', async () => {
     const response = await handleRequest(new Request('http://localhost/api/missing'))
     expect(response.status).toBe(404)

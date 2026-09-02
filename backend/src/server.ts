@@ -16,12 +16,11 @@ interface CompressedFileCacheEntry {
 }
 const compressedFiles = new Map<string, CompressedFileCacheEntry>()
 
+const CONTENT_SECURITY_POLICY = "default-src 'self'; base-uri 'self'; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; font-src 'self' data:; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'"
 const securityHeaders: Record<string, string> = {
-  'Content-Security-Policy': "default-src 'self'; base-uri 'self'; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; font-src 'self' data:; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; upgrade-insecure-requests",
-  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Content-Security-Policy': CONTENT_SECURITY_POLICY,
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
 }
@@ -37,14 +36,24 @@ const mimeTypes: Record<string, string> = {
 interface RateRecord { count: number; resetAt: number }
 const rateLimits = new Map<string, RateRecord>()
 
-function responseHeaders(extra: HeadersInit = {}): Headers {
+function isSecureRequest(request: Request): boolean {
+  const forwardedProtocol = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim().toLowerCase()
+  return new URL(request.url).protocol === 'https:' || forwardedProtocol === 'https'
+}
+
+function responseHeaders(extra: HeadersInit = {}, request?: Request): Headers {
   const headers = new Headers(securityHeaders)
+  if (request && isSecureRequest(request)) {
+    headers.set('Content-Security-Policy', `${CONTENT_SECURITY_POLICY}; upgrade-insecure-requests`)
+    headers.set('Cross-Origin-Opener-Policy', 'same-origin')
+    headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
+  }
   new Headers(extra).forEach((value, key) => headers.set(key, value))
   return headers
 }
 
-function json(data: unknown, status = 200, extra: HeadersInit = {}): Response {
-  const headers = responseHeaders(extra)
+function json(request: Request, data: unknown, status = 200, extra: HeadersInit = {}): Response {
+  const headers = responseHeaders(extra, request)
   headers.set('Cache-Control', 'no-store')
   return Response.json(data, { status, headers })
 }
@@ -66,7 +75,7 @@ function isCompressible(contentType: string): boolean {
 
 export async function staticResponse(request: Request, filePath: string): Promise<Response> {
   const contentType = getMimeType(filePath)
-  const headers = responseHeaders({ 'Content-Type': contentType, 'Cache-Control': cacheControl(filePath) })
+  const headers = responseHeaders({ 'Content-Type': contentType, 'Cache-Control': cacheControl(filePath) }, request)
   const acceptsGzip = request.headers.get('accept-encoding')?.split(',').some((value) => value.trim().startsWith('gzip'))
   const file = Bun.file(filePath)
   const metadata = statSync(filePath)
@@ -151,29 +160,29 @@ function isRateLimited(key: string, now = Date.now()): boolean {
 }
 
 async function handleContact(request: Request, server?: Server<undefined>): Promise<Response> {
-  if (request.method !== 'POST') return json({ error: 'Method not allowed.' }, 405, { Allow: 'POST' })
-  if (!isAllowedOrigin(request)) return json({ error: 'Cross-origin submission rejected.' }, 403)
-  if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) return json({ error: 'Content-Type must be application/json.' }, 415)
+  if (request.method !== 'POST') return json(request, { error: 'Method not allowed.' }, 405, { Allow: 'POST' })
+  if (!isAllowedOrigin(request)) return json(request, { error: 'Cross-origin submission rejected.' }, 403)
+  if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) return json(request, { error: 'Content-Type must be application/json.' }, 415)
   const contentLength = Number.parseInt(request.headers.get('content-length') || '0', 10)
-  if (contentLength > MAX_BODY_BYTES) return json({ error: 'Request body is too large.' }, 413)
+  if (contentLength > MAX_BODY_BYTES) return json(request, { error: 'Request body is too large.' }, 413)
 
   let payload: unknown
-  try { payload = await request.json() } catch { return json({ error: 'Request body must contain valid JSON.' }, 400) }
+  try { payload = await request.json() } catch { return json(request, { error: 'Request body must contain valid JSON.' }, 400) }
   const validation = validateContactPayload(payload)
-  if (!validation.data) return json({ error: 'Please correct the highlighted fields.', fields: validation.errors }, 422)
-  if (validation.data.website) return json({ success: true, message: 'Message received.' })
-  if (isRateLimited(getClientIp(request, server))) return json({ error: 'Too many messages. Please try again in a few minutes.' }, 429, { 'Retry-After': '600' })
+  if (!validation.data) return json(request, { error: 'Please correct the highlighted fields.', fields: validation.errors }, 422)
+  if (validation.data.website) return json(request, { success: true, message: 'Message received.' })
+  if (isRateLimited(getClientIp(request, server))) return json(request, { error: 'Too many messages. Please try again in a few minutes.' }, 429, { 'Retry-After': '600' })
 
   const result = await sendContactEmail(validation.data)
-  return result.success ? json(result) : json({ error: result.message }, 502)
+  return result.success ? json(request, result) : json(request, { error: result.message }, 502)
 }
 
 export async function handleRequest(request: Request, server?: Server<undefined>): Promise<Response> {
   const url = new URL(request.url)
-  if (url.pathname === '/health') return json({ status: 'ok', timestamp: new Date().toISOString() })
+  if (url.pathname === '/health') return json(request, { status: 'ok', timestamp: new Date().toISOString() })
   if (url.pathname === '/api/contact') return handleContact(request, server)
-  if (url.pathname.startsWith('/api/')) return json({ error: 'API endpoint not found.' }, 404)
-  if (request.method !== 'GET' && request.method !== 'HEAD') return new Response('Method not allowed', { status: 405, headers: responseHeaders({ Allow: 'GET, HEAD' }) })
+  if (url.pathname.startsWith('/api/')) return json(request, { error: 'API endpoint not found.' }, 404)
+  if (request.method !== 'GET' && request.method !== 'HEAD') return new Response('Method not allowed', { status: 405, headers: responseHeaders({ Allow: 'GET, HEAD' }, request) })
 
   const filePath = findStaticFile(url.pathname)
   if (filePath) {
@@ -183,7 +192,7 @@ export async function handleRequest(request: Request, server?: Server<undefined>
   const notFoundPath = findStaticFile('/404')
   return new Response(request.method === 'HEAD' ? null : notFoundPath ? Bun.file(notFoundPath) : 'Not found', {
     status: 404,
-    headers: responseHeaders({ 'Content-Type': notFoundPath ? 'text/html; charset=utf-8' : 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' }),
+    headers: responseHeaders({ 'Content-Type': notFoundPath ? 'text/html; charset=utf-8' : 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' }, request),
   })
 }
 
