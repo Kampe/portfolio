@@ -1,0 +1,14 @@
+{
+  "name": "Nick Kampe — Platform Architect",
+  "short_name": "Nick Kampe",
+  "description": "Platform engineering, cloud infrastructure, Kubernetes, and SRE portfolio.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080d13",
+  "theme_color": "#080d13",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

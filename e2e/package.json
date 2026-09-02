@@ -8,7 +8,7 @@
     "test:debug": "playwright test --debug"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
-    "axe-playwright": "^1.2.3"
+    "@playwright/test": "^1.62.1",
+    "axe-playwright": "^2.2.2"
   }
 }

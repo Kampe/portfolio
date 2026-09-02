@@ -1,45 +1,24 @@
-import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, RouterLinkStub } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 import App from '../App.vue'
 
-describe('App.vue', () => {
-  it('should render the app component', () => {
-    const wrapper = mount(App)
-    expect(wrapper.exists()).toBe(true)
+describe('application shell', () => {
+  it('provides landmarks, a skip link, and primary navigation', () => {
+    const wrapper = mount(App, {
+      global: { stubs: { RouterLink: RouterLinkStub, RouterView: { template: '<div>Page content</div>' }, PrivacyControls: true, RouteAnnouncer: true } },
+    })
+    expect(wrapper.find('header').exists()).toBe(true)
+    expect(wrapper.get('main').attributes('id')).toBe('main-content')
+    expect(wrapper.find('footer').exists()).toBe(true)
+    expect(wrapper.get('.skip-link').attributes('href')).toBe('#main-content')
+    expect(wrapper.get('nav').attributes('aria-label')).toBe('Primary')
   })
 
-  it('should have the hero component', () => {
-    const wrapper = mount(App)
-    expect(wrapper.findComponent({ name: 'VectorCloudHero' }).exists()).toBe(true)
-  })
-
-  it('should have navigation buttons', () => {
-    const wrapper = mount(App)
-    const buttons = wrapper.findAll('button')
-    expect(buttons.length).toBeGreaterThan(0)
-  })
-
-  it('should contain ABOUT section in navigation', () => {
-    const wrapper = mount(App)
-    const text = wrapper.text()
-    expect(text.includes('ABOUT')).toBe(true)
-  })
-
-  it('should contain SKILLS section in navigation', () => {
-    const wrapper = mount(App)
-    const text = wrapper.text()
-    expect(text.includes('SKILLS')).toBe(true)
-  })
-
-  it('should contain RESUME section in navigation', () => {
-    const wrapper = mount(App)
-    const text = wrapper.text()
-    expect(text.includes('RESUME')).toBe(true)
-  })
-
-  it('should contain CONTACT section in navigation', () => {
-    const wrapper = mount(App)
-    const text = wrapper.text()
-    expect(text.includes('CONTACT')).toBe(true)
+  it('uses semantic links for every primary destination', () => {
+    const wrapper = mount(App, {
+      global: { stubs: { RouterLink: RouterLinkStub, RouterView: true, PrivacyControls: true, RouteAnnouncer: true } },
+    })
+    const destinations = wrapper.findAllComponents(RouterLinkStub).map((link) => link.props('to'))
+    expect(destinations).toEqual(expect.arrayContaining(['/work', '/about', '/resume', '/lab', '/contact']))
   })
 })

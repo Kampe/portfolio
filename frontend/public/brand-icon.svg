@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Nick Kampe monogram</title>
+  <rect width="512" height="512" rx="88" fill="#080d13"/>
+  <rect x="44" y="44" width="424" height="424" rx="60" fill="none" stroke="#385063" stroke-width="8"/>
+  <circle cx="390" cy="122" r="22" fill="#5eead4"/>
+  <path d="M132 356V156h40l116 137V156h48v200h-39L180 219v137h-48Z" fill="#f5f7fa"/>
+  <path d="M289 259 377 156h56l-91 101 97 99h-63l-87-97Z" fill="#5eead4"/>
+</svg>

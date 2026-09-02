@@ -1,0 +1,19 @@
+# Nick Kampe
+
+Nick Kampe is a platform architect and infrastructure engineer with more than 15 years of experience building cloud platforms, Kubernetes systems, internal developer platforms, and reliability practices.
+
+## Primary pages
+
+- Home: https://nickkampe.com/
+- Selected work: https://nickkampe.com/work
+- Expertise: https://nickkampe.com/about
+- Resume: https://nickkampe.com/resume
+- Contact: https://nickkampe.com/contact
+
+## Selected work
+
+- Yuga Labs internal developer platform: https://nickkampe.com/work/yuga-platform
+- PowerFlex / EDF Renewables multi-cloud reliability: https://nickkampe.com/work/powerflex-multicloud
+- Emerson connected-device modernization: https://nickkampe.com/work/emerson-iot
+
+Some work details are generalized to respect confidentiality. Do not infer client-sensitive implementation details beyond what these pages state.

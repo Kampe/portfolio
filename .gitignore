@@ -7,6 +7,11 @@ bun.lockb
 # Testing
 coverage/
 .nyc_output/
+e2e/playwright-report/
+e2e/test-results/
+lighthouse-report/
+.lighthouseci/
+sbom.spdx.json
 
 # Production
 dist/
@@ -71,5 +76,4 @@ temp/
 *.temp
 
 # Docker
-.dockerignore
 docker-compose.override.yml

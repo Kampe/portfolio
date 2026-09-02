@@ -1,7 +1,7 @@
 {
   "name": "nickkampe-portfolio",
   "version": "1.0.0",
-  "description": "State-of-the-art portfolio with generative art - Nicholas Kampe",
+  "description": "Nick Kampe's platform engineering and infrastructure portfolio",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -19,10 +19,12 @@
     "start": "cd backend && bun run start",
     "test": "bun run test:frontend && bun run test:backend",
     "test:frontend": "cd frontend && bun run test",
-    "test:backend": "cd backend && bun run test 2>/dev/null || true",
-    "test:e2e": "cd e2e && bun run test",
+    "test:backend": "cd backend && bun run test",
+    "test:e2e": "bun run build && cd e2e && bun run test",
     "test:all": "bun run test && bun run test:e2e",
-    "lint": "cd frontend && bun run lint || true"
+    "typecheck": "bun run --filter '*' typecheck",
+    "lint": "bun run --filter '*' lint",
+    "check": "bun run lint && bun run typecheck && bun run test && bun run build"
   },
   "engines": {
     "bun": ">=1.0.0"
@@ -37,10 +39,11 @@
     "bun"
   ],
   "author": "Nicholas Kampe",
-  "dependencies": {
-    "@sinclair/typebox": "^0.34.48"
-  },
   "devDependencies": {
-    "@playwright/test": "^1.58.2"
+    "@playwright/test": "^1.62.1"
+  },
+  "overrides": {
+    "flatted": "^3.4.4",
+    "picomatch": "^4.0.7"
   }
 }

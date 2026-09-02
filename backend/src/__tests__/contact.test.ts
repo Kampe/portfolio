@@ -1,57 +1,43 @@
-import { describe, it, expect } from 'bun:test'
-import { sendContactEmail, ContactMessage } from '../routes/contact'
+import { describe, expect, it } from 'bun:test'
+import { sendContactEmail, validateContactPayload, type ContactMessage } from '../routes/contact'
 
-describe('Contact Form Handler', () => {
-  it('should accept valid contact message', async () => {
-    const message: ContactMessage = {
-      name: 'John Doe',
-      email: 'john@example.com',
-      subject: 'Test Subject',
-      message: 'Test message content'
-    }
+const validMessage: ContactMessage = {
+  name: 'Alex Rivera',
+  email: 'alex@example.com',
+  subject: 'Platform modernization',
+  message: 'We need a safer self-service path for our product teams.',
+  website: '',
+}
 
-    const result = await sendContactEmail(message)
-
-    expect(result.success).toBe(true)
-    expect(result.message).toBeDefined()
-    expect(typeof result.message).toBe('string')
+describe('contact payload validation', () => {
+  it('normalizes a valid payload', () => {
+    const result = validateContactPayload({ ...validMessage, name: '  Alex Rivera ', email: 'ALEX@EXAMPLE.COM ' })
+    expect(result.errors).toBeUndefined()
+    expect(result.data?.name).toBe('Alex Rivera')
+    expect(result.data?.email).toBe('alex@example.com')
   })
 
-  it('should handle empty fields gracefully', async () => {
-    const message: ContactMessage = {
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    }
-
-    const result = await sendContactEmail(message)
-
-    expect(result.success).toBe(true)
+  it('rejects missing, malformed, and oversized fields', () => {
+    const result = validateContactPayload({ name: '', email: 'invalid', subject: 'x', message: 'short' })
+    expect(result.errors).toEqual(expect.objectContaining({ name: expect.any(String), email: expect.any(String), subject: expect.any(String), message: expect.any(String) }))
   })
 
-  it('should handle long messages', async () => {
-    const longMessage = 'a'.repeat(5000)
-    const message: ContactMessage = {
-      name: 'Test User',
-      email: 'test@example.com',
-      subject: 'Long Message',
-      message: longMessage
-    }
+  it('rejects non-object input', () => {
+    expect(validateContactPayload('payload').errors?.form).toBeDefined()
+  })
+})
 
-    const result = await sendContactEmail(message)
+describe('contact provider', () => {
+  it('returns success only when the provider accepts the message', async () => {
+    const fakeFetch = async () => new Response('{}', { status: 200 })
+    const result = await sendContactEmail(validMessage, fakeFetch)
     expect(result.success).toBe(true)
   })
 
-  it('should handle special characters', async () => {
-    const message: ContactMessage = {
-      name: 'José García',
-      email: 'josé@example.com',
-      subject: 'Test with émojis 🚀',
-      message: 'Message with special chars: <>&"'
-    }
-
-    const result = await sendContactEmail(message)
-    expect(result.success).toBe(true)
+  it('returns a safe error when the provider fails', async () => {
+    const fakeFetch = async () => new Response('{}', { status: 503 })
+    const result = await sendContactEmail(validMessage, fakeFetch)
+    expect(result.success).toBe(false)
+    expect(result.message).not.toContain('503')
   })
 })

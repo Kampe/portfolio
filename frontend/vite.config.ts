@@ -4,12 +4,21 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   publicDir: 'public',
+  ssgOptions: {
+    includedRoutes() {
+      return [
+        '/', '/work', '/work/yuga-platform', '/work/powerflex-multicloud', '/work/emerson-iot',
+        '/about', '/resume', '/contact', '/lab', '/privacy', '/404',
+      ]
+    },
+  },
   build: {
     outDir: '../backend/public',
     emptyOutDir: true,
     minify: 'terser',
     sourcemap: false,
     target: 'esnext',
+    chunkSizeWarningLimit: 550,
     terserOptions: {
       compress: {
         drop_console: true,
@@ -19,14 +28,7 @@ export default defineConfig({
         comments: false
       }
     },
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          three: ['three'],
-          vue: ['vue', 'vue-router', 'pinia']
-        }
-      }
-    }
+    rollupOptions: {}
   },
   server: {
     port: 5173,
@@ -40,6 +42,7 @@ export default defineConfig({
     watch: {
       usePolling: true,
       interval: 100
-    }
+    },
+    proxy: { '/api': 'http://127.0.0.1:3001' }
   }
 })
