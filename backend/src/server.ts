@@ -37,7 +37,9 @@ function responseHeaders(extra: HeadersInit = {}): Headers {
 }
 
 function json(data: unknown, status = 200, extra: HeadersInit = {}): Response {
-  return Response.json(data, { status, headers: responseHeaders({ 'Cache-Control': 'no-store', ...Object.fromEntries(new Headers(extra)) }) })
+  const headers = responseHeaders(extra)
+  headers.set('Cache-Control', 'no-store')
+  return Response.json(data, { status, headers })
 }
 
 function getMimeType(filePath: string): string {

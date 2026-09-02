@@ -78,7 +78,7 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun audit
       - name: Scan repository
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
           scan-ref: .
@@ -89,7 +89,7 @@ jobs:
       - name: Build hardened image
         run: docker build --build-arg BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)" --tag portfolio:test .
       - name: Scan image
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: portfolio:test
           severity: HIGH,CRITICAL
