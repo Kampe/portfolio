@@ -29,13 +29,13 @@ const CONFIG: ThemeConfig = {
   },
   performance: {
     targetFps: 50,
-    particleCount: 84,
+    particleCount: 132,
   },
 }
 
 // ===== CONFIGURATION KNOBS =====
 const PARAMS = {
-  particleCount: 84,
+  particleCount: 132,
   particleSize: 2.55,
   bloomStrength: 0.45,
   bloomRadius: 0.4,
@@ -43,11 +43,11 @@ const PARAMS = {
   toneMappingExposure: 0.85, // Slightly reduced brightness
   interactionRadius: 42,
   chargeRadius: 38,
-  chargeStrength: 0.0008,
-  flowStrength: 0.00022,
+  chargeStrength: 0.0011,
+  flowStrength: 0.00032,
   safeZoneStrength: 0.0018,
-  velocityDamping: 0.978,
-  maxVelocity: 0.045,
+  velocityDamping: 0.981,
+  maxVelocity: 0.064,
   beatResponsiveness: 2.5, // Strong response to pattern energy
 }
 
@@ -159,7 +159,7 @@ export const createChargedMagnetosphereTheme = (
   // ===== PARTICLE SYSTEM =====
   // Preserve the sparse original composition while scaling down on phones and
   // constrained renderers.
-  const particleCount = isConstrainedRenderer ? 36 : prefersReducedMotion ? 48 : width < 768 ? 48 : PARAMS.particleCount
+  const particleCount = isConstrainedRenderer ? 48 : prefersReducedMotion ? 60 : width < 768 ? 72 : PARAMS.particleCount
   const particles: ChargedParticle[] = []
 
   const particleGeometry = new THREE.BufferGeometry()
@@ -218,9 +218,9 @@ export const createChargedMagnetosphereTheme = (
         randomStartZ + zOffset
       ),
       velocity: new THREE.Vector3(
-        (Math.random() - 0.5) * 0.012,
-        (Math.random() - 0.5) * 0.012,
-        (Math.random() - 0.5) * 0.008
+        (Math.random() - 0.5) * 0.016,
+        (Math.random() - 0.5) * 0.016,
+        (Math.random() - 0.5) * 0.011
       ),
       charge,
       color,
@@ -335,7 +335,7 @@ export const createChargedMagnetosphereTheme = (
       // Slow, layered curl gives every depth plane a slightly different path.
       // Nearby particles naturally render larger because sizeAttenuation is on;
       // distant particles remain small and sharp instead of forming one flat halo.
-      const flowTime = seconds * 0.12
+      const flowTime = seconds * 0.18
       const flowX = Math.sin(relativeY * 0.018 + flowTime + particle.phase) +
         Math.cos(relativeZ * 0.021 - flowTime * 0.7)
       const flowY = Math.cos(relativeX * 0.014 - flowTime * 0.8 + particle.phase * 0.5) +
@@ -470,13 +470,13 @@ export const createChargedMagnetosphereTheme = (
     // A barely perceptible camera wander revives the original depth parallax
     // without making the page feel like it is sliding underneath the reader.
     camera.position.set(
-      randomStartX + (Math.sin(seconds * 0.035) * 6 + Math.cos(seconds * 0.021) * 3) * motionScale,
-      randomStartY + Math.cos(seconds * 0.03) * 4 * motionScale,
-      randomStartZ + cameraDistance + Math.sin(seconds * 0.024) * 4 * motionScale
+      randomStartX + (Math.sin(seconds * 0.05) * 6 + Math.cos(seconds * 0.032) * 3) * motionScale,
+      randomStartY + Math.cos(seconds * 0.045) * 4 * motionScale,
+      randomStartZ + cameraDistance + Math.sin(seconds * 0.036) * 4 * motionScale
     )
     camera.lookAt(
-      randomStartX + Math.sin(seconds * 0.026) * 4 * motionScale,
-      randomStartY + Math.cos(seconds * 0.022) * 3 * motionScale,
+      randomStartX + Math.sin(seconds * 0.039) * 4 * motionScale,
+      randomStartY + Math.cos(seconds * 0.033) * 3 * motionScale,
       randomStartZ
     )
   }
