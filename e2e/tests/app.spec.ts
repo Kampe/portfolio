@@ -1,244 +1,127 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+import { checkA11y, injectAxe } from 'axe-playwright'
 
-test('homepage loads successfully', async ({ page }) => {
-  await page.goto('/')
-  await expect(page).toHaveTitle(//)
-
-  // Check that main content is visible
-  const canvas = page.locator('canvas')
-  await expect(canvas).toBeVisible()
-})
-
-test('health endpoint works', async ({ page }) => {
-  const response = await page.request.get('/health')
-  expect(response.status()).toBe(200)
-
-  const data = await response.json()
-  expect(data.status).toBe('ok')
-  expect(data.timestamp).toBeDefined()
-})
-
-test('navigation buttons are visible', async ({ page }) => {
+test('preserves the original hero, content, and navigation', async ({ page }) => {
   await page.goto('/')
 
-  // Check for navigation buttons
-  const aboutBtn = page.locator('button:has-text("ABOUT")')
-  const skillsBtn = page.locator('button:has-text("SKILLS")')
-  const resumeBtn = page.locator('button:has-text("RESUME")')
-  const contactBtn = page.locator('button:has-text("CONTACT")')
+  await expect(page).toHaveTitle('Nick Kampe | Automation Engineer & Platform Architect — Infrastructure & DevOps')
+  await expect(page.locator('canvas')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'NICK KAMPE' })).toBeVisible()
+  await expect(page.getByText('Platform Engineer', { exact: true })).toBeVisible()
+  await expect(page.getByText('Software Craftsman', { exact: true })).toBeVisible()
+  await expect(page.getByText('Perpetual Learner', { exact: true })).toBeVisible()
 
-  await expect(aboutBtn).toBeVisible()
-  await expect(skillsBtn).toBeVisible()
-  await expect(resumeBtn).toBeVisible()
-  await expect(contactBtn).toBeVisible()
-})
-
-test('ABOUT modal opens and closes', async ({ page }) => {
-  await page.goto('/')
-
-  const aboutBtn = page.locator('button:has-text("ABOUT")')
-  await aboutBtn.click()
-
-  // Modal should be visible with about content
-  const modal = page.locator('div[class*="modal"], div[class*="overlay"]')
-  await expect(modal.first()).toBeVisible({ timeout: 1000 })
-})
-
-test('SKILLS modal opens and displays content', async ({ page }) => {
-  await page.goto('/')
-
-  const skillsBtn = page.locator('button:has-text("SKILLS")')
-  await skillsBtn.click()
-
-  // Check for skills content (should contain some text about technologies)
-  const text = page.locator('text=/Vue|TypeScript|Docker/')
-  await expect(text.first()).toBeVisible({ timeout: 1000 })
-})
-
-test('RESUME modal opens and displays content', async ({ page }) => {
-  await page.goto('/')
-
-  const resumeBtn = page.locator('button:has-text("RESUME")')
-  await resumeBtn.click()
-
-  // Check for resume content
-  const text = page.locator('text=/DevOps|Experience|Skills/')
-  await expect(text.first()).toBeVisible({ timeout: 1000 })
-})
-
-test('CONTACT modal opens', async ({ page }) => {
-  await page.goto('/')
-
-  const contactBtn = page.locator('button:has-text("CONTACT")')
-  await contactBtn.click()
-
-  // Check for contact form or content
-  const modal = page.locator('div[class*="modal"], div[class*="overlay"]')
-  await expect(modal.first()).toBeVisible({ timeout: 1000 })
-})
-
-test('contact form can be filled and submitted', async ({ page }) => {
-  await page.goto('/')
-
-  const contactBtn = page.locator('button:has-text("CONTACT")')
-  await contactBtn.click()
-
-  // Fill contact form with proper IDs
-  const nameInput = page.locator('input#contact-name')
-  const emailInput = page.locator('input#contact-email')
-  const messageInput = page.locator('textarea#contact-message')
-  const submitBtn = page.locator('button#contact-submit')
-
-  if (await nameInput.isVisible({ timeout: 500 }).catch(() => false)) {
-    await nameInput.fill('Test User')
-    await emailInput.fill('test@example.com')
-    await messageInput.fill('Test message from Playwright')
-
-    // Wait for form submission response
-    const submitPromise = page.waitForResponse(
-      response => response.url().includes('/api/contact') && response.request().method() === 'POST'
-    )
-
-    await submitBtn.click()
-
-    try {
-      const response = await Promise.race([
-        submitPromise,
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000))
-      ])
-
-      expect(response.status()).toBe(200)
-    } catch (e) {
-      // Form submission timeout is acceptable if Formspree is not configured
-    }
+  for (const section of ['ABOUT', 'SKILLS', 'RESUME', 'CONTACT']) {
+    await expect(page.getByRole('button', { name: section, exact: true })).toBeVisible()
   }
 })
 
-test('page handles keyboard navigation', async ({ page }) => {
+test('the Three.js canvas paints particles and advances frames', async ({ page }) => {
   await page.goto('/')
 
-  // Try pressing Escape to close modals
-  const aboutBtn = page.locator('button:has-text("ABOUT")')
-  await aboutBtn.click()
-
-  await page.keyboard.press('Escape')
-
-  // Modal should be hidden
-  const modal = page.locator('div[class*="modal"], div[class*="overlay"]')
-  const isHidden = await modal.first().isHidden({ timeout: 500 }).catch(() => true)
-  expect(isHidden).toBe(true)
-})
-
-test('page is responsive', async ({ page, viewport }) => {
-  // Test at mobile viewport
-  await page.goto('/')
-
-  // Canvas should still be visible on mobile
-  const canvas = page.locator('canvas')
+  const canvas = page.locator('canvas[data-animation-state="ready"]')
   await expect(canvas).toBeVisible()
 
-  // Navigation buttons should be accessible
-  const aboutBtn = page.locator('button:has-text("ABOUT")')
-  await expect(aboutBtn).toBeVisible()
+  const readFrame = () => page.evaluate(() => new Promise<{ hash: number; litPixels: number }>((resolve) => {
+    requestAnimationFrame(() => {
+      const canvas = document.querySelector<HTMLCanvasElement>('canvas[data-animation-state="ready"]')
+      const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
+      if (!canvas || !gl) {
+        resolve({ hash: 0, litPixels: 0 })
+        return
+      }
+
+      const pixels = new Uint8Array(canvas.width * canvas.height * 4)
+      gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
+
+      let hash = 2166136261
+      let litPixels = 0
+      for (let index = 0; index < pixels.length; index += 4) {
+        const brightness = pixels[index] + pixels[index + 1] + pixels[index + 2]
+        if (brightness > 30) litPixels += 1
+        hash ^= brightness
+        hash = Math.imul(hash, 16777619)
+      }
+
+      resolve({ hash: hash >>> 0, litPixels })
+    })
+  }))
+
+  let firstFrame = await readFrame()
+  await expect.poll(async () => {
+    firstFrame = await readFrame()
+    return firstFrame.litPixels
+  }).toBeGreaterThan(0)
+
+  await expect.poll(async () => (await readFrame()).hash).not.toBe(firstFrame.hash)
 })
 
-test('api contact endpoint responds', async ({ page }) => {
-  const response = await page.request.post('/api/contact', {
-    data: {
-      name: 'Test User',
-      email: 'test@example.com',
-      subject: 'Test',
-      message: 'Test message'
-    }
+test('section dialogs retain their original content and hash navigation', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'ABOUT' }).click()
+
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toBeVisible()
+  await expect(dialog.getByText('Infrastructure Architect & Platform Engineer')).toBeVisible()
+  await expect(page).toHaveURL(/#about$/)
+  await expect(dialog).toBeFocused()
+
+  await page.keyboard.press('Escape')
+  await expect(dialog).toBeHidden()
+})
+
+test('deep links open the existing sections', async ({ page }) => {
+  await page.goto('/#resume')
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toBeVisible()
+  await expect(dialog.getByText('PROFESSIONAL EXPERIENCE')).toBeVisible()
+})
+
+test('contact submission prevents duplicates and announces success', async ({ page }) => {
+  let requests = 0
+  await page.route('**/api/contact', async (route) => {
+    requests += 1
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true }) })
   })
 
-  expect(response.status()).toBe(200)
-  const data = await response.json()
-  expect(data).toHaveProperty('success')
-  expect(data).toHaveProperty('message')
-})
-
-// Deep linking tests
-test('deep link #about opens About modal', async ({ page }) => {
-  await page.goto('/#about')
-  await page.waitForTimeout(500)
-
-  const modal = page.locator('div[class*="modal"], div[class*="overlay"]')
-  const aboutText = page.locator('text=/Infrastructure Architect|Platform Engineer/')
-
-  await expect(modal.first()).toBeVisible()
-  await expect(aboutText).toBeVisible()
-})
-
-test('deep link #skills opens Skills modal', async ({ page }) => {
-  await page.goto('/#skills')
-  await page.waitForTimeout(500)
-
-  const modal = page.locator('div[class*="modal"], div[class*="overlay"]')
-  const skillsText = page.locator('text=/Cloud Native|Kubernetes/')
-
-  await expect(modal.first()).toBeVisible()
-  await expect(skillsText).toBeVisible()
-})
-
-test('deep link #resume opens Resume modal', async ({ page }) => {
-  await page.goto('/#resume')
-  await page.waitForTimeout(500)
-
-  const modal = page.locator('div[class*="modal"], div[class*="overlay"]')
-  const resumeText = page.locator('text=/PROFESSIONAL EXPERIENCE|DevOps Engineer/')
-
-  await expect(modal.first()).toBeVisible()
-  await expect(resumeText).toBeVisible()
-})
-
-test('deep link #contact opens Contact modal with form', async ({ page }) => {
   await page.goto('/#contact')
-  await page.waitForTimeout(500)
+  await page.getByLabel('Your name').fill('Test User')
+  await page.getByLabel('Your email').fill('test@example.com')
+  await page.getByLabel('Your message').fill('Test message from Playwright')
 
-  const modal = page.locator('div[class*="modal"], div[class*="overlay"]')
-  const contactForm = page.locator('form')
-  const nameInput = page.locator('input#contact-name')
-
-  await expect(modal.first()).toBeVisible()
-  await expect(contactForm).toBeVisible()
-  await expect(nameInput).toBeVisible()
+  const submit = page.getByRole('button', { name: 'SEND MESSAGE' })
+  await submit.click()
+  await expect(submit).toBeDisabled()
+  await submit.click({ force: true })
+  await expect(page.getByText('Message Submitted!')).toBeVisible()
+  expect(requests).toBe(1)
 })
 
-test('browser back button closes modal when deep linked', async ({ page }) => {
-  await page.goto('/#about')
-  await page.waitForTimeout(500)
-
-  const modal = page.locator('div[class*="modal"], div[class*="overlay"]')
-  await expect(modal.first()).toBeVisible()
-
-  // Go back
-  await page.goBack()
-  await page.waitForTimeout(500)
-
-  const isClosed = await modal.first().isHidden({ timeout: 500 }).catch(() => true)
-  expect(isClosed).toBe(true)
+test('an alternate original animation theme still renders', async ({ page }) => {
+  await page.goto('/?theme=spectrum')
+  await expect(page.locator('canvas')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'NICK KAMPE' })).toBeVisible()
 })
 
-test('hash updates when modal is opened', async ({ page }) => {
+test('unknown routes return a real 404 with security headers', async ({ request }) => {
+  const response = await request.get('/does-not-exist')
+  expect(response.status()).toBe(404)
+  expect(response.headers()['content-security-policy']).toContain("default-src 'self'")
+  expect(response.headers()['x-content-type-options']).toBe('nosniff')
+})
+
+test('the original experience has no automatic accessibility violations', async ({ page }) => {
   await page.goto('/')
+  await injectAxe(page)
+  await checkA11y(page, undefined, { detailedReport: true, detailedReportOptions: { html: true } })
 
-  const aboutBtn = page.locator('button:has-text("ABOUT")')
-  await aboutBtn.click()
-  await page.waitForTimeout(500)
-
-  const url = page.url()
-  expect(url).toContain('#about')
+  await page.getByRole('button', { name: 'ABOUT' }).click()
+  await checkA11y(page, undefined, { detailedReport: true, detailedReportOptions: { html: true } })
 })
 
-test('hash clears when modal is closed', async ({ page }) => {
-  await page.goto('/#about')
-  await page.waitForTimeout(500)
-
-  const closeBtn = page.locator('button:has-text("✕")')
-  await closeBtn.click()
-  await page.waitForTimeout(500)
-
-  const url = page.url()
-  expect(url).not.toContain('#about')
+test('the layout remains contained on mobile and desktop', async ({ page }) => {
+  await page.goto('/')
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
+  expect(overflow).toBeLessThanOrEqual(1)
 })

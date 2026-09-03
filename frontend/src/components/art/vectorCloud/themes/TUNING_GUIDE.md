@@ -411,4 +411,3 @@ morphIntensity: slight
 ---
 
 Ready to experiment? Pick a theme, change one parameter, and see what happens! 🎨
-

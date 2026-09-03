@@ -4,7 +4,7 @@
  * Handles theme selection, switching, and lifecycle
  */
 
-import { ThemeFactory, ThemeSetupResult, ThemeConfig } from './themeTypes'
+import { ThemeFactory, ThemeSetupResult, ThemeConfig, type ThemeName } from './themeTypes'
 import { createSpectrumAnalyzerTheme } from './spectrumAnalyzer'
 import { createKaleidoscopeFractalsTheme } from './kaleidoscopeFractals'
 import { createDMTMorphingTheme } from './dmtMorphing'
@@ -12,7 +12,7 @@ import { createDMTGeometryTheme } from './dmtGeometry'
 import { createVectorFieldFloorTheme } from './vectorFieldFloor'
 import { createChargedMagnetosphereTheme } from './chargedMagnetosphere'
 
-export type ThemeName = 'spectrum' | 'kaleidoscope' | 'milkdrop' | 'dmt' | 'vectorfield' | 'magnetosphere'
+export type { ThemeName } from './themeTypes'
 
 type ThemeRegistry = Record<ThemeName, ThemeFactory>
 

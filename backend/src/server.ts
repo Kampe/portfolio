@@ -1,153 +1,210 @@
-import { existsSync, statSync } from 'fs'
-import { join } from 'path'
-import { sendContactEmail } from './routes/contact'
+import { statSync } from 'node:fs'
+import { resolve, sep } from 'node:path'
+import type { Server } from 'bun'
+import { sendContactEmail, validateContactPayload } from './routes/contact'
 
-const PORT = 3001
-// Use absolute path in container, relative path in dev
-const PUBLIC_DIR = process.env.NODE_ENV === 'production'
-  ? '/app/backend/public'
-  : join(import.meta.dir, '../public')
+const PORT = Number.parseInt(process.env.PORT || '3001', 10)
+const PUBLIC_DIR = process.env.PUBLIC_DIR || (process.env.NODE_ENV === 'production' ? '/app/backend/public' : resolve(import.meta.dir, '../public'))
+const MAX_BODY_BYTES = 64 * 1024
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+const RATE_LIMIT_MAX = 5
+const MIN_COMPRESSIBLE_BYTES = 1024
+interface CompressedFileCacheEntry {
+  bytes: Uint8Array
+  mtimeMs: number
+  size: number
+}
+const compressedFiles = new Map<string, CompressedFileCacheEntry>()
+
+const CONTENT_SECURITY_POLICY = "default-src 'self'; base-uri 'self'; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; font-src 'self' data:; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'"
+const securityHeaders: Record<string, string> = {
+  'Content-Security-Policy': CONTENT_SECURITY_POLICY,
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+}
+
+const mimeTypes: Record<string, string> = {
+  html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8',
+  json: 'application/json; charset=utf-8', webmanifest: 'application/manifest+json; charset=utf-8',
+  xml: 'application/xml; charset=utf-8', txt: 'text/plain; charset=utf-8', png: 'image/png', jpg: 'image/jpeg',
+  jpeg: 'image/jpeg', gif: 'image/gif', svg: 'image/svg+xml', ico: 'image/x-icon',
+  webp: 'image/webp', avif: 'image/avif', woff: 'font/woff', woff2: 'font/woff2', ttf: 'font/ttf', map: 'application/json',
+}
+
+interface RateRecord { count: number; resetAt: number }
+const rateLimits = new Map<string, RateRecord>()
+
+function isSecureRequest(request: Request): boolean {
+  const forwardedProtocol = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim().toLowerCase()
+  return new URL(request.url).protocol === 'https:' || forwardedProtocol === 'https'
+}
+
+function responseHeaders(extra: HeadersInit = {}, request?: Request): Headers {
+  const headers = new Headers(securityHeaders)
+  if (request && isSecureRequest(request)) {
+    headers.set('Content-Security-Policy', `${CONTENT_SECURITY_POLICY}; upgrade-insecure-requests`)
+    headers.set('Cross-Origin-Opener-Policy', 'same-origin')
+    headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
+  }
+  new Headers(extra).forEach((value, key) => headers.set(key, value))
+  return headers
+}
+
+function json(request: Request, data: unknown, status = 200, extra: HeadersInit = {}): Response {
+  const headers = responseHeaders(extra, request)
+  headers.set('Cache-Control', 'no-store')
+  return Response.json(data, { status, headers })
+}
 
 function getMimeType(filePath: string): string {
-  const ext = filePath.split('.').pop()?.toLowerCase()
-
-  const mimeTypes: Record<string, string> = {
-    'html': 'text/html',
-    'css': 'text/css',
-    'js': 'application/javascript',
-    'json': 'application/json',
-    'xml': 'application/xml',
-    'txt': 'text/plain',
-    'png': 'image/png',
-    'jpg': 'image/jpeg',
-    'jpeg': 'image/jpeg',
-    'gif': 'image/gif',
-    'svg': 'image/svg+xml',
-    'ico': 'image/x-icon',
-    'woff': 'font/woff',
-    'woff2': 'font/woff2',
-    'ttf': 'font/ttf',
-  }
-
-  return mimeTypes[ext || ''] || 'application/octet-stream'
+  const extension = filePath.split('.').pop()?.toLowerCase() || ''
+  return mimeTypes[extension] || 'application/octet-stream'
 }
 
-function getCacheHeaders(filePath: string): Record<string, string> {
-  const ext = filePath.split('.').pop()?.toLowerCase()
-
-  // Immutable assets (hashed filenames)
-  if (filePath.includes('/assets/')) {
-    return { 'Cache-Control': 'public, max-age=31536000, immutable' } // 1 year
-  }
-
-  // Long cache for fonts
-  if (['woff', 'woff2', 'ttf'].includes(ext || '')) {
-    return { 'Cache-Control': 'public, max-age=31536000, immutable' } // 1 year
-  }
-
-  // Medium cache for images
-  if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'].includes(ext || '')) {
-    return { 'Cache-Control': 'public, max-age=604800' } // 1 week
-  }
-
-  // Short cache for HTML
-  if (ext === 'html') {
-    return { 'Cache-Control': 'public, max-age=3600, must-revalidate' } // 1 hour, with revalidation
-  }
-
-  // No cache for everything else
-  return { 'Cache-Control': 'public, max-age=0, must-revalidate' }
+function cacheControl(filePath: string): string {
+  if (filePath.includes(`${sep}assets${sep}`)) return 'public, max-age=31536000, immutable'
+  if (/\.(?:png|jpe?g|gif|svg|ico|webp|avif|woff2?|ttf)$/.test(filePath)) return 'public, max-age=604800'
+  return 'public, max-age=0, must-revalidate'
 }
 
-function isRegularFile(filePath: string): boolean {
+function isCompressible(contentType: string): boolean {
+  return /^(?:text\/|application\/(?:javascript|json|manifest\+json|xml)|image\/svg\+xml)/.test(contentType)
+}
+
+export async function staticResponse(request: Request, filePath: string): Promise<Response> {
+  const contentType = getMimeType(filePath)
+  const headers = responseHeaders({ 'Content-Type': contentType, 'Cache-Control': cacheControl(filePath) }, request)
+  const acceptsGzip = request.headers.get('accept-encoding')?.split(',').some((value) => value.trim().startsWith('gzip'))
+  const file = Bun.file(filePath)
+  const metadata = statSync(filePath)
+
+  if (acceptsGzip && isCompressible(contentType) && metadata.size >= MIN_COMPRESSIBLE_BYTES) {
+    let cached = compressedFiles.get(filePath)
+    if (!cached || cached.mtimeMs !== metadata.mtimeMs || cached.size !== metadata.size) {
+      cached = {
+        bytes: Bun.gzipSync(new Uint8Array(await file.arrayBuffer())),
+        mtimeMs: metadata.mtimeMs,
+        size: metadata.size,
+      }
+      compressedFiles.set(filePath, cached)
+    }
+    const compressed = cached.bytes
+    headers.set('Content-Encoding', 'gzip')
+    headers.set('Vary', 'Accept-Encoding')
+    headers.set('Content-Length', String(compressed.byteLength))
+    const body = compressed.buffer.slice(
+      compressed.byteOffset,
+      compressed.byteOffset + compressed.byteLength,
+    ) as ArrayBuffer
+    return new Response(request.method === 'HEAD' ? null : body, { headers })
+  }
+
+  return new Response(request.method === 'HEAD' ? null : file, { headers })
+}
+
+function isFile(filePath: string): boolean {
+  try { return statSync(filePath).isFile() } catch { return false }
+}
+
+function safeStaticPath(pathname: string): string | undefined {
+  let decoded: string
+  try { decoded = decodeURIComponent(pathname) } catch { return undefined }
+  const candidate = resolve(PUBLIC_DIR, `.${decoded}`)
+  const root = resolve(PUBLIC_DIR)
+  if (candidate !== root && !candidate.startsWith(`${root}${sep}`)) return undefined
+  return candidate
+}
+
+function findStaticFile(pathname: string): string | undefined {
+  const base = safeStaticPath(pathname)
+  if (!base) return undefined
+  const candidates = pathname === '/'
+    ? [resolve(PUBLIC_DIR, 'index.html')]
+    : [base, `${base}.html`, resolve(base, 'index.html')]
+  return candidates.find(isFile)
+}
+
+function getClientIp(request: Request, server?: Server<undefined>): string {
+  const forwarded = process.env.NODE_ENV === 'production' ? request.headers.get('cf-connecting-ip') : null
+  return forwarded || server?.requestIP(request)?.address || 'unknown'
+}
+
+function isAllowedOrigin(request: Request): boolean {
+  const origin = request.headers.get('origin')
+  if (!origin) return true
   try {
-    return statSync(filePath).isFile()
+    const originUrl = new URL(origin)
+    const requestUrl = new URL(request.url)
+    if (originUrl.host === requestUrl.host) return true
+    if (process.env.PUBLIC_ORIGIN && origin === process.env.PUBLIC_ORIGIN) return true
+    return process.env.NODE_ENV !== 'production' && ['localhost', '127.0.0.1'].includes(originUrl.hostname)
   } catch {
     return false
   }
 }
 
+function isRateLimited(key: string, now = Date.now()): boolean {
+  const current = rateLimits.get(key)
+  if (!current || current.resetAt <= now) {
+    if (!current && rateLimits.size >= 10_000) {
+      const oldestKey = rateLimits.keys().next().value
+      if (typeof oldestKey === 'string') rateLimits.delete(oldestKey)
+    }
+    rateLimits.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
+    return false
+  }
+  current.count += 1
+  return current.count > RATE_LIMIT_MAX
+}
+
+async function handleContact(request: Request, server?: Server<undefined>): Promise<Response> {
+  if (request.method !== 'POST') return json(request, { error: 'Method not allowed.' }, 405, { Allow: 'POST' })
+  if (!isAllowedOrigin(request)) return json(request, { error: 'Cross-origin submission rejected.' }, 403)
+  if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) return json(request, { error: 'Content-Type must be application/json.' }, 415)
+  const contentLength = Number.parseInt(request.headers.get('content-length') || '0', 10)
+  if (contentLength > MAX_BODY_BYTES) return json(request, { error: 'Request body is too large.' }, 413)
+
+  let payload: unknown
+  try { payload = await request.json() } catch { return json(request, { error: 'Request body must contain valid JSON.' }, 400) }
+  const validation = validateContactPayload(payload)
+  if (!validation.data) return json(request, { error: 'Please correct the highlighted fields.', fields: validation.errors }, 422)
+  if (validation.data.website) return json(request, { success: true, message: 'Message received.' })
+  if (isRateLimited(getClientIp(request, server))) return json(request, { error: 'Too many messages. Please try again in a few minutes.' }, 429, { 'Retry-After': '600' })
+
+  const result = await sendContactEmail(validation.data)
+  return result.success ? json(request, result) : json(request, { error: result.message }, 502)
+}
+
+export async function handleRequest(request: Request, server?: Server<undefined>): Promise<Response> {
+  const url = new URL(request.url)
+  if (url.pathname === '/health') return json(request, { status: 'ok', timestamp: new Date().toISOString() })
+  if (url.pathname === '/api/contact') return handleContact(request, server)
+  if (url.pathname.startsWith('/api/')) return json(request, { error: 'API endpoint not found.' }, 404)
+  if (request.method !== 'GET' && request.method !== 'HEAD') return new Response('Method not allowed', { status: 405, headers: responseHeaders({ Allow: 'GET, HEAD' }, request) })
+
+  const filePath = findStaticFile(url.pathname)
+  if (filePath) {
+    return staticResponse(request, filePath)
+  }
+
+  const notFoundPath = findStaticFile('/404')
+  return new Response(request.method === 'HEAD' ? null : notFoundPath ? Bun.file(notFoundPath) : 'Not found', {
+    status: 404,
+    headers: responseHeaders({ 'Content-Type': notFoundPath ? 'text/html; charset=utf-8' : 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' }, request),
+  })
+}
+
 export function startServer() {
   const server = Bun.serve({
-    port: PORT,
+    port: Number.isFinite(PORT) ? PORT : 3001,
     hostname: '0.0.0.0',
     development: process.env.NODE_ENV !== 'production',
-    async fetch(request: any) {
-      const url = new URL(request.url)
-      const pathname = url.pathname
-
-      // Health check endpoint
-      if (pathname === '/health') {
-        return new Response(
-          JSON.stringify({
-            status: 'ok',
-            timestamp: new Date().toISOString()
-          }),
-          { headers: { 'Content-Type': 'application/json' } }
-        )
-      }
-
-      // API endpoints
-      if (pathname === '/api/contact' && request.method === 'POST') {
-        try {
-          const body = await request.json()
-          const result = await sendContactEmail({
-            name: body.name || '',
-            email: body.email || '',
-            subject: body.subject || '',
-            message: body.message || '',
-          })
-          return new Response(JSON.stringify(result), {
-            headers: { 'Content-Type': 'application/json' }
-          })
-        } catch (error) {
-          return new Response(
-            JSON.stringify({ error: 'Failed to process contact form' }),
-            { status: 500, headers: { 'Content-Type': 'application/json' } }
-          )
-        }
-      }
-
-      if (pathname.startsWith('/api/')) {
-        return new Response(
-          JSON.stringify({ error: 'API endpoint not found' }),
-          { status: 404, headers: { 'Content-Type': 'application/json' } }
-        )
-      }
-
-      // Static file serving
-      let filePath = join(PUBLIC_DIR, pathname === '/' ? 'index.html' : pathname)
-
-      if (existsSync(filePath) && isRegularFile(filePath)) {
-        const file = Bun.file(filePath)
-        const mimeType = getMimeType(filePath)
-        const cacheHeaders = getCacheHeaders(filePath)
-        return new Response(file, {
-          headers: {
-            'Content-Type': mimeType,
-            ...cacheHeaders
-          }
-        })
-      }
-
-      // Fallback to index.html for SPA routing
-      if (pathname.startsWith('/assets/')) {
-        return new Response('Not found', { status: 404 })
-      }
-
-      if (pathname.startsWith('/.well-known/')) {
-        return new Response('Not found', { status: 404 })
-      }
-
-      const indexFile = Bun.file(join(PUBLIC_DIR, 'index.html'))
-      return new Response(indexFile, {
-        headers: { 'Content-Type': 'text/html' }
-      })
-    }
+    maxRequestBodySize: MAX_BODY_BYTES,
+    idleTimeout: 10,
+    fetch: handleRequest,
   })
-
-  console.log(`🚀 Server running at http://localhost:${PORT}`)
-  console.log(`📁 Serving static files from: ${PUBLIC_DIR}`)
-
+  console.log(`Server listening on http://localhost:${server.port}`)
   return server
 }

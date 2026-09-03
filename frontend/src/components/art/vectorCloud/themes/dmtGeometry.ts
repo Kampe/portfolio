@@ -312,7 +312,6 @@ export const createDMTGeometryTheme = (
   const handleResize = () => {
     const newWidth = window.innerWidth
     const newHeight = window.innerHeight
-    camera.aspect = newWidth / newHeight
     camera.updateProjectionMatrix()
     renderer.setSize(newWidth, newHeight)
     composer.setSize(newWidth, newHeight)

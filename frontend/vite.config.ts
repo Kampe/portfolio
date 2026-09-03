@@ -10,6 +10,8 @@ export default defineConfig({
     minify: 'terser',
     sourcemap: false,
     target: 'esnext',
+    // Three.js is intentionally isolated behind the visualizer's dynamic import.
+    chunkSizeWarningLimit: 750,
     terserOptions: {
       compress: {
         drop_console: true,
@@ -19,14 +21,7 @@ export default defineConfig({
         comments: false
       }
     },
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          three: ['three'],
-          vue: ['vue', 'vue-router', 'pinia']
-        }
-      }
-    }
+    rollupOptions: {}
   },
   server: {
     port: 5173,
@@ -40,6 +35,7 @@ export default defineConfig({
     watch: {
       usePolling: true,
       interval: 100
-    }
+    },
+    proxy: { '/api': 'http://127.0.0.1:3001' }
   }
 })

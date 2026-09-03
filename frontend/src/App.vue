@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="fixed inset-0 bg-black text-white overflow-hidden font-sans">
     <!-- Vector Cloud Hero -->
-    <VectorCloudHero :palette="currentPalette" @open-contact="activeSection = 'contact'" />
+    <VectorCloudHero :palette="currentPalette" @open-contact="openSection('contact')" />
 
     <!-- Animated Grid Background (subtle) -->
     <div class="fixed inset-0 opacity-5 pointer-events-none overflow-hidden z-0">
@@ -10,20 +10,20 @@
 
     <!-- Header + Navigation (overlay) -->
     <header class="fixed top-0 left-0 right-0 z-30 flex justify-end items-center px-4 md:px-8 py-6 md:py-8 pointer-events-none">
-      <nav ref="navRef" class="flex gap-3 md:gap-6 text-xs md:text-sm tracking-wider uppercase font-bold pointer-events-auto" style="opacity: 0;">
-        <button ref="navAboutRef" @click="activeSection = 'about'" class="relative text-white transition-all duration-200 group" :style="{ '--hover-color': `hsl(var(--color-primary-hsl) / 1)` }">
+      <nav ref="navRef" aria-label="Portfolio sections" class="flex gap-3 md:gap-6 text-xs md:text-sm tracking-wider uppercase font-bold pointer-events-auto" style="opacity: 0;">
+        <button ref="navAboutRef" type="button" @click="openSection('about', $event)" class="relative text-white transition-all duration-200 group" :style="{ '--hover-color': `hsl(var(--color-primary-hsl) / 1)` }">
           <span class="block hover:opacity-70">ABOUT</span>
           <span class="absolute bottom-0 left-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)`, width: '100%' }"></span>
         </button>
-        <button ref="navSkillsRef" @click="activeSection = 'skills'" class="relative text-white transition-all duration-200 group">
+        <button ref="navSkillsRef" type="button" @click="openSection('skills', $event)" class="relative text-white transition-all duration-200 group">
           <span class="block hover:opacity-70">SKILLS</span>
           <span class="absolute bottom-0 left-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)`, width: '100%' }"></span>
         </button>
-        <button ref="navResumeRef" @click="activeSection = 'resume'" class="relative text-white transition-all duration-200 group">
+        <button ref="navResumeRef" type="button" @click="openSection('resume', $event)" class="relative text-white transition-all duration-200 group">
           <span class="block hover:opacity-70">RESUME</span>
           <span class="absolute bottom-0 left-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)`, width: '100%' }"></span>
         </button>
-        <button ref="navContactRef" @click="activeSection = 'contact'" class="relative text-white transition-all duration-200 group">
+        <button ref="navContactRef" type="button" @click="openSection('contact', $event)" class="relative text-white transition-all duration-200 group">
           <span class="block hover:opacity-70">CONTACT</span>
           <span class="absolute bottom-0 left-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" :style="{ backgroundColor: `hsl(var(--color-primary-hsl) / 1)`, width: '100%' }"></span>
         </button>
@@ -32,10 +32,10 @@
 
     <!-- Modal Overlay -->
     <Teleport to="body" v-if="activeSection">
-      <div class="fixed inset-0 bg-black/70 backdrop-blur-lg z-40 pointer-events-auto" @click.self="activeSection = null" style="animation: fadeIn 0.3s ease-out;"></div>
+      <div class="fixed inset-0 bg-black/70 backdrop-blur-lg z-40 pointer-events-auto" @click.self="closeSection" style="animation: fadeIn 0.3s ease-out;"></div>
 
       <div class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 pointer-events-auto overflow-y-auto">
-        <div class="relative w-full md:max-w-4xl max-h-[90vh] bg-slate-950/98 backdrop-blur-xl rounded-none md:rounded-lg pointer-events-auto flex flex-col my-8 md:my-0 shadow-2xl border-2" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)`, boxShadow: `0 0 50px hsl(var(--color-primary-hsl) / 0.1)` }" style="animation: glitchOpen 0.5s ease-out; --glitch-offset: 4px;">
+        <div ref="dialogRef" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1" class="relative w-full md:max-w-4xl max-h-[90vh] bg-slate-950/98 backdrop-blur-xl rounded-none md:rounded-lg pointer-events-auto flex flex-col my-8 md:my-0 shadow-2xl border-2" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.6)`, boxShadow: `0 0 50px hsl(var(--color-primary-hsl) / 0.1)` }" style="animation: glitchOpen 0.5s ease-out; --glitch-offset: 4px;" @keydown="handleDialogKeydown">
           <!-- Neon glow effect -->
           <div class="absolute inset-0 rounded-lg bg-gradient-to-br via-transparent pointer-events-none" :style="{ backgroundImage: `linear-gradient(to bottom right, hsl(var(--color-primary-hsl) / 0.03), transparent, hsl(var(--color-secondary-hsl) / 0.02))` }"></div>
 
@@ -43,16 +43,16 @@
           <div class="absolute inset-0 rounded-lg pointer-events-none opacity-20" :style="{ backgroundImage: `linear-gradient(0deg, transparent 24%, hsl(var(--color-primary-hsl) / 0.1) 25%, hsl(var(--color-primary-hsl) / 0.1) 26%, transparent 27%, transparent 74%, hsl(var(--color-primary-hsl) / 0.1) 75%, hsl(var(--color-primary-hsl) / 0.1) 76%, transparent 77%, transparent)`, backgroundSize: '100% 4px', animation: 'scanlines 8s linear infinite' }"></div>
 
           <!-- Close Button - Fixed to modal corner -->
-          <button @click="activeSection = null" class="absolute top-4 md:top-6 right-4 md:right-6 z-20 hover:scale-110 transition-all duration-200" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)` }" style="animation: slideInTop 0.4s ease-out 0.1s both;">
-            <X size="24" />
+          <button type="button" aria-label="Close section" @click="closeSection" class="absolute top-4 md:top-6 right-4 md:right-6 z-20 hover:scale-110 transition-all duration-200" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)` }" style="animation: slideInTop 0.4s ease-out 0.1s both;">
+            <X :size="24" />
           </button>
 
           <!-- Content -->
-          <div class="relative z-10 min-h-full overflow-y-auto p-6 md:p-12 pb-12" style="animation: slideInUp 0.6s ease-out 0.2s both;">
+          <div tabindex="0" class="relative z-10 min-h-full overflow-y-auto p-6 md:p-12 pb-12" style="animation: slideInUp 0.6s ease-out 0.2s both;">
           <!-- About -->
           <template v-if="activeSection === 'about'">
             <div class="mb-8 md:mb-12">
-              <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="letter-spacing: -2px;">ABOUT</h2>
+              <h2 id="modal-title" class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="letter-spacing: -2px;">ABOUT</h2>
               <div class="h-1 mt-4 bg-gradient-to-r" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.8), hsl(var(--color-secondary-hsl) / 0.4), transparent)` }"></div>
             </div>
             <div class="space-y-5 md:space-y-6 text-white/80 leading-relaxed font-light">
@@ -75,7 +75,7 @@
           <!-- Skills -->
           <template v-if="activeSection === 'skills'">
             <div class="mb-8 md:mb-12">
-              <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }" style="letter-spacing: -2px;">SKILLS</h2>
+              <h2 id="modal-title" class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }" style="letter-spacing: -2px;">SKILLS</h2>
               <div class="h-1 mt-4 bg-gradient-to-r" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-secondary-hsl) / 0.8), hsl(var(--color-primary-hsl) / 0.4), transparent)` }"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-0 pb-12">
@@ -232,7 +232,7 @@
           <!-- Resume -->
           <template v-if="activeSection === 'resume'">
             <div class="mb-8 md:mb-12">
-              <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="letter-spacing: -2px;">RESUME</h2>
+              <h2 id="modal-title" class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-primary-hsl) / 1)` }" style="letter-spacing: -2px;">RESUME</h2>
               <div class="h-1 mt-4 bg-gradient-to-r" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.8), hsl(var(--color-secondary-hsl) / 0.4), transparent)` }"></div>
             </div>
             <div class="space-y-6 md:space-y-8 mt-0 pb-12" style="animation: slideInUp 0.6s ease-out 0.2s both;">
@@ -344,42 +344,42 @@
           <!-- Contact -->
           <template v-if="activeSection === 'contact'">
             <div class="mb-8 md:mb-12">
-              <h2 class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }" style="letter-spacing: -2px;">CONTACT</h2>
+              <h2 id="modal-title" class="text-4xl md:text-6xl font-serif font-black leading-none" :style="{ color: `hsl(var(--color-secondary-hsl) / 1)` }" style="letter-spacing: -2px;">CONTACT</h2>
               <div class="h-1 mt-4 bg-gradient-to-r" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-secondary-hsl) / 0.8), hsl(var(--color-primary-hsl) / 0.4), transparent)` }"></div>
             </div>
             <div class="space-y-6 md:space-y-8 mt-0" style="animation: slideInUp 0.6s ease-out 0.2s both;">
               <div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
-                  <a href="https://github.com/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
-                    <Github size="18" class="transition-transform duration-300 group-hover:scale-110" />
+                  <a href="https://github.com/Kampe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                    <Github :size="18" class="transition-transform duration-300 group-hover:scale-110" />
                     <span>GitHub</span>
                   </a>
-                  <a href="https://linkedin.com/in/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
-                    <Linkedin size="18" class="transition-transform duration-300 group-hover:scale-110" />
+                  <a href="https://linkedin.com/in/Kampe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                    <Linkedin :size="18" class="transition-transform duration-300 group-hover:scale-110" />
                     <span>LinkedIn</span>
                   </a>
-                  <a href="https://twitter.com/NickKampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
-                    <Twitter size="18" class="transition-transform duration-300 group-hover:scale-110" />
+                  <a href="https://twitter.com/NickKampe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                    <Twitter :size="18" class="transition-transform duration-300 group-hover:scale-110" />
                     <span>Twitter/X</span>
                   </a>
-                  <a href="https://bitbucket.org/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                  <a href="https://bitbucket.org/Kampe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
                     <svg size="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-[18px] h-[18px] transition-transform duration-300 group-hover:scale-110"><path d="M6 7c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V7Z"/><path d="M6 17c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v0c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2v0Z"/></svg>
                     <span>BitBucket</span>
                   </a>
-                  <a href="https://stackoverflow.com/users/201297/nickkampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                  <a href="https://stackoverflow.com/users/201297/nickkampe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
                     <svg size="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-[18px] h-[18px] transition-transform duration-300 group-hover:scale-110"><path d="M6.5 12h11M6.5 16h11M8 19h8M8 8h8M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/></svg>
                     <span>Stack Overflow</span>
                   </a>
-                  <a href="https://angel.co/Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                  <a href="https://angel.co/Kampe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
                     <svg size="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-[18px] h-[18px] transition-transform duration-300 group-hover:scale-110"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 12h6"/></svg>
                     <span>AngelList</span>
                   </a>
-                  <a href="https://quora.com/Nick-Kampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
+                  <a href="https://quora.com/Nick-Kampe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-primary-hsl) / 0.7)`, borderColor: `hsl(var(--color-primary-hsl) / 0.3)` }">
                     <svg size="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-[18px] h-[18px] transition-transform duration-300 group-hover:scale-110"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm3.43-5.71C15.5 12.5 14 14.02 14 15.5v.5h-2v-.5c0-2.23 1.77-3.82 4-4.13V9.62c0-.88-.56-1.62-1.5-1.62-.95 0-1.5.75-1.5 1.62h-2c0-2.02 1.45-3.62 3.5-3.62 2.1 0 3.5 1.6 3.5 3.62v3.36z"/></svg>
                     <span>Quora</span>
                   </a>
-                  <a href="https://facebook.com/NickKampe" target="_blank" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
-                    <Facebook size="18" class="transition-transform duration-300 group-hover:scale-110" />
+                  <a href="https://facebook.com/NickKampe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition-all duration-300 group text-sm font-medium px-3 py-2 border rounded hover:bg-slate-900/40" :style="{ color: `hsl(var(--color-secondary-hsl) / 0.7)`, borderColor: `hsl(var(--color-secondary-hsl) / 0.3)` }">
+                    <Facebook :size="18" class="transition-transform duration-300 group-hover:scale-110" />
                     <span>Facebook</span>
                   </a>
                 </div>
@@ -400,13 +400,14 @@
                 </template>
                 <form v-else @submit.prevent="submitForm" class="space-y-3 md:space-y-4">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                    <input id="contact-name" name="name" v-model="form.name" type="text" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required />
-                    <input id="contact-email" name="email" v-model="form.email" type="email" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.5)` }" required />
+                    <input id="contact-name" name="name" v-model="form.name" type="text" aria-label="Your name" autocomplete="name" maxlength="100" placeholder="Your Name" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required />
+                    <input id="contact-email" name="email" v-model="form.email" type="email" aria-label="Your email" autocomplete="email" maxlength="254" placeholder="Your Email" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-secondary-hsl) / 0.5)` }" required />
                   </div>
-                  <textarea id="contact-message" name="message" v-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required></textarea>
-                  <button id="contact-submit" type="submit" class="w-full px-6 md:px-8 py-3 md:py-4 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg border-2 flex items-center justify-center gap-2" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.6), hsl(var(--color-secondary-hsl) / 0.6))`, borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, boxShadow: `0 0 30px hsl(var(--color-primary-hsl) / 0.25)` }">
-                    <Send size="20" />SEND MESSAGE
+                  <textarea id="contact-message" name="message" v-model="form.message" aria-label="Your message" maxlength="5000" placeholder="Your Message" rows="5" class="w-full px-4 md:px-5 py-2 md:py-3 bg-slate-900/60 border-2 text-white placeholder-slate-500 focus:outline-none focus:bg-slate-900/80 transition-all duration-300 resize-none text-xs md:text-sm font-light" :style="{ borderColor: `hsl(var(--color-primary-hsl) / 0.5)` }" required></textarea>
+                  <button id="contact-submit" type="submit" :disabled="formPending" :aria-busy="formPending" class="w-full px-6 md:px-8 py-3 md:py-4 font-bold transition-all duration-300 text-xs md:text-sm uppercase tracking-widest text-black shadow-lg border-2 flex items-center justify-center gap-2 disabled:cursor-wait disabled:opacity-70" :style="{ backgroundImage: `linear-gradient(to right, hsl(var(--color-primary-hsl) / 0.6), hsl(var(--color-secondary-hsl) / 0.6))`, borderColor: `hsl(var(--color-primary-hsl) / 0.5)`, boxShadow: `0 0 30px hsl(var(--color-primary-hsl) / 0.25)` }">
+                    <Send :size="20" />SEND MESSAGE
                   </button>
+                  <p class="sr-only" role="status" aria-live="polite">{{ formError ? 'Message submission failed.' : '' }}</p>
                 </form>
               </div>
             </div>
@@ -426,16 +427,68 @@ import VectorCloudHero from './components/art/VectorCloudHero.vue'
 import { getRandomPalette, applyPaletteToDOM } from './utils/colorPalettes'
 import { trackPageView, trackSectionView, trackFormSubmission, trackExternalLink, trackNavigation, trackScrollDepth, trackError } from './utils/analytics'
 
-const activeSection = ref<string | null>(null)
+type Section = 'about' | 'skills' | 'resume' | 'contact'
+
+const activeSection = ref<Section | null>(null)
 const form = ref({ name: '', email: '', subject: '', message: '' })
 const formSuccess = ref(false)
 const formError = ref(false)
+const formPending = ref(false)
+const dialogRef = ref<HTMLElement | null>(null)
 const navRef = ref<HTMLElement | null>(null)
 const navAboutRef = ref<HTMLElement | null>(null)
 const navSkillsRef = ref<HTMLElement | null>(null)
 const navResumeRef = ref<HTMLElement | null>(null)
 const navContactRef = ref<HTMLElement | null>(null)
 const currentPalette = ref(getRandomPalette())
+const validSections: Section[] = ['about', 'skills', 'resume', 'contact']
+const pendingTimeouts = new Set<number>()
+const navListenerCleanup: Array<() => void> = []
+let previousFocus: HTMLElement | null = null
+let navTimeline: gsap.core.Timeline | null = null
+
+const schedule = (callback: () => void, delay: number) => {
+  const timeout = window.setTimeout(() => {
+    pendingTimeouts.delete(timeout)
+    callback()
+  }, delay)
+  pendingTimeouts.add(timeout)
+}
+
+const openSection = (section: Section, event?: Event) => {
+  previousFocus = event?.currentTarget instanceof HTMLElement
+    ? event.currentTarget
+    : document.activeElement instanceof HTMLElement ? document.activeElement : null
+  activeSection.value = section
+}
+
+const closeSection = () => {
+  activeSection.value = null
+  void nextTick(() => previousFocus?.focus())
+}
+
+const handleDialogKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeSection()
+    return
+  }
+  if (event.key !== 'Tab' || !dialogRef.value) return
+
+  const focusable = Array.from(dialogRef.value.querySelectorAll<HTMLElement>(
+    'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  ))
+  if (focusable.length === 0) return
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
+}
 
 const trackCurrentPage = () => {
   const pagePath = `${window.location.pathname}${window.location.search}${window.location.hash}`
@@ -459,15 +512,17 @@ const handleScroll = () => {
 }
 
 const handleErrorEvent = (event: ErrorEvent) => {
-  trackError(event.error?.name || 'Error', event.error?.message || event.message, event.error?.stack)
+  trackError(event.error?.name || 'Error', event.error?.message || event.message)
 }
 
 // Sync URL hash with active section
-watch(activeSection, (newSection) => {
+watch(activeSection, async (newSection) => {
   if (newSection) {
     window.location.hash = newSection
     trackSectionView(newSection)
     trackNavigation(newSection)
+    await nextTick()
+    dialogRef.value?.focus()
   } else {
     window.location.hash = ''
   }
@@ -476,42 +531,56 @@ watch(activeSection, (newSection) => {
 // Handle browser back/forward navigation
 const handleHashChange = () => {
   const hash = window.location.hash.slice(1)
-  const validSections = ['about', 'skills', 'resume', 'contact']
-  activeSection.value = validSections.includes(hash) ? hash : null
+  activeSection.value = validSections.includes(hash as Section) ? hash as Section : null
   trackCurrentPage()
 }
 
 const submitForm = async () => {
+  if (formPending.value) return
+  formPending.value = true
+  formError.value = false
   try {
     const response = await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form.value)
     })
-    const result = await response.json()
-    if (result.success) {
+    const result = await response.json() as { success?: boolean; error?: string }
+    if (response.ok && result.success) {
       trackFormSubmission('contact_form', true)
       form.value = { name: '', email: '', subject: '', message: '' }
       formSuccess.value = true
 
       // Close modal after 2 seconds
-      setTimeout(() => {
-        activeSection.value = null
+      schedule(() => {
+        closeSection()
         formSuccess.value = false
       }, 2000)
     } else {
       trackFormSubmission('contact_form', false, result.error || 'Unknown error')
       formError.value = true
-      setTimeout(() => {
+      schedule(() => {
         formError.value = false
       }, 3000)
     }
   } catch (error) {
     trackFormSubmission('contact_form', false, error instanceof Error ? error.message : 'Unknown error')
     formError.value = true
-    setTimeout(() => {
+    schedule(() => {
       formError.value = false
     }, 3000)
+  } finally {
+    formPending.value = false
+  }
+}
+
+const handleDocumentClick = (event: MouseEvent) => {
+  const target = event.target
+  if (!(target instanceof Element)) return
+  const link = target.closest<HTMLAnchorElement>('a[href]')
+  if (!link || !/^https?:/.test(link.href)) return
+  if (new URL(link.href).origin !== window.location.origin) {
+    trackExternalLink(link.href, link.textContent?.trim() || undefined)
   }
 }
 
@@ -521,9 +590,8 @@ onMounted(async () => {
 
   // Handle initial URL hash for deep linking
   const hash = window.location.hash.slice(1)
-  const validSections = ['about', 'skills', 'resume', 'contact']
-  if (validSections.includes(hash)) {
-    activeSection.value = hash
+  if (validSections.includes(hash as Section)) {
+    activeSection.value = hash as Section
   }
 
   // Listen for browser back/forward navigation
@@ -534,16 +602,7 @@ onMounted(async () => {
   applyPaletteToDOM(currentPalette.value)
 
   // Track external link clicks
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement
-    const link = target.closest('a') as HTMLAnchorElement | null
-    if (link && link.href && (link.href.startsWith('http') || link.href.startsWith('//'))) {
-      const isExternal = !link.href.includes(window.location.hostname)
-      if (isExternal) {
-        trackExternalLink(link.href, link.textContent || undefined)
-      }
-    }
-  })
+  document.addEventListener('click', handleDocumentClick)
 
   // Track scroll depth
   window.addEventListener('scroll', handleScroll, { passive: true })
@@ -552,16 +611,16 @@ onMounted(async () => {
   window.addEventListener('error', handleErrorEvent)
 
   // Animate navbar with staggered entrance
-  const timeline = gsap.timeline()
+  navTimeline = gsap.timeline()
 
-  timeline.to(navRef.value, {
+  navTimeline.to(navRef.value, {
     opacity: 1,
     duration: 0.6,
     ease: 'cubic.out',
   })
 
   // Stagger nav buttons with slight delay
-  timeline.fromTo(
+  navTimeline.fromTo(
     [navAboutRef.value, navSkillsRef.value, navResumeRef.value, navContactRef.value],
     { opacity: 0, y: -10 },
     { opacity: 1, y: 0, duration: 0.5, ease: 'cubic.out', stagger: 0.1 },
@@ -572,33 +631,42 @@ onMounted(async () => {
   const navButtons = [navAboutRef.value, navSkillsRef.value, navResumeRef.value, navContactRef.value]
   navButtons.forEach((btn) => {
     if (!btn) return
-    btn.addEventListener('mouseenter', () => {
+    const handleMouseEnter = () => {
       gsap.to(btn, {
         y: -3,
         duration: 0.3,
         ease: 'cubic.out',
       })
-    })
-    btn.addEventListener('mouseleave', () => {
+    }
+    const handleMouseLeave = () => {
       gsap.to(btn, {
         y: 0,
         duration: 0.3,
         ease: 'cubic.out',
       })
+    }
+    btn.addEventListener('mouseenter', handleMouseEnter)
+    btn.addEventListener('mouseleave', handleMouseLeave)
+    navListenerCleanup.push(() => {
+      btn.removeEventListener('mouseenter', handleMouseEnter)
+      btn.removeEventListener('mouseleave', handleMouseLeave)
     })
   })
 })
 
 onUnmounted(() => {
   window.removeEventListener('hashchange', handleHashChange)
-  window.removeEventListener('scroll', handleScroll as any)
-  window.removeEventListener('error', handleErrorEvent as any)
+  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('error', handleErrorEvent)
+  document.removeEventListener('click', handleDocumentClick)
+  pendingTimeouts.forEach((timeout) => window.clearTimeout(timeout))
+  navListenerCleanup.forEach((cleanup) => cleanup())
+  navTimeline?.kill()
+  gsap.killTweensOf([navAboutRef.value, navSkillsRef.value, navResumeRef.value, navContactRef.value])
 })
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=IBM+Plex+Mono:wght@400;700&display=swap');
-
 :root {
   --font-serif: 'Crimson Text', serif;
   --font-mono: 'IBM Plex Mono', monospace;

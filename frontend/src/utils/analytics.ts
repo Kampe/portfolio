@@ -1,52 +1,46 @@
-const MEASUREMENT_ID = 'G-68N6G3WJ35'
+const DEFAULT_MEASUREMENT_ID = import.meta.env.VITE_GA_ID || 'G-68N6G3WJ35'
 const SCRIPT_ID = 'google-analytics-gtag'
 
 declare global {
   interface Window {
     dataLayer: unknown[]
     gtag?: (...args: unknown[]) => void
+    __gaMeasurementId?: string
   }
 }
 
 const isBrowser = () => typeof window !== 'undefined' && typeof document !== 'undefined'
 const isTestRuntime = () => typeof navigator !== 'undefined' && /happy.?dom|jsdom/i.test(navigator.userAgent)
 
-const getCurrentPagePath = () => `${window.location.pathname}${window.location.search}${window.location.hash}`
+function privacySignalEnabled() {
+  if (!isBrowser()) return true
+  const navigatorWithGpc = navigator as Navigator & { globalPrivacyControl?: boolean }
+  return navigator.doNotTrack === '1' || navigatorWithGpc.globalPrivacyControl === true
+}
 
-export const initializeGoogleAnalytics = (): boolean => {
-  if (!isBrowser()) return false
+export function initializeGoogleAnalytics(measurementId = DEFAULT_MEASUREMENT_ID): boolean {
+  if (!isBrowser() || privacySignalEnabled() || !measurementId) return false
+  if (document.getElementById(SCRIPT_ID)) return true
 
-  if (document.getElementById(SCRIPT_ID)) {
-    return true
-  }
-
-  if (!Array.isArray(window.dataLayer)) {
-    window.dataLayer = []
-  }
-
-  if (typeof window.gtag !== 'function') {
-    window.gtag = (...args: unknown[]) => {
-      window.dataLayer.push(args)
-    }
-  }
+  window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : []
+  window.gtag = window.gtag || ((...args: unknown[]) => { window.dataLayer.push(args) })
+  window.__gaMeasurementId = measurementId
 
   if (!isTestRuntime()) {
     const script = document.createElement('script')
     script.id = SCRIPT_ID
     script.async = true
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`
     document.head.appendChild(script)
   }
 
   window.gtag('js', new Date())
-  window.gtag('config', MEASUREMENT_ID, { send_page_view: true })
-
+  window.gtag('config', measurementId, { send_page_view: false, anonymize_ip: true })
   return true
 }
 
-export const trackPageView = (pagePath = getCurrentPagePath()): void => {
+export function trackPageView(pagePath: string): void {
   if (!isBrowser() || typeof window.gtag !== 'function') return
-
   window.gtag('event', 'page_view', {
     page_path: pagePath,
     page_location: window.location.href,
@@ -54,54 +48,31 @@ export const trackPageView = (pagePath = getCurrentPagePath()): void => {
   })
 }
 
-export const trackEvent = (eventName: string, eventData?: Record<string, unknown>): void => {
+export function trackEvent(eventName: string, eventData: Record<string, unknown> = {}): void {
   if (!isBrowser() || typeof window.gtag !== 'function') return
-  window.gtag('event', eventName, eventData || {})
+  window.gtag('event', eventName, eventData)
 }
 
-export const trackSectionView = (section: string): void => {
-  trackEvent('section_view', {
-    section_name: section,
-    timestamp: new Date().toISOString(),
-  })
+export function trackFormSubmission(formName: string, success: boolean, error?: string): void {
+  trackEvent('form_submit', { form_name: formName, success, error_message: error })
 }
 
-export const trackFormSubmission = (formName: string, success: boolean, error?: string): void => {
-  trackEvent('form_submit', {
-    form_name: formName,
-    success,
-    error_message: error,
-    timestamp: new Date().toISOString(),
-  })
+export function trackSectionView(section: string): void {
+  trackEvent('section_view', { section_name: section })
 }
 
-export const trackExternalLink = (url: string, linkText?: string): void => {
-  trackEvent('external_link_click', {
-    url,
-    link_text: linkText,
-    timestamp: new Date().toISOString(),
-  })
+export function trackExternalLink(url: string, linkText?: string): void {
+  trackEvent('external_link_click', { url, link_text: linkText })
 }
 
-export const trackNavigation = (target: string): void => {
-  trackEvent('navigation', {
-    target,
-    timestamp: new Date().toISOString(),
-  })
+export function trackNavigation(target: string): void {
+  trackEvent('navigation', { target })
 }
 
-export const trackScrollDepth = (depth: number): void => {
-  trackEvent('scroll_depth', {
-    depth_percent: Math.round(depth),
-    timestamp: new Date().toISOString(),
-  })
+export function trackScrollDepth(depth: number): void {
+  trackEvent('scroll_depth', { depth_percent: Math.round(depth) })
 }
 
-export const trackError = (errorName: string, errorMessage: string, errorStack?: string): void => {
-  trackEvent('exception', {
-    description: `${errorName}: ${errorMessage}`,
-    fatal: false,
-    stack: errorStack,
-    timestamp: new Date().toISOString(),
-  })
+export function trackError(errorName: string, errorMessage: string): void {
+  trackEvent('exception', { description: `${errorName}: ${errorMessage}`, fatal: false })
 }

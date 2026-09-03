@@ -110,7 +110,7 @@ let presetManager: ParameterPresetManager | null = null
 
 // Scene objects
 let scene: THREE.Scene | null = null
-let camera: THREE.PerspectiveCamera | null = null
+let camera: THREE.Camera | null = null
 let renderer: THREE.WebGLRenderer | null = null
 let animationId: number | null = null
 
@@ -167,8 +167,12 @@ const initScene = () => {
     const width = canvasRef.value!.clientWidth
     const height = canvasRef.value!.clientHeight
 
-    camera.aspect = width / height
-    camera.updateProjectionMatrix()
+    if (camera instanceof THREE.PerspectiveCamera) {
+      camera.aspect = width / height
+      camera.updateProjectionMatrix()
+    } else if (camera instanceof THREE.OrthographicCamera) {
+      camera.updateProjectionMatrix()
+    }
     renderer.setSize(width, height)
   }
 
@@ -187,6 +191,7 @@ const initScene = () => {
     )
 
     // Project to a plane 50 units in front of camera
+    if (!(camera instanceof THREE.PerspectiveCamera)) return ndc.unproject(camera)
     const vFOV = (camera.fov * Math.PI) / 180 // vertical FOV in radians
     const height = 2 * Math.tan(vFOV / 2) * 50 // height at focal distance 50
     const width = height * camera.aspect

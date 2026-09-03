@@ -1,30 +1,21 @@
-version: '3.8'
-
-# Single unified container for portfolio app
-# Usage:
-#   Development:
-#     docker-compose up
-#   Or simply:
-#     docker run -p 3001:3001 portfolio:latest
-
 services:
   app:
-    image: portfolio:latest
+    image: portfolio:local
     build:
       context: .
-      dockerfile: Dockerfile
+      args:
+        BUILD_DATE: ${BUILD_DATE:-local}
+    environment:
+      FORMSPREE_ID: ${FORMSPREE_ID:-meelkpqg}
     ports:
-      - "3001:3001"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 5s
+      - "127.0.0.1:3001:3001"
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 100
     restart: unless-stopped
-    networks:
-      - portfolio
-
-networks:
-  portfolio:
-    driver: bridge

@@ -2,14 +2,14 @@
  * CHARGED MAGNETOSPHERE THEME
  * Inspired by Robert Hodgin's Magnetosphere visualizer
  *
- * Visual: Charged particle system with attractive/repulsive forces.
- * Particles with opposite charges dance around each other in organic flows.
- * Additive blending creates intense glowing "trippiness"
+ * Visual: A loose field of charged particles drifting through depth. Subtle
+ * attraction and repulsion create brief clusters without imposing a shape,
+ * while additive blending preserves the original glowing character.
  *
- * Physics: Each particle has a charge (+/-). Distance-based forces
- * create emergent patterns without explicit geometry
+ * Physics: Each particle has a charge (+/-). A curl-like flow field, one stable
+ * charge partner, and pointer impulses create emergent motion in linear time.
  *
- * Performance: ~50-60fps on desktop, 30-45fps mobile (particle physics)
+ * Performance: O(n) per frame; targets 60fps desktop and smooth mobile motion.
  */
 
 import * as THREE from 'three'
@@ -21,7 +21,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 
 const CONFIG: ThemeConfig = {
   name: 'Charged Magnetosphere',
-  description: 'Dense particle clouds with intense glowing interactions',
+  description: 'A sparse, layered field of softly glowing charged particles',
   colors: {
     primary: '#ff006e',
     secondary: '#00d4ff',
@@ -29,21 +29,25 @@ const CONFIG: ThemeConfig = {
   },
   performance: {
     targetFps: 50,
-    particleCount: 2000,
+    particleCount: 132,
   },
 }
 
 // ===== CONFIGURATION KNOBS =====
 const PARAMS = {
-  particleCount: 2000, // Dense cloud like original Magnetosphere
-  particleSize: 2.8, // Medium-large glowing particles
-  bloomStrength: 0.6, // Subtle glow (preserves text readability)
+  particleCount: 132,
+  particleSize: 2.55,
+  bloomStrength: 0.45,
   bloomRadius: 0.4,
   bloomThreshold: 0.5,
   toneMappingExposure: 0.85, // Slightly reduced brightness
-  interactionRadius: 80, // Larger interaction range
-  chargeStrength: 0.6, // Moderate repulsion/attraction for organic spreading
-  velocityDamping: 0.91, // Smooth drift through space
+  interactionRadius: 42,
+  chargeRadius: 38,
+  chargeStrength: 0.0011,
+  flowStrength: 0.00032,
+  safeZoneStrength: 0.0018,
+  velocityDamping: 0.981,
+  maxVelocity: 0.064,
   beatResponsiveness: 2.5, // Strong response to pattern energy
 }
 
@@ -54,6 +58,9 @@ interface ChargedParticle {
   color: THREE.Color
   age: number
   life: number
+  phase: number
+  driftScale: number
+  partnerIndex: number
 }
 
 // Beautiful complementary color pairs
@@ -83,6 +90,7 @@ export const createChargedMagnetosphereTheme = (
 ): ThemeSetupResult => {
   const width = window.innerWidth
   const height = window.innerHeight
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   // ===== COLOR SETUP =====
   // Use provided palette colors or pick random pair
@@ -100,9 +108,10 @@ export const createChargedMagnetosphereTheme = (
   const colorPair = paletteColors ? { positive: 0.95, negative: 0.35 } : pickColorPair()
 
   // ===== RANDOM STARTING POSITION =====
-  const randomStartX = (Math.random() - 0.5) * 80 - 30 // Biased left
-  const randomStartY = (Math.random() - 0.5) * 60 + 10
+  const randomStartX = (Math.random() - 0.5) * 12
+  const randomStartY = (Math.random() - 0.5) * 10
   const randomStartZ = Math.random() * 40 + 50
+  const cameraDistance = width < 768 ? 120 : 108
 
   // ===== SCENE SETUP =====
   const scene = new THREE.Scene()
@@ -111,8 +120,8 @@ export const createChargedMagnetosphereTheme = (
 
   // ===== CAMERA =====
   const camera = new THREE.PerspectiveCamera(65, width / height, 0.1, 1000)
-  camera.position.set(randomStartX, randomStartY, randomStartZ)
-  camera.lookAt(randomStartX + 20, randomStartY, 0)
+  camera.position.set(randomStartX, randomStartY, randomStartZ + cameraDistance)
+  camera.lookAt(randomStartX, randomStartY, randomStartZ)
 
   // ===== RENDERER =====
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
@@ -123,35 +132,71 @@ export const createChargedMagnetosphereTheme = (
   renderer.toneMapping = THREE.ACESFilmicToneMapping
   renderer.toneMappingExposure = PARAMS.toneMappingExposure
 
-  // ===== POSTPROCESSING =====
-  const composer = new EffectComposer(renderer)
-  const renderPass = new RenderPass(scene, camera)
-  composer.addPass(renderPass)
+  const gl = renderer.getContext()
+  const debugRendererInfo = gl.getExtension('WEBGL_debug_renderer_info')
+  const rendererDescription = debugRendererInfo
+    ? String(gl.getParameter(debugRendererInfo.UNMASKED_RENDERER_WEBGL))
+    : ''
+  const isSoftwareRenderer = /swiftshader|llvmpipe|software rasterizer/i.test(rendererDescription)
+  const isConstrainedRenderer = isSoftwareRenderer || (navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 2)
 
-  const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(width, height),
-    PARAMS.bloomStrength, // strength - intense glow
-    PARAMS.bloomRadius, // radius
-    PARAMS.bloomThreshold // threshold
-  )
-  composer.addPass(bloomPass)
+  // ===== POSTPROCESSING =====
+  let composer: EffectComposer | undefined
+  if (!isConstrainedRenderer && !prefersReducedMotion) {
+    composer = new EffectComposer(renderer)
+    const renderPass = new RenderPass(scene, camera)
+    composer.addPass(renderPass)
+
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(width, height),
+      PARAMS.bloomStrength,
+      PARAMS.bloomRadius,
+      PARAMS.bloomThreshold
+    )
+    composer.addPass(bloomPass)
+  }
 
   // ===== PARTICLE SYSTEM =====
-  const particleCount = PARAMS.particleCount
+  // Preserve the sparse original composition while scaling down on phones and
+  // constrained renderers.
+  const particleCount = isConstrainedRenderer ? 48 : prefersReducedMotion ? 60 : width < 768 ? 72 : PARAMS.particleCount
   const particles: ChargedParticle[] = []
 
   const particleGeometry = new THREE.BufferGeometry()
   const particlePositions = new Float32Array(particleCount * 3)
   const particleColors = new Float32Array(particleCount * 3)
+  const workingColor = new THREE.Color()
+  const white = new THREE.Color(1, 1, 1)
+  const fieldHalfWidth = width < 768 ? 58 : 138
+  const fieldHalfHeight = width < 768 ? 112 : 94
+  const fieldHalfDepth = 54
+  const safeHalfWidth = width < 768 ? 42 : 58
+  const safeHalfHeight = width < 768 ? 48 : 34
 
-  // Track offset center for globe movement around screen
-  let globeCenterX = randomStartX
-  let globeCenterY = randomStartY
-  let globeCenterZ = randomStartZ
-
-  // Initialize particles with random charges and complementary colors
+  // Shape the original random cloud instead of forcing it into a ring. Initial
+  // placement leaves breathing room around the hero copy while depth produces
+  // the mix of pinpoints and larger glowing orbs.
   for (let i = 0; i < particleCount; i++) {
     const charge = Math.random() > 0.5 ? 1 : -1
+    const phase = Math.random() * Math.PI * 2
+    const depthMix = Math.random()
+    const zOffset = depthMix < 0.2
+      ? 26 + Math.random() * 26
+      : depthMix < 0.65
+        ? -15 + Math.random() * 41
+        : -fieldHalfDepth + Math.random() * 39
+    const perspectiveScale = (cameraDistance - zOffset) / cameraDistance
+    let x = 0
+    let y = 0
+    for (let attempt = 0; attempt < 8; attempt++) {
+      x = (Math.random() - 0.5) * fieldHalfWidth * perspectiveScale * 2
+      y = (Math.random() - 0.5) * fieldHalfHeight * perspectiveScale * 2
+      const safeWidthAtDepth = safeHalfWidth * perspectiveScale
+      const safeHeightAtDepth = safeHalfHeight * perspectiveScale
+      const safeDistance = (x * x) / (safeWidthAtDepth * safeWidthAtDepth) +
+        (y * y) / (safeHeightAtDepth * safeHeightAtDepth)
+      if (safeDistance >= 1) break
+    }
 
     // Use palette colors if provided, otherwise use HSL-based colors
     let color: THREE.Color
@@ -168,15 +213,22 @@ export const createChargedMagnetosphereTheme = (
 
     particles.push({
       position: new THREE.Vector3(
-        randomStartX + (Math.random() - 0.5) * 180,
-        randomStartY + (Math.random() - 0.5) * 180,
-        randomStartZ + (Math.random() - 0.5) * 140
+        randomStartX + x,
+        randomStartY + y,
+        randomStartZ + zOffset
       ),
-      velocity: new THREE.Vector3(0, 0, 0), // Start from rest, accelerate via forces
+      velocity: new THREE.Vector3(
+        (Math.random() - 0.5) * 0.016,
+        (Math.random() - 0.5) * 0.016,
+        (Math.random() - 0.5) * 0.011
+      ),
       charge,
       color,
-      age: 0,
-      life: Math.random() * 6 + 4,
+      age: Math.random() * 10,
+      life: 8 + Math.random() * 8,
+      phase,
+      driftScale: 0.65 + Math.random() * 0.7,
+      partnerIndex: (i * 37 + 17) % particleCount,
     })
 
     particlePositions[i * 3] = particles[i].position.x
@@ -212,6 +264,7 @@ export const createChargedMagnetosphereTheme = (
     size: PARAMS.particleSize,
     sizeAttenuation: true,
     transparent: true,
+    opacity: 0.8,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
     fog: false, // Don't fade particles with fog for more vivid effect
@@ -230,6 +283,7 @@ export const createChargedMagnetosphereTheme = (
     camera.aspect = newWidth / newHeight
     camera.updateProjectionMatrix()
     renderer.setSize(newWidth, newHeight)
+    composer?.setSize(newWidth, newHeight)
   }
 
   window.addEventListener('resize', handleResize)
@@ -242,95 +296,152 @@ export const createChargedMagnetosphereTheme = (
   ) => {
     const particlePositions = particleGeometry.attributes.position.array as Float32Array
     const particleColors = particleGeometry.attributes.color.array as Float32Array
-    const dt = interaction.deltaTime || 1 / 60 // Use actual delta time, fallback to 60fps
+    const dt = interaction.deltaTime || 1 / 60
+    const frameScale = Math.min(Math.max(dt * 60, 0.25), 3)
+    const seconds = time * 0.001
+    const motionScale = prefersReducedMotion ? 0.28 : 1
 
-    // Get live-tuned parameters from interaction, fallback to defaults
-    const params = {
-      particleSize: (interaction.parameters?.particleSize as number) || PARAMS.particleSize,
-      interactionRadius: (interaction.parameters?.['speed'] as number) ? PARAMS.interactionRadius * ((interaction.parameters?.speed as number) || 1) : PARAMS.interactionRadius,
-      chargeStrength: (interaction.parameters?.['brightness'] as number) ? PARAMS.chargeStrength * ((interaction.parameters?.brightness as number) || 1) : PARAMS.chargeStrength,
-      velocityDamping: (interaction.parameters?.['speed'] as number) ? Math.pow(PARAMS.velocityDamping, ((interaction.parameters?.speed as number) || 1) * 0.5) : PARAMS.velocityDamping,
-      beatResponsiveness: PARAMS.beatResponsiveness,
+    const speed = typeof interaction.parameters?.speed === 'number' ? interaction.parameters.speed : 1
+    const brightness = typeof interaction.parameters?.brightness === 'number' ? interaction.parameters.brightness : 1
+    const particleSize = typeof interaction.parameters?.particleSize === 'number'
+      ? interaction.parameters.particleSize
+      : PARAMS.particleSize
+    const flowEnergy = (0.55 + pattern.spatialFlow * 0.55 + interaction.energizedLevel * 0.55) * speed * motionScale
+    const pulse = pattern.frequency.low * 0.7 + pattern.frequency.peak * 0.3
+    const damping = Math.pow(PARAMS.velocityDamping, frameScale)
+    const maximumVelocity = PARAMS.maxVelocity * (0.8 + pattern.particleVelocity * 0.2 + interaction.energizedLevel * 0.25)
+    const maximumVelocitySquared = maximumVelocity * maximumVelocity
+    const cursor = interaction.cursor.position
+    const cursorX = cursor ? randomStartX + cursor.x * 0.72 : 0
+    const cursorY = cursor ? randomStartY + cursor.y * 0.72 : 0
+    const cursorZ = randomStartZ
+    const interactionRadius = PARAMS.interactionRadius * (1 + interaction.clickPulse * 0.35)
+    const interactionRadiusSquared = interactionRadius * interactionRadius
+    const chargeRadiusSquared = PARAMS.chargeRadius * PARAMS.chargeRadius
+
+    const animatedParticleSize = particleSize * (0.98 + pulse * 0.04)
+    if (particleMaterial.size !== animatedParticleSize) {
+      particleMaterial.size = animatedParticleSize
     }
 
-    // Update particle material size if changed
-    if (particleMaterial.size !== params.particleSize) {
-      particleMaterial.size = params.particleSize
-    }
-
-    // Update particles with charged particle physics
     for (let i = 0; i < particleCount; i++) {
       const particle = particles[i]
+      particle.age = (particle.age + dt) % particle.life
 
-      particle.age += dt
+      const relativeX = particle.position.x - randomStartX
+      const relativeY = particle.position.y - randomStartY
+      const relativeZ = particle.position.z - randomStartZ
 
-      // Only update physics for living particles
-      if (particle.age <= particle.life) {
-        // Charged particle interactions: calculate forces from other particles
-        let forceX = 0
-        let forceY = 0
-        let forceZ = 0
+      // Slow, layered curl gives every depth plane a slightly different path.
+      // Nearby particles naturally render larger because sizeAttenuation is on;
+      // distant particles remain small and sharp instead of forming one flat halo.
+      const flowTime = seconds * 0.18
+      const flowX = Math.sin(relativeY * 0.018 + flowTime + particle.phase) +
+        Math.cos(relativeZ * 0.021 - flowTime * 0.7)
+      const flowY = Math.cos(relativeX * 0.014 - flowTime * 0.8 + particle.phase * 0.5) +
+        Math.sin(relativeZ * 0.017 + flowTime)
+      const flowZ = Math.sin((relativeX + relativeY) * 0.012 + flowTime * 0.6 + particle.phase)
+      const turbulence = PARAMS.flowStrength * particle.driftScale *
+        (0.5 + pattern.spatialTurbulence * 0.6) * flowEnergy
 
-        for (let j = 0; j < particleCount; j++) {
-          if (i === j) continue
+      particle.velocity.x += flowX * turbulence * frameScale
+      particle.velocity.y += flowY * turbulence * frameScale
+      particle.velocity.z += flowZ * turbulence * 0.7 * frameScale
 
-          const other = particles[j]
-          const dx = other.position.x - particle.position.x
-          const dy = other.position.y - particle.position.y
-          const dz = other.position.z - particle.position.z
-          const distSq = dx * dx + dy * dy + dz * dz
-          const dist = Math.sqrt(distSq)
-
-          if (dist < 0.05) continue // Skip if too close
-          if (dist > params.interactionRadius) continue // Skip if too far
-
-          // Coulomb-like force: stronger repulsion/attraction
-          const chargeProduct = particle.charge * other.charge
-          const forceMagnitude = (chargeProduct * params.chargeStrength) / (distSq + 0.5)
-
-          forceX += (dx / dist) * forceMagnitude
-          forceY += (dy / dist) * forceMagnitude
-          forceZ += (dz / dist) * forceMagnitude
-        }
-
-        // Apply forces to velocity (stronger response)
-        particle.velocity.x += forceX * 0.02
-        particle.velocity.y += forceY * 0.02
-        particle.velocity.z += forceZ * 0.02
-
-        // Damping for drift trails
-        particle.velocity.multiplyScalar(params.velocityDamping)
-
-        // Update position
-        particle.position.addScaledVector(particle.velocity, 1.0)
+      // One stable partner preserves a hint of the original charged-particle
+      // behavior without the old O(n squared) cost or dense particle clumps.
+      const partner = particles[particle.partnerIndex]
+      const partnerDeltaX = partner.position.x - particle.position.x
+      const partnerDeltaY = partner.position.y - particle.position.y
+      const partnerDeltaZ = partner.position.z - particle.position.z
+      const partnerDistanceSquared = partnerDeltaX * partnerDeltaX +
+        partnerDeltaY * partnerDeltaY + partnerDeltaZ * partnerDeltaZ
+      if (partnerDistanceSquared > 0.05 && partnerDistanceSquared < chargeRadiusSquared) {
+        const partnerDistance = Math.sqrt(partnerDistanceSquared)
+        const chargeFalloff = 1 - partnerDistance / PARAMS.chargeRadius
+        const chargeForce = particle.charge * partner.charge * PARAMS.chargeStrength *
+          chargeFalloff * flowEnergy
+        const inversePartnerDistance = 1 / partnerDistance
+        particle.velocity.x += partnerDeltaX * inversePartnerDistance * chargeForce * frameScale
+        particle.velocity.y += partnerDeltaY * inversePartnerDistance * chargeForce * frameScale
+        particle.velocity.z += partnerDeltaZ * inversePartnerDistance * chargeForce * 0.65 * frameScale
       }
 
-      // Update position in geometry (for both living and fading particles)
+      // Keep a perspective-correct reading area around the centered hero copy.
+      // Its world-space size grows with distance so the gap looks consistent on
+      // screen across near, middle, and far particle layers.
+      const perspectiveScale = Math.max(0.45, (cameraDistance - relativeZ) / cameraDistance)
+      const safeWidthAtDepth = safeHalfWidth * perspectiveScale
+      const safeHeightAtDepth = safeHalfHeight * perspectiveScale
+      const safeDistance = (relativeX * relativeX) / (safeWidthAtDepth * safeWidthAtDepth) +
+        (relativeY * relativeY) / (safeHeightAtDepth * safeHeightAtDepth)
+      if (safeDistance < 1) {
+        const centerDistance = Math.hypot(relativeX, relativeY)
+        const directionX = centerDistance > 0.001 ? relativeX / centerDistance : Math.cos(particle.phase)
+        const directionY = centerDistance > 0.001 ? relativeY / centerDistance : Math.sin(particle.phase)
+        const safeZoneForce = (1 - safeDistance) * PARAMS.safeZoneStrength
+        particle.velocity.x += directionX * safeZoneForce * frameScale
+        particle.velocity.y += directionY * safeZoneForce * frameScale
+      }
+
+      // Pointer movement bends the field; taps create a short radial pulse.
+      if (cursor) {
+        const cursorDeltaX = particle.position.x - cursorX
+        const cursorDeltaY = particle.position.y - cursorY
+        const cursorDeltaZ = particle.position.z - cursorZ
+        const cursorDistanceSquared = cursorDeltaX * cursorDeltaX + cursorDeltaY * cursorDeltaY + cursorDeltaZ * cursorDeltaZ
+        if (cursorDistanceSquared > 0.001 && cursorDistanceSquared < interactionRadiusSquared) {
+          const cursorDistance = Math.sqrt(cursorDistanceSquared)
+          const falloff = 1 - cursorDistance / interactionRadius
+          const pointerForce = falloff * falloff * (0.005 + interaction.clickPulse * 0.06) * interaction.cursor.strength
+          const inverseCursorDistance = 1 / cursorDistance
+          particle.velocity.x += cursorDeltaX * inverseCursorDistance * pointerForce * frameScale
+          particle.velocity.y += cursorDeltaY * inverseCursorDistance * pointerForce * frameScale
+          particle.velocity.z += cursorDeltaZ * inverseCursorDistance * pointerForce * frameScale
+        }
+      }
+
+      particle.velocity.multiplyScalar(damping)
+      const velocitySquared = particle.velocity.lengthSq()
+      if (velocitySquared > maximumVelocitySquared) {
+        particle.velocity.multiplyScalar(maximumVelocity / Math.sqrt(velocitySquared))
+      }
+      particle.position.addScaledVector(particle.velocity, frameScale)
+
+      // Wrap each depth plane independently. Scaling the horizontal and vertical
+      // bounds by camera distance keeps the sparse composition stable in screen
+      // space while particles drift forward and backward through z.
+      const updatedRelativeZ = particle.position.z - randomStartZ
+      const updatedPerspectiveScale = Math.max(0.45, (cameraDistance - updatedRelativeZ) / cameraDistance)
+      const horizontalBound = fieldHalfWidth * updatedPerspectiveScale
+      const verticalBound = fieldHalfHeight * updatedPerspectiveScale
+      const updatedRelativeX = particle.position.x - randomStartX
+      const updatedRelativeY = particle.position.y - randomStartY
+      if (updatedRelativeX > horizontalBound) particle.position.x = randomStartX - horizontalBound
+      else if (updatedRelativeX < -horizontalBound) particle.position.x = randomStartX + horizontalBound
+      if (updatedRelativeY > verticalBound) particle.position.y = randomStartY - verticalBound
+      else if (updatedRelativeY < -verticalBound) particle.position.y = randomStartY + verticalBound
+      if (updatedRelativeZ > fieldHalfDepth) particle.position.z = randomStartZ - fieldHalfDepth
+      else if (updatedRelativeZ < -fieldHalfDepth) particle.position.z = randomStartZ + fieldHalfDepth
+
+      // Stream the simulated position into the GPU geometry.
       particlePositions[i * 3] = particle.position.x
       particlePositions[i * 3 + 1] = particle.position.y
       particlePositions[i * 3 + 2] = particle.position.z
 
       // Update color: psychedelic cycling based on charge + pattern + time
-      const ageRatio = particle.age / particle.life
+      const agePhase = particle.age / particle.life
 
       // Use palette colors with brightness variations, or HSL-based dynamic colors
-      let color: THREE.Color
       if (paletteColors) {
         // Get base palette color and vary brightness based on pattern energy
         const colorIndex = i % 3
         const baseColor = colorIndex === 0 ? orbColor1 : colorIndex === 1 ? orbColor2 : orbColor3
-        color = baseColor.clone()
+        workingColor.copy(baseColor)
 
-        // Adjust brightness based on pattern energy
-        const baseLightness = 0.55 * (1 - Math.min(1, ageRatio) * 0.3)
-        const energyBoost = ageRatio <= 1 ?
-          (pattern.lightIntensity * params.beatResponsiveness * 0.05 +
-          pattern.frequency.peak * 0.08) : 0
-        const finalBrightness = Math.min(0.65, baseLightness + energyBoost)
-
-        // Apply brightness by blending with white
-        const white = new THREE.Color(1, 1, 1)
-        color.lerp(white, 1 - finalBrightness)
+        const shimmer = Math.sin(agePhase * Math.PI * 2 + particle.phase + seconds * 0.7) * 0.5 + 0.5
+        const energyBoost = (pattern.lightIntensity * PARAMS.beatResponsiveness * 0.018 + pattern.frequency.peak * 0.08) * brightness
+        workingColor.lerp(white, Math.min(0.28, 0.05 + shimmer * 0.1 + energyBoost))
       } else {
         // Original HSL-based color generation
         const chargeHue = particle.charge > 0 ? colorPair.positive : colorPair.negative
@@ -341,48 +452,33 @@ export const createChargedMagnetosphereTheme = (
 
         const saturation = 0.95 + Math.sin(time * 0.0003 + i * 0.01) * 0.05
 
-        const baseLightness = Math.max(0, 0.55 * (1 - Math.min(1, ageRatio) * 0.3))
-        const energyBoost = ageRatio <= 1 ?
-          (pattern.lightIntensity * params.beatResponsiveness * 0.05 +
-          pattern.frequency.peak * 0.08) : 0
-        const lightness = Math.min(0.65, baseLightness + energyBoost)
+        const shimmer = Math.sin(agePhase * Math.PI * 2 + particle.phase) * 0.04
+        const energyBoost = (pattern.lightIntensity * PARAMS.beatResponsiveness * 0.025 + pattern.frequency.peak * 0.06) * brightness
+        const lightness = Math.min(0.65, 0.44 + shimmer + energyBoost)
 
-        color = new THREE.Color().setHSL(baseHue % 1, saturation, lightness)
+        workingColor.setHSL(baseHue % 1, saturation, lightness)
       }
 
-      particleColors[i * 3] = color.r
-      particleColors[i * 3 + 1] = color.g
-      particleColors[i * 3 + 2] = color.b
+      particleColors[i * 3] = workingColor.r
+      particleColors[i * 3 + 1] = workingColor.g
+      particleColors[i * 3 + 2] = workingColor.b
     }
 
     ;(particleGeometry.attributes.position as THREE.BufferAttribute).needsUpdate = true
     ;(particleGeometry.attributes.color as THREE.BufferAttribute).needsUpdate = true
 
-    // Dynamic globe movement - move the particle cloud around the screen
-    // Multiple sine waves at different frequencies for organic motion
-    globeCenterX = randomStartX +
-      Math.sin(time * 0.00006) * 35 +
-      Math.cos(time * 0.00009) * 25
-    globeCenterY = randomStartY +
-      Math.cos(time * 0.00005) * 28 +
-      Math.sin(time * 0.00008) * 20
-    globeCenterZ = randomStartZ +
-      Math.sin(time * 0.00004) * 15
-
-    // Camera follows globe with slight lag for immersion
-    const cameraOffsetX = globeCenterX + Math.sin(time * 0.00007) * 8
-    const cameraOffsetY = globeCenterY + Math.cos(time * 0.00006) * 6
-    const cameraOffsetZ = globeCenterZ + 25
-
-    camera.position.x = cameraOffsetX
-    camera.position.y = cameraOffsetY
-    camera.position.z = cameraOffsetZ
-
-    // Look at globe center with dynamic variation
-    const lookAtX = globeCenterX + Math.sin(time * 0.00008) * 8
-    const lookAtY = globeCenterY + Math.cos(time * 0.00007) * 6
-    const lookAtZ = globeCenterZ + 15
-    camera.lookAt(lookAtX, lookAtY, lookAtZ)
+    // A barely perceptible camera wander revives the original depth parallax
+    // without making the page feel like it is sliding underneath the reader.
+    camera.position.set(
+      randomStartX + (Math.sin(seconds * 0.05) * 6 + Math.cos(seconds * 0.032) * 3) * motionScale,
+      randomStartY + Math.cos(seconds * 0.045) * 4 * motionScale,
+      randomStartZ + cameraDistance + Math.sin(seconds * 0.036) * 4 * motionScale
+    )
+    camera.lookAt(
+      randomStartX + Math.sin(seconds * 0.039) * 4 * motionScale,
+      randomStartY + Math.cos(seconds * 0.033) * 3 * motionScale,
+      randomStartZ
+    )
   }
 
   // ===== DISPOSAL =====
@@ -392,7 +488,7 @@ export const createChargedMagnetosphereTheme = (
     particleGeometry.dispose()
     particleMaterial.dispose()
     glowTexture.dispose()
-    composer.dispose()
+    composer?.dispose()
     renderer.dispose()
   }
 

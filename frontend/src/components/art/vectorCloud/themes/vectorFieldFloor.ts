@@ -220,8 +220,6 @@ export const createVectorFieldFloorTheme = (
     uniforms: gridUniforms,
     vertexShader: gridVertexShader,
     fragmentShader: gridFragmentShader,
-    emissive: 0x00ffff,
-    emissiveIntensity: 0.5,
     side: THREE.DoubleSide,
   })
 
@@ -229,7 +227,7 @@ export const createVectorFieldFloorTheme = (
   scene.add(tunnelMesh)
 
   // ===== NEON RAILS (hot pink) =====
-  const railGeometries = []
+  const railGeometries: THREE.BufferGeometry[] = []
   const railRadius = 4
   const angle = (Math.PI * 2) / 3
 
@@ -253,8 +251,6 @@ export const createVectorFieldFloorTheme = (
 
     const railMaterial = new THREE.MeshBasicMaterial({
       color: 0xff1493,
-      emissive: 0xff1493,
-      emissiveIntensity: 1.0,
       side: THREE.DoubleSide,
     })
 
@@ -277,8 +273,6 @@ export const createVectorFieldFloorTheme = (
 
     const panelMaterial = new THREE.MeshBasicMaterial({
       color: panelColor,
-      emissive: panelColor,
-      emissiveIntensity: 0.8,
       side: THREE.DoubleSide,
     })
 

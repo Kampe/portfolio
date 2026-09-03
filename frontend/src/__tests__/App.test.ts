@@ -1,45 +1,54 @@
-import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { afterEach, describe, expect, it } from 'vitest'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import App from '../App.vue'
 
+let wrapper: VueWrapper | undefined
+
+function mountApp() {
+  wrapper = mount(App, {
+    attachTo: document.body,
+    global: {
+      stubs: {
+        Teleport: true,
+        VectorCloudHero: { template: '<div data-testid="hero">NICK KAMPE</div>' },
+      },
+    },
+  })
+  return wrapper
+}
+
+afterEach(() => {
+  wrapper?.unmount()
+  wrapper = undefined
+  window.history.replaceState({}, '', '/')
+  document.body.innerHTML = ''
+})
+
 describe('App.vue', () => {
-  it('should render the app component', () => {
-    const wrapper = mount(App)
-    expect(wrapper.exists()).toBe(true)
+  it('preserves the original hero and section navigation', () => {
+    const app = mountApp()
+    expect(app.text()).toContain('NICK KAMPE')
+    expect(app.find('nav[aria-label="Portfolio sections"]').text()).toContain('ABOUT')
+    expect(app.find('nav[aria-label="Portfolio sections"]').text()).toContain('SKILLS')
+    expect(app.find('nav[aria-label="Portfolio sections"]').text()).toContain('RESUME')
+    expect(app.find('nav[aria-label="Portfolio sections"]').text()).toContain('CONTACT')
   })
 
-  it('should have the hero component', () => {
-    const wrapper = mount(App)
-    expect(wrapper.findComponent({ name: 'VectorCloudHero' }).exists()).toBe(true)
+  it('opens the original about content in an accessible dialog', async () => {
+    const app = mountApp()
+    await app.get('button').trigger('click')
+
+    const dialog = app.get('[role="dialog"]')
+    expect(dialog.attributes('aria-modal')).toBe('true')
+    expect(dialog.text()).toContain('Infrastructure Architect & Platform Engineer')
+    expect(window.location.hash).toBe('#about')
   })
 
-  it('should have navigation buttons', () => {
-    const wrapper = mount(App)
-    const buttons = wrapper.findAll('button')
-    expect(buttons.length).toBeGreaterThan(0)
-  })
+  it('closes a section with Escape', async () => {
+    const app = mountApp()
+    await app.get('button').trigger('click')
+    await app.get('[role="dialog"]').trigger('keydown', { key: 'Escape' })
 
-  it('should contain ABOUT section in navigation', () => {
-    const wrapper = mount(App)
-    const text = wrapper.text()
-    expect(text.includes('ABOUT')).toBe(true)
-  })
-
-  it('should contain SKILLS section in navigation', () => {
-    const wrapper = mount(App)
-    const text = wrapper.text()
-    expect(text.includes('SKILLS')).toBe(true)
-  })
-
-  it('should contain RESUME section in navigation', () => {
-    const wrapper = mount(App)
-    const text = wrapper.text()
-    expect(text.includes('RESUME')).toBe(true)
-  })
-
-  it('should contain CONTACT section in navigation', () => {
-    const wrapper = mount(App)
-    const text = wrapper.text()
-    expect(text.includes('CONTACT')).toBe(true)
+    expect(app.find('[role="dialog"]').exists()).toBe(false)
   })
 })

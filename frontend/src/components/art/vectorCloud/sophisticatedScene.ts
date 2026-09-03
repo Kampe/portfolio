@@ -181,7 +181,7 @@ export const createSophisticatedScene = (canvas: HTMLCanvasElement): Sophisticat
   let currentPathIndex = 0
   let cameraLookTarget = new THREE.Vector3(0, 30, 0)
   let isFlying = false
-  let flightTimeout: NodeJS.Timeout | null = null
+  let flightTimeout: ReturnType<typeof setTimeout> | null = null
 
   const animateCameraPath = () => {
     if (!isFlying && flightPath.length > 0) {

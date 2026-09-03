@@ -13,6 +13,8 @@
 import * as THREE from 'three'
 import { SynthesizedPattern } from '../synthesis'
 
+export type ThemeName = 'spectrum' | 'kaleidoscope' | 'milkdrop' | 'dmt' | 'vectorfield' | 'magnetosphere'
+
 /**
  * Post-processing composer interface (EffectComposer from three/examples/jsm)
  * Defined as interface for decoupling and testability
@@ -59,7 +61,7 @@ export interface ThemeSetupResult {
   /** Three.js scene for this theme */
   scene: THREE.Scene
   /** Camera viewing the scene */
-  camera: THREE.PerspectiveCamera
+  camera: THREE.Camera
   /** WebGL renderer */
   renderer: THREE.WebGLRenderer
   /** Optional post-processing composer for effects */

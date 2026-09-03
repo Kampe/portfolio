@@ -5,5 +5,7 @@ import { initializeGoogleAnalytics } from './utils/analytics'
 
 const app = createApp(App)
 
-initializeGoogleAnalytics()
+if (['nickkampe.com', 'www.nickkampe.com'].includes(window.location.hostname)) {
+  initializeGoogleAnalytics()
+}
 app.mount('#app')

@@ -123,11 +123,14 @@ export class PerformanceMonitor {
   }
 
   private updateMemoryStats(): void {
-    if (performance.memory) {
-      const memory = performance.memory
+    const performanceWithMemory = performance as Performance & {
+      memory?: { jsHeapSizeLimit: number; totalJSHeapSize: number; usedJSHeapSize: number }
+    }
+    if (performanceWithMemory.memory) {
+      const memory = performanceWithMemory.memory
       this.metrics.totalMemory = Math.round((memory.jsHeapSizeLimit / 1048576) * 10) / 10
       this.metrics.usedMemory = Math.round((memory.usedJSHeapSize / 1048576) * 10) / 10
-      this.metrics.jsHeap = Math.round((memory.jsHeapSize / 1048576) * 10) / 10
+      this.metrics.jsHeap = Math.round((memory.totalJSHeapSize / 1048576) * 10) / 10
     }
   }
 

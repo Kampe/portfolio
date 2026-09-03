@@ -1,52 +1,42 @@
-# Multi-stage build for portfolio app
-# Stage 1: Build frontend
-FROM oven/bun:latest AS frontend-builder
+# syntax=docker/dockerfile:1.7
+ARG BUILD_DATE=unknown
+FROM oven/bun:1.3.13-alpine@sha256:4de475389889577f346c636f956b42a5c31501b654664e9ae5726f94d7bb5349 AS builder
 
-# Build timestamp to invalidate cache
 ARG BUILD_DATE
-
 WORKDIR /app
 
-# Copy monorepo metadata files for workspace resolution
 COPY package.json bun.lock ./
-
-# Copy workspace package.json files first (minimal files for caching)
 COPY frontend/package.json ./frontend/package.json
 COPY backend/package.json ./backend/package.json
 COPY e2e/package.json ./e2e/package.json
+RUN --mount=type=cache,target=/root/.bun/install/cache \
+  bun install --frozen-lockfile --filter portfolio-frontend --filter portfolio-backend
 
-# Install dependencies (cached if lock files unchanged)
-RUN bun install
-
-# Copy full source code (.dockerignore prevents build artifacts from being copied)
 COPY frontend ./frontend
 COPY backend ./backend
-COPY e2e ./e2e
+RUN bun run build
 
-# Build frontend - outputs to backend/public/
-RUN echo "Building frontend at ${BUILD_DATE}" && bun run build:frontend
+FROM oven/bun:1.3.13-alpine@sha256:4de475389889577f346c636f956b42a5c31501b654664e9ae5726f94d7bb5349 AS runtime
 
-# Stage 2: Runtime
-FROM oven/bun:latest
+ARG BUILD_DATE
+RUN apk upgrade --no-cache
+LABEL org.opencontainers.image.title="Nick Kampe portfolio" \
+      org.opencontainers.image.description="Static portfolio and contact API" \
+      org.opencontainers.image.source="https://github.com/Kampe/portfolio" \
+      org.opencontainers.image.created="${BUILD_DATE}"
+
+ENV NODE_ENV=production \
+    PORT=3001 \
+    PUBLIC_DIR=/app/backend/public
 
 WORKDIR /app
+COPY --from=builder --chown=bun:bun /app/backend/src ./backend/src
+COPY --from=builder --chown=bun:bun /app/backend/public ./backend/public
 
-# Copy backend source and built frontend (includes public files with SEO metadata)
-COPY --from=frontend-builder /app/backend ./backend
-COPY --from=frontend-builder /app/package.json ./
-COPY --from=frontend-builder /app/bun.lock ./
-
-WORKDIR /app/backend
-
-# Install only backend dependencies
-RUN bun install --only=production
-
+USER bun
 EXPOSE 3001
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD bun run -e "const res = await fetch('http://localhost:3001/health'); process.exit(res.ok ? 0 : 1)"
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD ["bun", "-e", "const r=await fetch('http://127.0.0.1:3001/health');process.exit(r.ok?0:1)"]
 
-# Start the server with production environment
-ENV NODE_ENV=production
-CMD ["bun", "src/index.ts"]
+CMD ["bun", "backend/src/index.ts"]

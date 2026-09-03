@@ -72,12 +72,15 @@ export const synthesizeFrequencies = (time: number): FrequencyBand => {
  */
 export const synthesizeSpatialFlow = (time: number, x: number, y: number, z: number): number => {
   // Curl noise for smooth, flowing motion
-  const noiseVal = curlNoiseMultiOctave(x * 0.01, y * 0.01, z * 0.01 + time * 0.0001, 3, 1.5)
+  const noiseVector = curlNoiseMultiOctave(x * 0.01, y * 0.01, z * 0.01 + time * 0.0001, 3, 1.5)
+  const noiseMagnitude = Math.sqrt(
+    noiseVector.x * noiseVector.x + noiseVector.y * noiseVector.y + noiseVector.z * noiseVector.z
+  ) / Math.sqrt(3)
 
   // Combine with time-based modulation
   const timeWave = Math.sin(time * 0.0003 + x * 0.001 + y * 0.001) * 0.5 + 0.5
 
-  return noiseVal * timeWave
+  return noiseMagnitude * timeWave
 }
 
 /**
