@@ -2,12 +2,12 @@
  * CHARGED MAGNETOSPHERE THEME
  * Inspired by Robert Hodgin's Magnetosphere visualizer
  *
- * Visual: Charged particles travelling through layered magnetic flow fields.
- * Opposite charges counter-rotate through breathing orbital ribbons while
- * additive blending creates the original glowing "trippiness".
+ * Visual: A loose field of charged particles drifting through depth. Subtle
+ * attraction and repulsion create brief clusters without imposing a shape,
+ * while additive blending preserves the original glowing character.
  *
- * Physics: Each particle has a charge (+/-). A bounded orbital field, curl-like
- * drift, and pointer impulses create emergent motion in linear time.
+ * Physics: Each particle has a charge (+/-). A curl-like flow field, one stable
+ * charge partner, and pointer impulses create emergent motion in linear time.
  *
  * Performance: O(n) per frame; targets 60fps desktop and smooth mobile motion.
  */
@@ -21,7 +21,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 
 const CONFIG: ThemeConfig = {
   name: 'Charged Magnetosphere',
-  description: 'Dense particle clouds with intense glowing interactions',
+  description: 'A sparse, layered field of softly glowing charged particles',
   colors: {
     primary: '#ff006e',
     secondary: '#00d4ff',
@@ -29,25 +29,25 @@ const CONFIG: ThemeConfig = {
   },
   performance: {
     targetFps: 50,
-    particleCount: 2000,
+    particleCount: 84,
   },
 }
 
 // ===== CONFIGURATION KNOBS =====
 const PARAMS = {
-  particleCount: 1200,
-  particleSize: 2.05,
-  bloomStrength: 0.34,
+  particleCount: 84,
+  particleSize: 2.55,
+  bloomStrength: 0.45,
   bloomRadius: 0.4,
   bloomThreshold: 0.5,
   toneMappingExposure: 0.85, // Slightly reduced brightness
-  interactionRadius: 48,
-  orbitStrength: 0.005,
-  shellStrength: 0.0016,
-  depthStrength: 0.0014,
-  flowStrength: 0.0009,
-  velocityDamping: 0.955,
-  maxVelocity: 0.22,
+  interactionRadius: 42,
+  chargeRadius: 38,
+  chargeStrength: 0.0008,
+  flowStrength: 0.00022,
+  safeZoneStrength: 0.0018,
+  velocityDamping: 0.978,
+  maxVelocity: 0.045,
   beatResponsiveness: 2.5, // Strong response to pattern energy
 }
 
@@ -59,8 +59,8 @@ interface ChargedParticle {
   age: number
   life: number
   phase: number
-  orbitRadius: number
-  depthAmplitude: number
+  driftScale: number
+  partnerIndex: number
 }
 
 // Beautiful complementary color pairs
@@ -111,7 +111,7 @@ export const createChargedMagnetosphereTheme = (
   const randomStartX = (Math.random() - 0.5) * 12
   const randomStartY = (Math.random() - 0.5) * 10
   const randomStartZ = Math.random() * 40 + 50
-  const cameraDistance = width < 768 ? 126 : 112
+  const cameraDistance = width < 768 ? 120 : 108
 
   // ===== SCENE SETUP =====
   const scene = new THREE.Scene()
@@ -157,9 +157,9 @@ export const createChargedMagnetosphereTheme = (
   }
 
   // ===== PARTICLE SYSTEM =====
-  // Scale density by capability and viewport so the animation frames the copy
-  // instead of competing with it, especially on phones.
-  const particleCount = isConstrainedRenderer ? 140 : prefersReducedMotion ? 260 : width < 768 ? 480 : PARAMS.particleCount
+  // Preserve the sparse original composition while scaling down on phones and
+  // constrained renderers.
+  const particleCount = isConstrainedRenderer ? 36 : prefersReducedMotion ? 48 : width < 768 ? 48 : PARAMS.particleCount
   const particles: ChargedParticle[] = []
 
   const particleGeometry = new THREE.BufferGeometry()
@@ -167,20 +167,36 @@ export const createChargedMagnetosphereTheme = (
   const particleColors = new Float32Array(particleCount * 3)
   const workingColor = new THREE.Color()
   const white = new THREE.Color(1, 1, 1)
-  const goldenAngle = Math.PI * (3 - Math.sqrt(5))
-  const horizontalScale = Math.min(1.15, Math.max(0.55, width / height))
-  const verticalScale = width < 768 ? 1.08 : 0.78
+  const fieldHalfWidth = width < 768 ? 58 : 138
+  const fieldHalfHeight = width < 768 ? 112 : 94
+  const fieldHalfDepth = 54
+  const safeHalfWidth = width < 768 ? 42 : 58
+  const safeHalfHeight = width < 768 ? 48 : 34
 
-  // Distribute particles through a wide band of gently warped orbits. Fibonacci
-  // spacing supplies even coverage; radial variation keeps it organic.
+  // Shape the original random cloud instead of forcing it into a ring. Initial
+  // placement leaves breathing room around the hero copy while depth produces
+  // the mix of pinpoints and larger glowing orbs.
   for (let i = 0; i < particleCount; i++) {
     const charge = Math.random() > 0.5 ? 1 : -1
-    const phase = i * goldenAngle + (Math.random() - 0.5) * 0.35
-    const orbitRadius = (width < 768 ? 58 : 52) + Math.random() * 56
-    const depthAmplitude = 8 + Math.random() * 17
-    const radialJitter = (Math.random() - 0.5) * 8
-    const radius = orbitRadius + radialJitter
-    const initialDepth = Math.sin(phase * (1.45 + (i % 5) * 0.08)) * depthAmplitude
+    const phase = Math.random() * Math.PI * 2
+    const depthMix = Math.random()
+    const zOffset = depthMix < 0.2
+      ? 26 + Math.random() * 26
+      : depthMix < 0.65
+        ? -15 + Math.random() * 41
+        : -fieldHalfDepth + Math.random() * 39
+    const perspectiveScale = (cameraDistance - zOffset) / cameraDistance
+    let x = 0
+    let y = 0
+    for (let attempt = 0; attempt < 8; attempt++) {
+      x = (Math.random() - 0.5) * fieldHalfWidth * perspectiveScale * 2
+      y = (Math.random() - 0.5) * fieldHalfHeight * perspectiveScale * 2
+      const safeWidthAtDepth = safeHalfWidth * perspectiveScale
+      const safeHeightAtDepth = safeHalfHeight * perspectiveScale
+      const safeDistance = (x * x) / (safeWidthAtDepth * safeWidthAtDepth) +
+        (y * y) / (safeHeightAtDepth * safeHeightAtDepth)
+      if (safeDistance >= 1) break
+    }
 
     // Use palette colors if provided, otherwise use HSL-based colors
     let color: THREE.Color
@@ -197,22 +213,22 @@ export const createChargedMagnetosphereTheme = (
 
     particles.push({
       position: new THREE.Vector3(
-        randomStartX + Math.cos(phase) * radius * horizontalScale,
-        randomStartY + Math.sin(phase) * radius * verticalScale,
-        randomStartZ + initialDepth + (Math.random() - 0.5) * 8
+        randomStartX + x,
+        randomStartY + y,
+        randomStartZ + zOffset
       ),
       velocity: new THREE.Vector3(
-        -Math.sin(phase) * charge * 0.022 * horizontalScale,
-        Math.cos(phase) * charge * 0.022 * verticalScale,
-        Math.cos(phase * 1.7) * 0.008
+        (Math.random() - 0.5) * 0.012,
+        (Math.random() - 0.5) * 0.012,
+        (Math.random() - 0.5) * 0.008
       ),
       charge,
       color,
       age: Math.random() * 10,
       life: 8 + Math.random() * 8,
       phase,
-      orbitRadius,
-      depthAmplitude,
+      driftScale: 0.65 + Math.random() * 0.7,
+      partnerIndex: (i * 37 + 17) % particleCount,
     })
 
     particlePositions[i * 3] = particles[i].position.x
@@ -248,7 +264,7 @@ export const createChargedMagnetosphereTheme = (
     size: PARAMS.particleSize,
     sizeAttenuation: true,
     transparent: true,
-    opacity: 0.72,
+    opacity: 0.8,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
     fog: false, // Don't fade particles with fog for more vivid effect
@@ -290,10 +306,10 @@ export const createChargedMagnetosphereTheme = (
     const particleSize = typeof interaction.parameters?.particleSize === 'number'
       ? interaction.parameters.particleSize
       : PARAMS.particleSize
-    const flowEnergy = (0.65 + pattern.spatialFlow * 0.65 + interaction.energizedLevel * 0.8) * speed * motionScale
+    const flowEnergy = (0.55 + pattern.spatialFlow * 0.55 + interaction.energizedLevel * 0.55) * speed * motionScale
     const pulse = pattern.frequency.low * 0.7 + pattern.frequency.peak * 0.3
     const damping = Math.pow(PARAMS.velocityDamping, frameScale)
-    const maximumVelocity = PARAMS.maxVelocity * (0.8 + pattern.particleVelocity * 0.28 + interaction.energizedLevel * 0.4)
+    const maximumVelocity = PARAMS.maxVelocity * (0.8 + pattern.particleVelocity * 0.2 + interaction.energizedLevel * 0.25)
     const maximumVelocitySquared = maximumVelocity * maximumVelocity
     const cursor = interaction.cursor.position
     const cursorX = cursor ? randomStartX + cursor.x * 0.72 : 0
@@ -301,8 +317,9 @@ export const createChargedMagnetosphereTheme = (
     const cursorZ = randomStartZ
     const interactionRadius = PARAMS.interactionRadius * (1 + interaction.clickPulse * 0.35)
     const interactionRadiusSquared = interactionRadius * interactionRadius
+    const chargeRadiusSquared = PARAMS.chargeRadius * PARAMS.chargeRadius
 
-    const animatedParticleSize = particleSize * (0.96 + pulse * 0.06)
+    const animatedParticleSize = particleSize * (0.98 + pulse * 0.04)
     if (particleMaterial.size !== animatedParticleSize) {
       particleMaterial.size = animatedParticleSize
     }
@@ -311,35 +328,61 @@ export const createChargedMagnetosphereTheme = (
       const particle = particles[i]
       particle.age = (particle.age + dt) % particle.life
 
-      const relativeX = (particle.position.x - randomStartX) / horizontalScale
-      const relativeY = (particle.position.y - randomStartY) / verticalScale
+      const relativeX = particle.position.x - randomStartX
+      const relativeY = particle.position.y - randomStartY
       const relativeZ = particle.position.z - randomStartZ
-      const radialDistance = Math.max(0.001, Math.hypot(relativeX, relativeY))
-      const inverseRadius = 1 / radialDistance
-      const targetRadius = particle.orbitRadius * (0.95 + pulse * 0.08 + Math.sin(seconds * 0.38 + particle.phase) * 0.035)
-      const radialForce = (targetRadius - radialDistance) * PARAMS.shellStrength
-      const orbitalForce = PARAMS.orbitStrength * particle.charge * flowEnergy
-      const targetDepth = Math.sin(particle.phase * 1.7 + seconds * (0.32 + particle.charge * 0.04)) * particle.depthAmplitude
 
-      // A layered, curl-like field bends the clean orbits into slowly changing
-      // ribbons without allocating noise vectors or evaluating every pair.
-      const flowX = Math.sin(relativeY * 0.075 + seconds * 0.47 + particle.phase)
-      const flowY = Math.sin(relativeZ * 0.038 - seconds * 0.31 + particle.phase * 0.5)
-      const flowZ = Math.cos(relativeX * 0.042 + seconds * 0.41 - particle.phase * 0.35)
-      const turbulence = PARAMS.flowStrength * (0.45 + pattern.spatialTurbulence * 0.8) * flowEnergy
+      // Slow, layered curl gives every depth plane a slightly different path.
+      // Nearby particles naturally render larger because sizeAttenuation is on;
+      // distant particles remain small and sharp instead of forming one flat halo.
+      const flowTime = seconds * 0.12
+      const flowX = Math.sin(relativeY * 0.018 + flowTime + particle.phase) +
+        Math.cos(relativeZ * 0.021 - flowTime * 0.7)
+      const flowY = Math.cos(relativeX * 0.014 - flowTime * 0.8 + particle.phase * 0.5) +
+        Math.sin(relativeZ * 0.017 + flowTime)
+      const flowZ = Math.sin((relativeX + relativeY) * 0.012 + flowTime * 0.6 + particle.phase)
+      const turbulence = PARAMS.flowStrength * particle.driftScale *
+        (0.5 + pattern.spatialTurbulence * 0.6) * flowEnergy
 
-      particle.velocity.x += (
-        (relativeX * inverseRadius * radialForce - relativeY * inverseRadius * orbitalForce) * horizontalScale +
-        flowX * turbulence
-      ) * frameScale
-      particle.velocity.y += (
-        (relativeY * inverseRadius * radialForce + relativeX * inverseRadius * orbitalForce) * verticalScale +
-        flowY * turbulence
-      ) * frameScale
-      particle.velocity.z += (
-        (targetDepth - relativeZ) * PARAMS.depthStrength +
-        flowZ * turbulence
-      ) * frameScale
+      particle.velocity.x += flowX * turbulence * frameScale
+      particle.velocity.y += flowY * turbulence * frameScale
+      particle.velocity.z += flowZ * turbulence * 0.7 * frameScale
+
+      // One stable partner preserves a hint of the original charged-particle
+      // behavior without the old O(n squared) cost or dense particle clumps.
+      const partner = particles[particle.partnerIndex]
+      const partnerDeltaX = partner.position.x - particle.position.x
+      const partnerDeltaY = partner.position.y - particle.position.y
+      const partnerDeltaZ = partner.position.z - particle.position.z
+      const partnerDistanceSquared = partnerDeltaX * partnerDeltaX +
+        partnerDeltaY * partnerDeltaY + partnerDeltaZ * partnerDeltaZ
+      if (partnerDistanceSquared > 0.05 && partnerDistanceSquared < chargeRadiusSquared) {
+        const partnerDistance = Math.sqrt(partnerDistanceSquared)
+        const chargeFalloff = 1 - partnerDistance / PARAMS.chargeRadius
+        const chargeForce = particle.charge * partner.charge * PARAMS.chargeStrength *
+          chargeFalloff * flowEnergy
+        const inversePartnerDistance = 1 / partnerDistance
+        particle.velocity.x += partnerDeltaX * inversePartnerDistance * chargeForce * frameScale
+        particle.velocity.y += partnerDeltaY * inversePartnerDistance * chargeForce * frameScale
+        particle.velocity.z += partnerDeltaZ * inversePartnerDistance * chargeForce * 0.65 * frameScale
+      }
+
+      // Keep a perspective-correct reading area around the centered hero copy.
+      // Its world-space size grows with distance so the gap looks consistent on
+      // screen across near, middle, and far particle layers.
+      const perspectiveScale = Math.max(0.45, (cameraDistance - relativeZ) / cameraDistance)
+      const safeWidthAtDepth = safeHalfWidth * perspectiveScale
+      const safeHeightAtDepth = safeHalfHeight * perspectiveScale
+      const safeDistance = (relativeX * relativeX) / (safeWidthAtDepth * safeWidthAtDepth) +
+        (relativeY * relativeY) / (safeHeightAtDepth * safeHeightAtDepth)
+      if (safeDistance < 1) {
+        const centerDistance = Math.hypot(relativeX, relativeY)
+        const directionX = centerDistance > 0.001 ? relativeX / centerDistance : Math.cos(particle.phase)
+        const directionY = centerDistance > 0.001 ? relativeY / centerDistance : Math.sin(particle.phase)
+        const safeZoneForce = (1 - safeDistance) * PARAMS.safeZoneStrength
+        particle.velocity.x += directionX * safeZoneForce * frameScale
+        particle.velocity.y += directionY * safeZoneForce * frameScale
+      }
 
       // Pointer movement bends the field; taps create a short radial pulse.
       if (cursor) {
@@ -350,7 +393,7 @@ export const createChargedMagnetosphereTheme = (
         if (cursorDistanceSquared > 0.001 && cursorDistanceSquared < interactionRadiusSquared) {
           const cursorDistance = Math.sqrt(cursorDistanceSquared)
           const falloff = 1 - cursorDistance / interactionRadius
-          const pointerForce = falloff * falloff * (0.006 + interaction.clickPulse * 0.08) * interaction.cursor.strength
+          const pointerForce = falloff * falloff * (0.005 + interaction.clickPulse * 0.06) * interaction.cursor.strength
           const inverseCursorDistance = 1 / cursorDistance
           particle.velocity.x += cursorDeltaX * inverseCursorDistance * pointerForce * frameScale
           particle.velocity.y += cursorDeltaY * inverseCursorDistance * pointerForce * frameScale
@@ -364,6 +407,22 @@ export const createChargedMagnetosphereTheme = (
         particle.velocity.multiplyScalar(maximumVelocity / Math.sqrt(velocitySquared))
       }
       particle.position.addScaledVector(particle.velocity, frameScale)
+
+      // Wrap each depth plane independently. Scaling the horizontal and vertical
+      // bounds by camera distance keeps the sparse composition stable in screen
+      // space while particles drift forward and backward through z.
+      const updatedRelativeZ = particle.position.z - randomStartZ
+      const updatedPerspectiveScale = Math.max(0.45, (cameraDistance - updatedRelativeZ) / cameraDistance)
+      const horizontalBound = fieldHalfWidth * updatedPerspectiveScale
+      const verticalBound = fieldHalfHeight * updatedPerspectiveScale
+      const updatedRelativeX = particle.position.x - randomStartX
+      const updatedRelativeY = particle.position.y - randomStartY
+      if (updatedRelativeX > horizontalBound) particle.position.x = randomStartX - horizontalBound
+      else if (updatedRelativeX < -horizontalBound) particle.position.x = randomStartX + horizontalBound
+      if (updatedRelativeY > verticalBound) particle.position.y = randomStartY - verticalBound
+      else if (updatedRelativeY < -verticalBound) particle.position.y = randomStartY + verticalBound
+      if (updatedRelativeZ > fieldHalfDepth) particle.position.z = randomStartZ - fieldHalfDepth
+      else if (updatedRelativeZ < -fieldHalfDepth) particle.position.z = randomStartZ + fieldHalfDepth
 
       // Stream the simulated position into the GPU geometry.
       particlePositions[i * 3] = particle.position.x
@@ -408,16 +467,16 @@ export const createChargedMagnetosphereTheme = (
     ;(particleGeometry.attributes.position as THREE.BufferAttribute).needsUpdate = true
     ;(particleGeometry.attributes.color as THREE.BufferAttribute).needsUpdate = true
 
-    // Slow camera parallax reveals depth without pulling the particle field away
-    // from the hero content, which was the main weakness of the old wide drift.
+    // A barely perceptible camera wander revives the original depth parallax
+    // without making the page feel like it is sliding underneath the reader.
     camera.position.set(
-      randomStartX + Math.sin(seconds * 0.11) * 7 * motionScale,
-      randomStartY + Math.cos(seconds * 0.09) * 5 * motionScale,
-      randomStartZ + cameraDistance
+      randomStartX + (Math.sin(seconds * 0.035) * 6 + Math.cos(seconds * 0.021) * 3) * motionScale,
+      randomStartY + Math.cos(seconds * 0.03) * 4 * motionScale,
+      randomStartZ + cameraDistance + Math.sin(seconds * 0.024) * 4 * motionScale
     )
     camera.lookAt(
-      randomStartX + Math.sin(seconds * 0.07) * 3,
-      randomStartY + Math.cos(seconds * 0.08) * 2,
+      randomStartX + Math.sin(seconds * 0.026) * 4 * motionScale,
+      randomStartY + Math.cos(seconds * 0.022) * 3 * motionScale,
       randomStartZ
     )
   }
