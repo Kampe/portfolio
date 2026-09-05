@@ -9,7 +9,7 @@ COPY package.json bun.lock ./
 COPY frontend/package.json ./frontend/package.json
 COPY backend/package.json ./backend/package.json
 COPY e2e/package.json ./e2e/package.json
-RUN --mount=type=cache,target=/root/.bun/install/cache \
+RUN --mount=type=cache,id=s/bc1183c0-ec01-4918-8390-f4ce5c14cfce-/root/.bun/install/cache,target=/root/.bun/install/cache \
   bun install --frozen-lockfile --filter portfolio-frontend --filter portfolio-backend
 
 COPY frontend ./frontend
@@ -30,6 +30,8 @@ ENV NODE_ENV=production \
     PUBLIC_DIR=/app/backend/public
 
 WORKDIR /app
+COPY --from=builder --chown=bun:bun /app/package.json /app/bun.lock ./
+COPY --from=builder --chown=bun:bun /app/backend/package.json ./backend/package.json
 COPY --from=builder --chown=bun:bun /app/backend/src ./backend/src
 COPY --from=builder --chown=bun:bun /app/backend/public ./backend/public
 
@@ -37,6 +39,6 @@ USER bun
 EXPOSE 3001
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD ["bun", "-e", "const r=await fetch('http://127.0.0.1:3001/health');process.exit(r.ok?0:1)"]
+  CMD ["bun", "-e", "const p=process.env.PORT||'3001';const r=await fetch('http://127.0.0.1:'+p+'/health');process.exit(r.ok?0:1)"]
 
 CMD ["bun", "backend/src/index.ts"]
