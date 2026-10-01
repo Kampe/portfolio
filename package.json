@@ -40,7 +40,7 @@
   ],
   "author": "Nicholas Kampe",
   "devDependencies": {
-    "@playwright/test": "^1.62.1"
+    "@playwright/test": "^1.63.0"
   },
   "overrides": {
     "flatted": "^3.4.4",
