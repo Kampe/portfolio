@@ -35,7 +35,7 @@ jobs:
       - run: bunx playwright install --with-deps chromium
       - run: bun run test:e2e
       - if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-results
           path: |
@@ -101,7 +101,7 @@ jobs:
           image: portfolio:test
           format: spdx-json
           output-file: sbom.spdx.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: portfolio-sbom
           path: sbom.spdx.json
