@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 ARG BUILD_DATE=unknown
-FROM oven/bun:1.3.13-alpine@sha256:4de475389889577f346c636f956b42a5c31501b654664e9ae5726f94d7bb5349 AS builder
+FROM oven/bun:1.4.4-alpine@sha256:4cf82f5686b196504fe119db3fcd9185b191f82ece82c40680e597228ec6070a AS builder
 
 ARG BUILD_DATE
 WORKDIR /app
@@ -16,7 +16,7 @@ COPY frontend ./frontend
 COPY backend ./backend
 RUN bun run build
 
-FROM oven/bun:1.3.13-alpine@sha256:4de475389889577f346c636f956b42a5c31501b654664e9ae5726f94d7bb5349 AS runtime
+FROM oven/bun:1.4.4-alpine@sha256:4cf82f5686b196504fe119db3fcd9185b191f82ece82c40680e597228ec6070a AS runtime
 
 ARG BUILD_DATE
 RUN apk upgrade --no-cache
